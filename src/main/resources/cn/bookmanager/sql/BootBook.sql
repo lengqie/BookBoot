@@ -43,8 +43,6 @@ CREATE TABLE appointment(
 ); 
 CREATE TABLE recommend(
 	`name` VARCHAR(20),
-	`Isbd` VARCHAR(20),
+	`Isbn` VARCHAR(20),
 	`success` INT
 );
-
-boot_book
