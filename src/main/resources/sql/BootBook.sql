@@ -6,14 +6,14 @@ CREATE TABLE `user`(
 	`id` VARCHAR(20) PRIMARY KEY,
 	`name` VARCHAR(20),
 	`password` VARCHAR(20),
-	`default` INT DEFAULT 4,
+	`default_count` INT DEFAULT 4,
 	`count` INT DEFAULT 0,
 	`total` INT DEFAULT 0,
 	`balance` INT DEFAULT 0
 );
 -- 书籍信息
 CREATE TABLE `books`(
-	`IsbN` VARCHAR(20) PRIMARY KEY,
+	`Isbn` VARCHAR(20) PRIMARY KEY,
 	`name` VARCHAR(20),
 	`type` VARCHAR(10),
 	`hot` INT DEFAULT 0
@@ -46,3 +46,6 @@ CREATE TABLE recommend(
 	`Isbn` VARCHAR(20),
 	`success` INT
 );
+
+-- 添加一些 数据
+INSERT INTO `admin` VALUES ('root','root');
