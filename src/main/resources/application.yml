@@ -11,3 +11,6 @@ logging:
 
 mybatis:
   type-aliases-package: cn.bookmanager.entity
+
+server:
+  port: 8081

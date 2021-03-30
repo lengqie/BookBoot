@@ -33,7 +33,7 @@ public class BooksController {
         Map<String, String> map = new HashMap<>(1);
         final String s = booksService.borrowBooks(Isbn, id, date, days);
 
-        map.put("status",s);
+        map.put("msg",s);
         return map;
     }
 
