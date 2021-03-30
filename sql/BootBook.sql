@@ -6,7 +6,7 @@ CREATE TABLE `user`(
 	`id` VARCHAR(20) PRIMARY KEY,
 	`name` VARCHAR(20),
 	`password` VARCHAR(20),
-	`default_count` INT DEFAULT 4,
+	`defaultCount` INT DEFAULT 4,
 	`count` INT DEFAULT 0,
 	`total` INT DEFAULT 0,
 	`balance` INT DEFAULT 0
@@ -16,7 +16,8 @@ CREATE TABLE `books`(
 	`Isbn` VARCHAR(20) PRIMARY KEY,
 	`name` VARCHAR(20),
 	`type` VARCHAR(10),
-	`hot` INT DEFAULT 0
+	`hot` INT DEFAULT 0,
+	`num` INT DEFAULT 5
 );
 
 -- 管理员 账号 密码

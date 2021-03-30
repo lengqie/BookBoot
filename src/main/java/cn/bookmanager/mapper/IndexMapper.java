@@ -32,4 +32,17 @@ public interface IndexMapper {
      */
     List<Books> getBookByName(String name);
 
+    /**
+     * 获取书籍的全部类型 根据热度 排序
+     * @return
+     */
+    List<String> geAllType();
+
+    /**
+     * 用过类型查找 书籍
+     * @param type
+     * @return
+     */
+    List<Books> getBooksByType(String type);
+
 }

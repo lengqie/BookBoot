@@ -16,5 +16,12 @@
         select * from books where name like '%${name}%' order by hot desc;
     </select>
 
+    <select id="geAllType" resultType="string" parameterType="Books">
+        select type from (
+            select type, sum(hot) as total from books group by type order by total desc) as t;
+    </select>
 
+    <select id="getBooksByType" resultType="Books">
+        select * from books where type = #{type} order by hot desc;
+    </select>
 </mapper>

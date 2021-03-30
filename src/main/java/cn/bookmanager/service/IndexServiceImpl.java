@@ -43,4 +43,14 @@ public class IndexServiceImpl implements IndexService {
         }
         return books;
     }
+
+    @Override
+    public List<String> geAllType() {
+        return indexMapper.geAllType();
+    }
+
+    @Override
+    public List<Books> getBooksByType(String type) {
+        return indexMapper.getBooksByType(type);
+    }
 }

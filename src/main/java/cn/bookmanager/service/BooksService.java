@@ -2,6 +2,8 @@ package cn.bookmanager.service;
 
 import cn.bookmanager.entity.Books;
 
+import java.util.Date;
+
 /**
  * 书籍相关的一些操作
  * @author lengqie
@@ -21,4 +23,13 @@ public interface BooksService {
      * @return
      */
     Books getOneBook(String Isbn);
+    /**
+     * 借书！
+     * @param id
+     * @param Isbn
+     * @param time
+     * @param days
+     * @return
+     */
+    String borrowBooks(String Isbn, String id, Date time, int days);
 }
