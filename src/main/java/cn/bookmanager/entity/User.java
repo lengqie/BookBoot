@@ -19,4 +19,14 @@ public class User {
     private int count;
     private int total;
     private int balance;
+
+    /**
+     * 添加 只有账号密码的 构造 方法
+     * @param name
+     * @param password
+     */
+    public User(String name, String password) {
+        this.name = name;
+        this.password = password;
+    }
 }

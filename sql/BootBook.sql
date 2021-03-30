@@ -49,10 +49,13 @@ CREATE TABLE recommend(
 
 -- 添加一些 数据
 INSERT INTO `admin` VALUES ('root','root');
+INSERT INTO `admin` VALUES ('admin','root');
 
 INSERT INTO `user` VALUES ('2020','go','pass123',4,0,0,0);
 
-INSERT INTO `books` VALUES ('110-120-119-10','Go语言','编程',0),
+INSERT INTO `books` VALUES ('110-120-119-00','Java语言','编程',0),
+                           ('110-120-119-01','JavaScript语言','编程',0),
+                           ('110-120-119-10','Go语言','编程',0),
                            ('110-120-112-11','SpringBoot','编程',0),
                            ('110-120-112-11','SpringBoot','编程',0),
                            ('110-120-112-11','SpringBoot','编程',0),
@@ -71,4 +74,6 @@ INSERT INTO `books` VALUES ('110-120-119-10','Go语言','编程',0),
                            ('111-120-119-15','草书','书法',0),
                            ('111-120-119-16','小篆','书法',0),
                            ('111-120-119-17','行书','书法',0),
-                           ('111-120-119-18','唐诗宋词','文学',0)
+                           ('111-120-119-18','唐诗宋词','文学',0);
+                           
+SELECT COUNT(1) FROM admin WHERE `password`='root'

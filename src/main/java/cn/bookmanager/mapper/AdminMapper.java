@@ -19,6 +19,14 @@ public interface AdminMapper {
      * @return 数据库查找 结果小于 1 则表示 查找失败
      */
     Admin login(@Param("name") String name, @Param("password") String password);
+
+    /**
+     * 管理员登录
+     * @param admin
+     * @return
+     */
     int isLogin(Admin admin);
+
+
 
 }
