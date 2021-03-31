@@ -1,7 +1,5 @@
 package cn.bookmanager.service;
 
-import cn.bookmanager.entity.Books;
-import cn.bookmanager.entity.Record;
 import cn.bookmanager.entity.User;
 import cn.bookmanager.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;

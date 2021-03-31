@@ -39,7 +39,7 @@ public interface UserService {
      * 注册用户
      * @param name
      * @param password
-     * @retun
+     * @return
      */
     String registered(String name,String password);
 
