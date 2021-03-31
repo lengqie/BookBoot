@@ -1,11 +1,14 @@
 package cn.bookmanager.service;
 
 import cn.bookmanager.entity.Books;
+import cn.bookmanager.entity.Record;
 import cn.bookmanager.entity.User;
 import cn.bookmanager.mapper.BooksMapper;
 import cn.bookmanager.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 /**
@@ -33,4 +36,9 @@ public class UserServiceImpl implements UserService {
     public void overduePay(String id) {
         userMapper.overduePay(id);
     }
+
+    // @Override
+    // public List<Record> getMyBooks(String id) {
+    //     return userMapper.getMyBooks(id);
+    // }
 }

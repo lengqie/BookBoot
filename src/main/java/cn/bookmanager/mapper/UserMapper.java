@@ -1,10 +1,14 @@
 package cn.bookmanager.mapper;
 
 import cn.bookmanager.entity.Admin;
+import cn.bookmanager.entity.Books;
+import cn.bookmanager.entity.Record;
 import cn.bookmanager.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * @author lengqie
@@ -25,7 +29,7 @@ public interface UserMapper {
      * @param id
      * @return
      */
-    User getUserInfo(String id);
+    User getOneUser(String id);
 
     /**
      * 逾期扣款
@@ -39,5 +43,12 @@ public interface UserMapper {
      * @param id
      */
     void overduePay(String id);
+
+    /**
+     * 获取借的书
+     * @param id
+     * @return
+     */
+    // List<Record> getMyBooks(String id);
 
 }

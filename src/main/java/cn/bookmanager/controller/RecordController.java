@@ -24,6 +24,7 @@ public class RecordController {
     public List<Record> getAllRecord(){
         return recordService.getAllRecord();
     }
+
     @GetMapping("/{recordId}")
     public Record getOneRecord(@PathVariable String recordId){
         return recordService.getOneRecord(recordId);

@@ -9,7 +9,7 @@
     select count(1) from admin where name=#{name} and password =#{password}
     </select>
 
-    <select id="getUserInfo" resultType="cn.bookmanager.entity.User">
+    <select id="getOneUser" resultType="cn.bookmanager.entity.User">
         select * from user where id=#{id}
     </select>
 
@@ -20,5 +20,10 @@
     <update id="overduePay">
         update user set balance = 0 where id=#{id};
     </update>
+
+    <select id="getMyBooks" resultType="int" parameterType="string">
+        select books.name,books.isbn, record.time,record.days from record, books
+            where books.Isbn = record.Isbn AND record.user_id =#{id} ;
+    </select>
 
 </mapper>
