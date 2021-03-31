@@ -1,11 +1,11 @@
 package cn.bookmanager.service;
 
-import cn.bookmanager.entity.Books;
 import cn.bookmanager.entity.User;
-import cn.bookmanager.mapper.BooksMapper;
 import cn.bookmanager.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 
 /**
@@ -21,16 +21,29 @@ public class UserServiceImpl implements UserService {
     @Override
     public Boolean isLogin(User user) {
         final int login = userMapper.isLogin(user);
-        return login != 1;
+        return login == 1;
     }
 
     @Override
     public void overdueCost(String id, double cost) {
-
     }
 
     @Override
     public void overduePay(String id) {
         userMapper.overduePay(id);
     }
+
+    @Override
+    public String registered(String name, String password) {
+        // 用户名 不能重复
+        final int i = userMapper.isUniqueName(name);
+        if (i==1){
+            return "exist";
+        }
+        String id = UUID.randomUUID().toString().replace("-","");
+        userMapper.registered(id,name,password);
+
+        return "Ok";
+    }
+
 }

@@ -5,6 +5,7 @@ import cn.bookmanager.service.IndexService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -40,8 +41,8 @@ public class IndexController {
         return indexService.geAllType();
     }
 
-    @GetMapping("/searchByType")
-    public List<Books> getBookByType(String type){
+    @GetMapping("/search/{type}")
+    public List<Books> getBookByType(@PathVariable String type){
         return indexService.getBooksByType(type);
     }
 

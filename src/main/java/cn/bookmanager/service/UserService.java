@@ -1,8 +1,10 @@
 package cn.bookmanager.service;
 
+import cn.bookmanager.entity.Record;
 import cn.bookmanager.entity.User;
 
 import java.util.Date;
+import java.util.List;
 
 
 /** 用户的服务层
@@ -32,5 +34,13 @@ public interface UserService {
      */
     void overduePay(String id);
 
+
+    /**
+     * 注册用户
+     * @param name
+     * @param password
+     * @return
+     */
+    String registered(String name,String password);
 
 }

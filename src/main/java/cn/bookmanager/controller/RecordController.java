@@ -24,6 +24,12 @@ public class RecordController {
     public List<Record> getAllRecord(){
         return recordService.getAllRecord();
     }
+
+    /**
+     * 使用 PathVariable 放在最后 防止先被匹配
+     * @param recordId
+     * @return
+     */
     @GetMapping("/{recordId}")
     public Record getOneRecord(@PathVariable String recordId){
         return recordService.getOneRecord(recordId);

@@ -14,11 +14,12 @@
 
     <resultMap id="recordMap" type="Record">
         <id column="record_id" property="recordId"/>
-        <result column="Isbn" property="isbn"/>
-        <result column="user_id" property="userId"/>
         <result column="time" property="time"/>
         <result column="days" property="days"/>
         <result column="success" property="success"/>
+        <association property="books" column="isbn" select="cn.bookmanager.mapper.BooksMapper.getOneBook" javaType="Books"/>
+        <association property="user" column="user_id" select="cn.bookmanager.mapper.UserMapper.getOneUser" javaType="User"/>
     </resultMap>
+
 
 </mapper>

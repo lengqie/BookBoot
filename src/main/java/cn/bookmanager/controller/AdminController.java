@@ -2,14 +2,13 @@ package cn.bookmanager.controller;
 
 import cn.bookmanager.entity.Admin;
 import cn.bookmanager.service.AdminService;
+import cn.bookmanager.utils.ReturnMapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.PostConstruct;
-import java.util.HashMap;
+
 import java.util.Map;
 
 /**
@@ -28,15 +27,13 @@ public class AdminController {
     @PostMapping("/login")
     public Map login(String name, String password){
         final Boolean login = adminService.isLogin(new Admin(name, password));
-        Map<String,String> map =new HashMap<>(1);
 
         if (login){
-            map.put("status","200");
+            final Map map = ReturnMapUtils.getMap("200","ok");
             return map;
         }
-        map.put("status","404");
+        final Map map = ReturnMapUtils.getMap("500","username or password error!");
         return map;
-
     }
 
 

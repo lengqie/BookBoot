@@ -44,7 +44,7 @@ public class BooksServiceImpl implements BooksService {
     @Override
     public String borrowBooks(String isbn, String userId, Date time, int days){
 
-        User u = userMapper.getUserInfo(userId);
+        User u = userMapper.getOneUser(userId);
         // 满了！
         if (u.getDefaultCount() == u.getCount()) {
             return "exceed the upper limit";
