@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * 书籍一些操作 实现类
@@ -36,9 +37,9 @@ public class BooksServiceImpl implements BooksService {
 
 
     @Override
-    public String borrowBooks(String Isbn, String id, Date time, int days) {
+    public String borrowBooks(String isbn, String userId, Date time, int days){
 
-        User u = userMapper.getUserInfo(id);
+        User u = userMapper.getUserInfo(userId);
         // 满了！
         if (u.getDefaultCount() == u.getCount()) {
             return "exceed the upper limit";
@@ -47,12 +48,15 @@ public class BooksServiceImpl implements BooksService {
         if (u.getBalance() <0){
             return "insufficient balance";
         }
-        Books b = booksMapper.getBooksInfo(Isbn);
+        Books b = booksMapper.getBooksInfo(isbn);
         // 无📕！
         if (b.getNum() == 0){
             return "no remaining";
         }
-        booksMapper.borrowBooks(Isbn,id,time,days);
+
+        String recordId = UUID.randomUUID().toString().replace("-","");
+
+        booksMapper.borrowBooks(recordId,isbn,userId,time,days);
         return "Ok";
     }
 }

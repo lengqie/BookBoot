@@ -24,12 +24,12 @@ public interface BooksService {
      */
     Books getOneBook(String Isbn);
     /**
-     * 借书！
-     * @param id
-     * @param Isbn
+     * 借书
+     * @param isbn
+     * @param userId
      * @param time
      * @param days
      * @return
      */
-    String borrowBooks(String Isbn, String id, Date time, int days);
+    String borrowBooks(String isbn, String userId, Date time, int days);
 }

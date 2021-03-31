@@ -1,14 +1,22 @@
 package cn.bookmanager.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.Date;
 
 /**
  * @author lengqie
  * 借阅记录
  */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Record {
-    private String Isbn;
-    private String name;
+    private String recordId;
+    private String isbn;
+    private String userId;
     private Date time;
     private int days;
     private int success;

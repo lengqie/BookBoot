@@ -14,14 +14,20 @@
     </update>
 
     <select id="getOneBook" parameterType="string" resultType="Books">
-        select * from books where Isbn =#{Isbn}
+        select * from books where Isbn =#{isbn}
     </select>
 
     <update id="borrowBooks">
-        update books set num = num - 1 where Isbn = #{Isbn};
-        update user set count = count + 1 where id = #{id};
-        update user set total = count + 1 where id = #{id};
-        insert into record values (#{Isbn},#{id},#{time},#{Days},0);
+        update books set num = num - 1 where Isbn = #{isbn};
+        update user set count = count + 1 where id = #{userId};
+        update user set total = total + 1 where id = #{userId};
+        insert into record values (#{recordId},#{isbn},#{userId},#{time},#{days},0);
+    </update>
+
+    <update id="returnBooks">
+        update books set num = num + 1 where Isbn = #{isbn};
+        update user set count = count - 1 where id = #{userId};
+        update record set success = 1 where record_id = #{recordId}
     </update>
 
 </mapper>

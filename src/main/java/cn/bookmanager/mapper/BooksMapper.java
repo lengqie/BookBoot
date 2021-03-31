@@ -1,10 +1,12 @@
 package cn.bookmanager.mapper;
 
 import cn.bookmanager.entity.Books;
+import cn.bookmanager.entity.Record;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author lengqie
@@ -28,17 +30,29 @@ public interface BooksMapper {
 
     /**
      * 获取一本书的详情
-     * @param Isbn
+     * @param isbn
      * @return
      */
-    Books getOneBook(String Isbn);
+    Books getOneBook(String isbn);
     /**
      * 借书
-     * @param id
-     * @param Isbn
+     * @param recordId
+     * @param isbn
+     * @param userId
      * @param time
-     * @param Days
+     * @param days
      * @return
      */
-    void borrowBooks(String Isbn, String id, Date time, int Days);
+    void borrowBooks(String recordId, String isbn, String userId, Date time, int days);
+
+    /**
+     * 还书
+     * @param recordId
+     * @param Isbn
+     * @param id
+     * @param time
+     */
+    void returnBooks(String recordId,String Isbn, String id, Date time);
+
+
 }

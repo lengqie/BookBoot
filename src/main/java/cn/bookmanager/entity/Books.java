@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Books {
-    private String Isbn;
+    private String isbn;
     private String name;
     private String type;
     private int hot;
