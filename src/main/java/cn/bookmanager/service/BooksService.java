@@ -32,4 +32,14 @@ public interface BooksService {
      * @return
      */
     String borrowBooks(String isbn, String userId, Date time, int days);
+
+    /**
+     * 还书
+     * @param recordId
+     * @param isbn
+     * @param userId
+     * @param date
+     * @return
+     */
+    String returnBooks(String recordId,String isbn, String userId,Date date);
 }

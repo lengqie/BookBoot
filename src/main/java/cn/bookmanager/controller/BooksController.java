@@ -36,6 +36,16 @@ public class BooksController {
         map.put("msg",s);
         return map;
     }
+    @PostMapping("/return")
+    public Map<String, String> returnBooks(String recordId,String Isbn, String userId){
+        // 默认当天
+        Date date =new Date();
+        Map<String, String> map = new HashMap<>(1);
+        final String s = booksService.returnBooks(Isbn, userId,recordId,date);
+
+        map.put("msg",s);
+        return map;
+    }
 
     /**
      * 使用 PathVariable 放在最后 防止先被匹配

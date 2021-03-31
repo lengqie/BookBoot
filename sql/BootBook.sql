@@ -9,7 +9,7 @@ CREATE TABLE `user`(
 	`defaultCount` INT DEFAULT 4,
 	`count` INT DEFAULT 0,
 	`total` INT DEFAULT 0,
-	`balance` INT DEFAULT 0
+	`balance` DECIMAL DEFAULT 0
 );
 -- 书籍信息
 CREATE TABLE `books`(
@@ -79,3 +79,4 @@ INSERT INTO `books` VALUES ('110-120-119-00','Java语言','编程',0,5),
                            ('111-120-119-18','唐诗宋词','文学',0,5);
                            
 SELECT COUNT(1) FROM admin WHERE `password`='root'
+recordrecommend

@@ -35,4 +35,15 @@ public class UserController {
         return map;
 
     }
+    @PostMapping("/pay")
+    public Map pay(String id){
+
+        Map<String,String> map =new HashMap<>(1);
+
+        userService.overduePay(id);
+
+        map.put("status","200");
+        return map;
+
+    }
 }

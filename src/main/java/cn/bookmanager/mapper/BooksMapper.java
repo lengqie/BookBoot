@@ -48,11 +48,9 @@ public interface BooksMapper {
     /**
      * 还书
      * @param recordId
-     * @param Isbn
-     * @param id
-     * @param time
+     * @param isbn
      */
-    void returnBooks(String recordId,String Isbn, String id, Date time);
+    void returnBooks(String recordId,String isbn,String userId);
 
 
 }

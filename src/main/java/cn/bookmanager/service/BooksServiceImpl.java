@@ -1,8 +1,10 @@
 package cn.bookmanager.service;
 
 import cn.bookmanager.entity.Books;
+import cn.bookmanager.entity.Record;
 import cn.bookmanager.entity.User;
 import cn.bookmanager.mapper.BooksMapper;
+import cn.bookmanager.mapper.RecordMapper;
 import cn.bookmanager.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,9 @@ public class BooksServiceImpl implements BooksService {
 
     @Autowired
     BooksMapper booksMapper;
+
+    @Autowired
+    RecordMapper recordMapper;
 
     @Override
     public void addHot(String Isbn) {
@@ -58,5 +63,27 @@ public class BooksServiceImpl implements BooksService {
 
         booksMapper.borrowBooks(recordId,isbn,userId,time,days);
         return "Ok";
+    }
+
+    @Override
+    public String returnBooks(String recordId,String isbn, String userId,Date date) {
+        final Record record = recordMapper.getOneRecord(recordId);
+
+        int days =record.getDays();
+
+        final long now = date.getTime();
+        int realDays = (int) ((now - record.getTime().getTime())/(1000*24*60*60));
+        if (realDays > days){
+            //
+            // 逾期 按照天数 扣款
+            // 有点问题！
+            //
+            double arrears = (days -realDays ) * 0.5;
+            userMapper.overdueCost(userId,arrears);
+            return -arrears + "￥ in arrears";
+        }
+        booksMapper.returnBooks(recordId,isbn,userId);
+
+        return "ok";
     }
 }

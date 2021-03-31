@@ -27,4 +27,17 @@ public interface UserMapper {
      */
     User getUserInfo(String id);
 
+    /**
+     * 逾期扣款
+     * @param id
+     * @param cost
+     */
+    void overdueCost(String id, double cost);
+
+    /**
+     * 逾期支付
+     * @param id
+     */
+    void overduePay(String id);
+
 }
