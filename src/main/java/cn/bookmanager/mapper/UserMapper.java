@@ -52,4 +52,12 @@ public interface UserMapper {
      */
     void registered(String id,String name,String password);
 
+    /**
+     * 注册名称 不可重复！
+     * @param name
+     * @retnr
+     */
+    int isUniqueName(String name);
+
+
 }

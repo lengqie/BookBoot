@@ -14,7 +14,7 @@ CREATE TABLE `user`(
 -- 书籍信息
 CREATE TABLE `books`(
 	`Isbn` VARCHAR(20) PRIMARY KEY,
-	`name` VARCHAR(20),
+	`name` VARCHAR(20) UNIQUE,
 	`type` VARCHAR(10),
 	`hot` INT DEFAULT 0,
 	`num` INT DEFAULT 5
@@ -78,5 +78,6 @@ INSERT INTO `books` VALUES ('110-120-119-00','Java语言','编程',0,5),
                            ('111-120-119-17','行书','书法',0,5),
                            ('111-120-119-18','唐诗宋词','文学',0,5);
                            
-SELECT COUNT(1) FROM admin WHERE `password`='root'
-select books.name,books.isbn, record.time,record.days from record, books where books.Isbn = record.Isbn AND record.user_id = 2020
+SELECT COUNT(1) FROM admin WHERE `password`='123'
+select books.name,books.userisbn, record.time,record.days from record, books where books.Isbn = record.Isbn AND record.user_id = 2020
+ALTER TABLE user ADD UNIQUE (name)

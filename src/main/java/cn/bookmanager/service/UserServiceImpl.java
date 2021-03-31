@@ -28,7 +28,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void overdueCost(String id, double cost) {
-
     }
 
     @Override
@@ -38,6 +37,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String registered(String name, String password) {
+        // 用户名 不能重复
+        final int i = userMapper.isUniqueName(name);
+        if (i==1){
+            return "exist";
+        }
         String id = UUID.randomUUID().toString().replace("-","");
         userMapper.registered(id,name,password);
 

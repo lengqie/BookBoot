@@ -4,6 +4,7 @@ import cn.bookmanager.entity.Admin;
 import cn.bookmanager.entity.Record;
 import cn.bookmanager.entity.User;
 import cn.bookmanager.service.UserService;
+import cn.bookmanager.utils.ReturnMapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,35 +28,37 @@ public class UserController {
 
     @PostMapping("/login")
     public Map login(String name, String password){
+
         final Boolean login = userService.isLogin(new User(name, password));
-        Map<String,String> map =new HashMap<>(1);
 
         if (login){
-            map.put("status","200");
+            final Map map = ReturnMapUtils.getMap("200","ok");
             return map;
         }
-        map.put("status","404");
+        final Map map = ReturnMapUtils.getMap("500","username or password error!");
         return map;
 
     }
     @PostMapping("/pay")
     public Map pay(String id){
 
-        Map<String,String> map =new HashMap<>(1);
-
         userService.overduePay(id);
 
-        map.put("status","200");
+        final Map map = ReturnMapUtils.getMap("200","Paid!");
         return map;
 
     }
 
     @PostMapping("/register")
     public Map register(String name, String password){
-        userService.registered(name,password);
 
-        Map<String,String> map =new HashMap<>(1);
-        map.put("status","404");
+        final String s = userService.registered(name, password);
+
+        if ("exist".equals(s)){
+            final Map map = ReturnMapUtils.getMap("500","username exist!");
+            return map;
+        }
+        final Map map = ReturnMapUtils.getMap("200","ok");
 
         return map;
     }

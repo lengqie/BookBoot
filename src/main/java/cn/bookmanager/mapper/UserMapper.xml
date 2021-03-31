@@ -24,4 +24,8 @@
     <insert id="registered" parameterType="User">
         insert into user values (#{id},#{name},#{password},4,0,0,0);
     </insert>
+
+    <select id="inUniqueName" parameterType="string">
+        select count(*) from user where name = #{name};
+    </select>
 </mapper>
