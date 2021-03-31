@@ -21,9 +21,7 @@
         update user set balance = 0 where id=#{id};
     </update>
 
-    <select id="getMyBooks" resultType="int" parameterType="string">
-        select books.name,books.isbn, record.time,record.days from record, books
-            where books.Isbn = record.Isbn AND record.user_id =#{id} ;
-    </select>
-
+    <insert id="registered" parameterType="User">
+        insert into user values (#{id},#{name},#{password},4,0,0,0);
+    </insert>
 </mapper>

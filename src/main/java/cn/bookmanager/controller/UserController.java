@@ -50,7 +50,15 @@ public class UserController {
 
     }
 
-    // @GetMapping("/books")
+    @PostMapping("/register")
+    public Map register(String name, String password){
+        userService.registered(name,password);
+
+        Map<String,String> map =new HashMap<>(1);
+        map.put("status","404");
+
+        return map;
+    }
     // public List<Record> myBooks(String id){
     //     return userService.getMyBooks(id);
     // }

@@ -36,11 +36,11 @@ public interface UserService {
 
 
     /**
-     * 获取借的书
-     * @param id
-     * @return
+     * 注册用户
+     * @param name
+     * @param password
+     * @retun
      */
-    // List<Record> getMyBooks(String id);
-
+    String registered(String name,String password);
 
 }

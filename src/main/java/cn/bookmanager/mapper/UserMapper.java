@@ -45,10 +45,11 @@ public interface UserMapper {
     void overduePay(String id);
 
     /**
-     * 获取借的书
+     * 注册用户
      * @param id
-     * @return
+     * @param name
+     * @param password
      */
-    // List<Record> getMyBooks(String id);
+    void registered(String id,String name,String password);
 
 }

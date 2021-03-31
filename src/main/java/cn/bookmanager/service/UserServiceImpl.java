@@ -3,12 +3,11 @@ package cn.bookmanager.service;
 import cn.bookmanager.entity.Books;
 import cn.bookmanager.entity.Record;
 import cn.bookmanager.entity.User;
-import cn.bookmanager.mapper.BooksMapper;
 import cn.bookmanager.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.UUID;
 
 
 /**
@@ -24,7 +23,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Boolean isLogin(User user) {
         final int login = userMapper.isLogin(user);
-        return login != 1;
+        return login == 1;
     }
 
     @Override
@@ -37,8 +36,12 @@ public class UserServiceImpl implements UserService {
         userMapper.overduePay(id);
     }
 
-    // @Override
-    // public List<Record> getMyBooks(String id) {
-    //     return userMapper.getMyBooks(id);
-    // }
+    @Override
+    public String registered(String name, String password) {
+        String id = UUID.randomUUID().toString().replace("-","");
+        userMapper.registered(id,name,password);
+
+        return "Ok";
+    }
+
 }
