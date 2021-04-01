@@ -22,7 +22,12 @@ public class RecordServiceImpl implements RecordService {
     }
 
     @Override
-    public Record getOneRecord(String recordId) {
-        return recordMapper.getOneRecord(recordId);
+    public Record getRecordByRecordId(String recordId) {
+        return recordMapper.getRecordByRecordId(recordId);
+    }
+
+    @Override
+    public List<Record> getRecordByUserId(String userId) {
+        return recordMapper.getRecordByUserId(userId);
     }
 }

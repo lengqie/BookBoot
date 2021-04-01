@@ -10,20 +10,20 @@ import java.util.Map;
 public class ReturnMapUtils {
 
 
-    public static Map getMap(String status, String msg){
+    public static Map<String, String> getMap(String status, String msg){
         Map<String,String> map =new HashMap<>(1);
         map.put("status",status);
         map.put("msg",msg);
         return map;
     }
 
-    public static Map getMap(String status){
+    public static Map<String, String> getMap(String status){
         Map<String,String> map =new HashMap<>(1);
         map.put("status",status);
         map.put("msg","null");
         return map;
     }
-    public static Map getMap(){
+    public static Map<String, String> getMap(){
         Map<String,String> map =new HashMap<>(1);
         map.put("status","404");
         map.put("msg","null");

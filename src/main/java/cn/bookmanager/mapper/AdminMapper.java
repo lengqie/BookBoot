@@ -1,6 +1,9 @@
 package cn.bookmanager.mapper;
 
 import cn.bookmanager.entity.Admin;
+import cn.bookmanager.entity.Books;
+import cn.bookmanager.entity.Record;
+import cn.bookmanager.entity.User;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 import org.apache.ibatis.annotations.Mapper;
@@ -34,6 +37,26 @@ public interface AdminMapper {
      */
     Admin getAdminByName(String name);
 
+    /**
+     * 修改用户
+     * @param user
+     * @return 操作的 数量 一般是 1
+     */
+    int updateUser(User user);
 
+    /**
+     * 修改书籍
+     * @param books
+     * @return 操作的 数量 一般是 1
+     */
+    int updateBook(Books books);
+
+    /**
+     * 修改记录
+     * @param recordId
+     * @param  success
+     * @return 操作的 数量 一般是 1
+     */
+    int updateRecord(String recordId, int success);
 
 }

@@ -3,6 +3,7 @@ package cn.bookmanager.controller;
 import cn.bookmanager.entity.Admin;
 import cn.bookmanager.entity.Record;
 import cn.bookmanager.entity.User;
+import cn.bookmanager.service.RecordService;
 import cn.bookmanager.service.UserService;
 import cn.bookmanager.utils.ReturnMapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,9 @@ public class UserController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    RecordService recordService;
 
     @PostMapping("/login")
     public Map login(String name, String password,HttpSession session, HttpServletRequest request, HttpServletResponse response){
@@ -77,5 +81,12 @@ public class UserController {
         final Map map = ReturnMapUtils.getMap("200","ok");
 
         return map;
+    }
+
+    @GetMapping("/record")
+    public List<Record> getAllRecord(HttpSession session){
+        final User user = (User) session.getAttribute("session_user");
+
+        return recordService.getRecordByUserId(user.getId());
     }
 }

@@ -35,16 +35,16 @@ public class BooksServiceImpl implements BooksService {
     }
 
     @Override
-    public Books getOneBook(String Isbn) {
+    public Books getBookByIsbn(String Isbn) {
         booksMapper.addHot(Isbn);
-        return booksMapper.getOneBook(Isbn);
+        return booksMapper.getBookByIsbn(Isbn);
     }
 
 
     @Override
     public String borrowBooks(String isbn, String userId, Date time, int days){
 
-        User u = userMapper.getOneUser(userId);
+        User u = userMapper.getUserById(userId);
         // 满了！
         if (u.getDefaultCount() == u.getCount()) {
             return "exceed the upper limit";
@@ -67,7 +67,7 @@ public class BooksServiceImpl implements BooksService {
 
     @Override
     public String returnBooks(String recordId,String isbn, String userId,Date date) {
-        final Record record = recordMapper.getOneRecord(recordId);
+        final Record record = recordMapper.getRecordByRecordId(recordId);
 
         int days =record.getDays();
 

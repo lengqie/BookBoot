@@ -13,7 +13,7 @@
         update books set hot =hot +1 where Isbn =#{Isbn};
     </update>
 
-    <select id="getOneBook" parameterType="string" resultType="Books">
+    <select id="getBookByIsbn" parameterType="string" resultType="Books">
         select * from books where Isbn =#{isbn}
     </select>
 

@@ -22,7 +22,7 @@ public interface BooksService {
      * @param Isbn
      * @return
      */
-    Books getOneBook(String Isbn);
+    Books getBookByIsbn(String Isbn);
     /**
      * 借书
      * @param isbn

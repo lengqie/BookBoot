@@ -1,6 +1,8 @@
 package cn.bookmanager.service;
 
 import cn.bookmanager.entity.Admin;
+import cn.bookmanager.entity.Books;
+import cn.bookmanager.entity.User;
 import cn.bookmanager.mapper.AdminMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,5 +48,21 @@ public class AdminServiceImpl implements AdminService{
     @Override
     public Admin getAdmin() {
         return adminMapper.getAdminByName("root");
+    }
+
+    @Override
+    public Boolean updateUser(User user) {
+        final int i = adminMapper.updateUser(user);
+        return i == 1;
+    }
+
+    @Override
+    public Boolean updateBook(Books books) {
+        return adminMapper.updateBook(books) == 1;
+    }
+
+    @Override
+    public Boolean updateRecord(String recordId, int success) {
+        return adminMapper.updateRecord(recordId,success) == 1;
     }
 }

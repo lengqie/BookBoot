@@ -27,9 +27,9 @@ CREATE TABLE admin(
 );
 -- 借阅记录
 CREATE TABLE record(
-	`record_id` VARCHAR(20) PRIMARY KEY,
+	`record_id` VARCHAR(50) PRIMARY KEY,
 	`Isbn` VARCHAR(20),
-	`user_id` VARCHAR(20),
+	`user_id` VARCHAR(50),
 	`time` DATE,
 	`days` INT,
 	`success` INT,

@@ -15,9 +15,15 @@ public interface RecordService {
     List<Record> getAllRecord();
 
     /**
-     * 查询记录
+     * 通过id 获取记录
      * @param recordId
      * @return
      */
-    Record getOneRecord(String recordId);
+    Record getRecordByRecordId(String recordId);
+    /**
+     * 通过id 获取记录
+     * @param userId
+     * @return
+     */
+    List<Record> getRecordByUserId(String userId);
 }

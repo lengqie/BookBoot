@@ -29,7 +29,7 @@ public interface UserMapper {
      * @param id
      * @return
      */
-    User getOneUser(String id);
+    User getUserById(String id);
 
     /**
      * 逾期扣款

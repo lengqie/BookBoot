@@ -1,6 +1,8 @@
 package cn.bookmanager.service;
 
 import cn.bookmanager.entity.Admin;
+import cn.bookmanager.entity.Books;
+import cn.bookmanager.entity.User;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,4 +20,11 @@ public interface AdminService {
     Boolean isLogin(Admin admin, HttpSession session, HttpServletRequest request, HttpServletResponse response);
 
     Admin getAdmin();
+
+
+    Boolean updateUser(User user);
+
+    Boolean updateBook(Books books);
+
+    Boolean updateRecord(String recordId, int success);
 }

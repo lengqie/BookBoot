@@ -33,7 +33,7 @@ public interface BooksMapper {
      * @param isbn
      * @return
      */
-    Books getOneBook(String isbn);
+    Books getBookByIsbn(String isbn);
     /**
      * 借书
      * @param recordId

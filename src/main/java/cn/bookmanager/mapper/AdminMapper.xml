@@ -14,4 +14,17 @@
     <select id="getAdminByName" resultType="Admin" parameterType="string">
         select * from admin where name =#{name}
     </select>
+
+    <update id="updateUser" parameterType="User">
+        update user set name = #{name}, password = #{password}, defaultCount =#{defaultCount}, balance =#{balance}
+        where id = #{id};
+    </update>
+    <update id="updateBook" parameterType="Books">
+        update books set Isbn =#{isbn},name =#{name}, type = #{type}, num = #{num} where isbn = #{isbn};
+    </update>
+
+    <update id="updateRecord">
+        update record set success = #{success} where record_id = #{recordId};
+    </update>
+
 </mapper>
