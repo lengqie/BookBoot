@@ -3,6 +3,9 @@ package cn.bookmanager.service;
 import cn.bookmanager.entity.Record;
 import cn.bookmanager.entity.User;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.List;
 
@@ -18,7 +21,7 @@ public interface UserService {
      * @return
      */
 
-    Boolean isLogin(User user);
+    Boolean isLogin(User user, HttpSession session, HttpServletRequest request, HttpServletResponse response);
 
 
     /**

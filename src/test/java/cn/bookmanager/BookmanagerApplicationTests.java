@@ -20,13 +20,16 @@ class BookmanagerApplicationTests {
     @Autowired
     AdminService adminService;
 
+    @Autowired
+    AdminMapper adminMapper;
+
     @Test
     void contextLoads() {
-        final Admin i = adminService.login("root","root");
-        System.out.println(i);
+        // final Admin i = adminService.login("root","root");
+        // System.out.println(i);
 
-        final Boolean login = adminService.isLogin(new Admin("root", "root"));
-        System.out.println(login);
+        Admin admin = adminMapper.getAdminByName("root");
+        System.out.println(admin);
     }
 
     @Autowired

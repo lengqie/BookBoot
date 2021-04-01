@@ -4,11 +4,16 @@ import cn.bookmanager.entity.Admin;
 import cn.bookmanager.service.AdminService;
 import cn.bookmanager.utils.ReturnMapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 /**
@@ -25,8 +30,8 @@ public class AdminController {
     AdminService adminService;
 
     @PostMapping("/login")
-    public Map login(String name, String password){
-        final Boolean login = adminService.isLogin(new Admin(name, password));
+    public Map login(String name, String password, HttpSession session, HttpServletRequest request, HttpServletResponse response){
+        final Boolean login = adminService.isLogin(new Admin(name, password),session,request,response);
 
         if (login){
             final Map map = ReturnMapUtils.getMap("200","ok");
@@ -36,7 +41,19 @@ public class AdminController {
         return map;
     }
 
+    @GetMapping("/info")
+    public Admin info(){
+        return adminService.getAdmin();
+    }
 
-
+    @GetMapping("/logout")
+    public Map logout(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+        session.removeAttribute("session_admin");
+        Cookie cookieUsername = new Cookie("cookie_admin", "");
+        cookieUsername.setMaxAge(0);
+        cookieUsername.setPath("/");
+        response.addCookie(cookieUsername);
+        final Map map = ReturnMapUtils.getMap("500","username or password error!");
+        return map;    }
 
 }

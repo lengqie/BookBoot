@@ -5,6 +5,10 @@ import cn.bookmanager.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.UUID;
 
 
@@ -19,9 +23,19 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public Boolean isLogin(User user) {
+    public Boolean isLogin(User user, HttpSession session, HttpServletRequest request, HttpServletResponse response){
         final int login = userMapper.isLogin(user);
-        return login == 1;
+        // 登录成功 则 写入Cookie！
+        if (login ==1){
+            session.setAttribute("session_user",user);
+            Cookie cookie_admin = new Cookie("cookie_user",user.getName());
+            cookie_admin.setMaxAge(60 * 60 * 24 * 7);
+            cookie_admin.setPath("/");
+            response.addCookie(cookie_admin);
+
+            return true;
+        }
+        return false;
     }
 
     @Override

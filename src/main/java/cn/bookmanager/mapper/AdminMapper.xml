@@ -10,4 +10,8 @@
     <select id="isLogin" resultType="int" parameterType="Admin">
         select count(1) from admin where name=#{name} and password =#{password}
     </select>
+
+    <select id="getAdminByName" resultType="Admin" parameterType="string">
+        select * from admin where name =#{name}
+    </select>
 </mapper>

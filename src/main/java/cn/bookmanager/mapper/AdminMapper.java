@@ -27,6 +27,13 @@ public interface AdminMapper {
      */
     int isLogin(Admin admin);
 
+    /**
+     * 通过 name 获取
+     * @param name
+     * @return
+     */
+    Admin getAdminByName(String name);
+
 
 
 }

@@ -5,6 +5,11 @@ import cn.bookmanager.mapper.AdminMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 /**
  * @author lengqie
  */
@@ -22,11 +27,24 @@ public class AdminServiceImpl implements AdminService{
     }
 
     @Override
-    public Boolean isLogin(Admin admin) {
+    public Boolean isLogin(Admin admin, HttpSession session, HttpServletRequest request, HttpServletResponse response){
         final int login = adminMapper.isLogin(admin);
+        // 登录成功 则 写入Cookie！
         if (login ==1){
+
+            session.setAttribute("session_admin",admin);
+            Cookie cookie_admin = new Cookie("cookie_admin",admin.getName());
+            cookie_admin.setMaxAge(60 * 60 * 24 * 7);
+            cookie_admin.setPath("/");
+            response.addCookie(cookie_admin);
+
             return true;
         }
         return false;
+    }
+
+    @Override
+    public Admin getAdmin() {
+        return adminMapper.getAdminByName("root");
     }
 }

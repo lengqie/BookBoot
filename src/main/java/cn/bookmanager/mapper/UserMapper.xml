@@ -6,7 +6,7 @@
 <mapper namespace="cn.bookmanager.mapper.UserMapper">
 
     <select id="isLogin" resultType="int" parameterType="User">
-    select count(1) from admin where name=#{name} and password =#{password}
+    select count(1) from user where name=#{name} and password =#{password}
     </select>
 
     <select id="getOneUser" resultType="cn.bookmanager.entity.User">
@@ -27,5 +27,8 @@
 
     <select id="isUniqueName" parameterType="string" resultType="int">
         select count(*) from user where name = #{name};
+    </select>
+    <select id="getUserByName" resultType="cn.bookmanager.entity.User">
+        select * from user where name = #{name}
     </select>
 </mapper>

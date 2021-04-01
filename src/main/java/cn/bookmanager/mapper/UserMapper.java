@@ -36,6 +36,14 @@ public interface UserMapper {
      * @param id
      * @param cost
      */
+
+    /**
+     * 通过 name 获取
+     * @param name
+     * @return
+     */
+    User getUserByName(String name);
+
     void overdueCost(String id, double cost);
 
     /**
