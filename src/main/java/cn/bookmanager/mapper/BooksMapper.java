@@ -25,8 +25,9 @@ public interface BooksMapper {
     /**
      * 添加书籍的热度
      * @param isbn
+     * return 返回1 则表示修改成功
      */
-    void addHot(String isbn);
+    int addHot(String isbn);
 
     /**
      * 获取一本书的详情

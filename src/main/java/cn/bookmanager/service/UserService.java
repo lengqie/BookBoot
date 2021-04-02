@@ -25,6 +25,15 @@ public interface UserService {
 
 
     /**
+     * 获取用户信息
+     * @param id
+     * @return
+     */
+    User getUserById(String id);
+
+
+
+    /**
      * 逾期扣款
      * @param id
      * @param cost

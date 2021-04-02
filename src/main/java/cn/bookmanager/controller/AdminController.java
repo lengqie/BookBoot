@@ -51,7 +51,7 @@ public class AdminController {
     }
 
     @GetMapping("/logout")
-    public Map<String, String> logout(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+    public Map logout(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
         session.removeAttribute("session_admin");
         Cookie cookieUsername = new Cookie("cookie_admin", "");
         cookieUsername.setMaxAge(0);
@@ -61,17 +61,23 @@ public class AdminController {
     }
 
     @GetMapping("/record")
-    public List<Record> getAllRecord(){
-        return recordService.getAllRecord();
+    public Map getAllRecord(){
+        final List<Record> record = recordService.getAllRecord();
+        return ReturnMapUtils.getMap("200","ok",record);
     }
 
     @GetMapping("/record/{recordId}")
-    public Record getOneRecord(@PathVariable String recordId){
-        return recordService.getRecordByRecordId(recordId);
+    public Map getRecordByRecordId(@PathVariable String recordId){
+        final Record record = recordService.getRecordByRecordId(recordId);
+
+        if (record == null) {
+            return ReturnMapUtils.getMap("404","not found");
+        }
+        return ReturnMapUtils.getMap("200","ok",record);
     }
 
     @PostMapping("/updateUser")
-    public Map<String, String> upUser(User user){
+    public Map upUser(User user){
         if ( adminService.updateUser(user) ) {
             return ReturnMapUtils.getMap("200","ok");
         }
@@ -80,7 +86,7 @@ public class AdminController {
 
 
     @PostMapping("/updateBook")
-    public Map<String, String> upBook(Books books){
+    public Map upBook(Books books){
         if ( adminService.updateBook(books) ) {
             return ReturnMapUtils.getMap("200","ok");
         }
@@ -88,7 +94,7 @@ public class AdminController {
     }
 
     @PostMapping("/updateRecord")
-    public Map<String, String> upRecord(String recordId, int success){
+    public Map upRecord(String recordId, int success){
         if ( adminService.updateRecord(recordId,success) ) {
             return ReturnMapUtils.getMap("200","ok");
         }

@@ -6,8 +6,10 @@ import cn.bookmanager.entity.User;
 import cn.bookmanager.service.BooksService;
 import cn.bookmanager.utils.ReturnMapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.Map;
@@ -24,14 +26,13 @@ public class BooksController {
     BooksService booksService;
 
     @PostMapping("/books/addHot")
-    public Map<String, String> addHot(String Isbn){
+    public Map addHot(String Isbn){
 
         booksService.addHot(Isbn);
-        final Map map = ReturnMapUtils.getMap("200","ok");
-        return map;
+        return ReturnMapUtils.getMap("200","ok");
     }
     @PostMapping("/user/borrow")
-    public Map<String, String> borrowBooks(String Isbn, int days, HttpSession session){
+    public Map borrowBooks(String Isbn, int days, HttpSession session){
         // 默认当天
         Date date =new Date();
 
@@ -39,19 +40,17 @@ public class BooksController {
 
         final String s = booksService.borrowBooks(Isbn, user.getId(), date, days);
 
-        final Map map = ReturnMapUtils.getMap("200",s);
-        return map;
+        return ReturnMapUtils.getMap("200",s);
     }
     @PostMapping("/user/return")
-    public Map<String, String> returnBooks(String recordId,String Isbn,HttpSession session){
+    public Map returnBooks(String recordId, @RequestParam("") String Isbn, HttpSession session){
         // 默认当天
         Date date =new Date();
 
         final User user = (User) session.getAttribute("session_user");
 
         final String s = booksService.returnBooks(Isbn, user.getId(),recordId,date);
-        final Map map = ReturnMapUtils.getMap("200","ok");
-        return map;
+        return ReturnMapUtils.getMap("200","ok");
     }
 
     /**
@@ -60,8 +59,13 @@ public class BooksController {
      * @return
      */
     @GetMapping("/books/{Isbn}")
-    public Books getOneBook(@PathVariable String Isbn){
-        return booksService.getOneBook(Isbn);
+    public Map getBookByIsbn(@PathVariable String Isbn, HttpServletResponse response){
+        final Books book = booksService.getBookByIsbn(Isbn);
+        if (book == null) {
+            response.setStatus(HttpStatus.NOT_FOUND.value());
+            return ReturnMapUtils.getMap("404","not found");
+        }
+        return ReturnMapUtils.getMap("200","ok",book);
     }
 
 }

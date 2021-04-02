@@ -23,7 +23,7 @@ public class IndexController {
     IndexService indexService;
 
     @GetMapping("/allBooks")
-    public List<?> getAllbooks(){
+    public List<?> getAllBooks(){
         return indexService.getAllBooks();
     }
     @GetMapping(value = "/allBooks/order")

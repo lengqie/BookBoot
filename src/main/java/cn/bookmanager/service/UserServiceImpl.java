@@ -39,6 +39,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User getUserById(String id) {
+        return userMapper.getUserById(id);
+    }
+
+    @Override
     public void overdueCost(String id, double cost) {
     }
 

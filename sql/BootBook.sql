@@ -77,7 +77,10 @@ INSERT INTO `books` VALUES ('110-120-119-00','Java语言','编程',0,5),
                            ('111-120-119-16','小篆','书法',0,5),
                            ('111-120-119-17','行书','书法',0,5),
                            ('111-120-119-18','唐诗宋词','文学',0,5);
-                           
+
+
+
+-- Test SQL...
 SELECT COUNT(1) FROM admin WHERE `password`='123'
-select books.name,books.userisbn, record.time,record.days from record, books where books.Isbn = record.Isbn AND record.user_id = 2020
+select books.name,books., record.time,record.days from record, books where books.Isbn = record.Isbn AND record.user_id = 2020
 ALTER TABLE user ADD UNIQUE (name)

@@ -36,8 +36,11 @@ public class BooksServiceImpl implements BooksService {
 
     @Override
     public Books getBookByIsbn(String Isbn) {
-        booksMapper.addHot(Isbn);
-        return booksMapper.getBookByIsbn(Isbn);
+        final int i = booksMapper.addHot(Isbn);
+        if (i == 1){
+            return booksMapper.getBookByIsbn(Isbn);
+        }
+        return null;
     }
 
 

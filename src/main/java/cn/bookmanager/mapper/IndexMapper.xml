@@ -9,7 +9,7 @@
     </select>
 
     <select id="getAllBooksOrderByHot" resultType="Books">
-        select * from books order by hot desc;
+        select * from books order by hot desc limit 0,5;
     </select>
 
     <select id="getBookByName" resultType="Books" parameterType="string">

@@ -1,6 +1,5 @@
 package cn.bookmanager.controller;
 
-import cn.bookmanager.entity.Admin;
 import cn.bookmanager.entity.Record;
 import cn.bookmanager.entity.User;
 import cn.bookmanager.service.RecordService;
@@ -16,7 +15,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -34,17 +32,20 @@ public class UserController {
     @Autowired
     RecordService recordService;
 
+    @PostMapping("/")
+    public User index(String id){
+        return userService.getUserById(id);
+    }
+
     @PostMapping("/login")
-    public Map login(String name, String password,HttpSession session, HttpServletRequest request, HttpServletResponse response){
+    public Map login(String name, String password, HttpSession session, HttpServletRequest request, HttpServletResponse response){
 
         final Boolean login = userService.isLogin(new User(name, password),session,request,response);
 
         if (login){
-            final Map map = ReturnMapUtils.getMap("200","ok");
-            return map;
+            return ReturnMapUtils.getMap("200","ok");
         }
-        final Map map = ReturnMapUtils.getMap("500","username or password error!");
-        return map;
+        return ReturnMapUtils.getMap("500","username or password error!");
 
     }
 
@@ -56,16 +57,14 @@ public class UserController {
         cookie_username.setMaxAge(0);
         cookie_username.setPath("/");
         response.addCookie(cookie_username);
-        final Map map = ReturnMapUtils.getMap("301","logout successful!");
-        return map;
+        return ReturnMapUtils.getMap("301","logout successful!");
     }
     @PostMapping("/pay")
     public Map pay(String id){
 
         userService.overduePay(id);
 
-        final Map map = ReturnMapUtils.getMap("200","Paid!");
-        return map;
+        return ReturnMapUtils.getMap("200","Paid!");
 
     }
 
@@ -75,12 +74,10 @@ public class UserController {
         final String s = userService.registered(name, password);
 
         if ("exist".equals(s)){
-            final Map map = ReturnMapUtils.getMap("500","username exist!");
-            return map;
+            return ReturnMapUtils.getMap("500","username exist!");
         }
-        final Map map = ReturnMapUtils.getMap("200","ok");
 
-        return map;
+        return ReturnMapUtils.getMap("200","ok");
     }
 
     @GetMapping("/record")
