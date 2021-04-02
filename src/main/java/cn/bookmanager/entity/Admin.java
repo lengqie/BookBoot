@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 /**
  * @author lengqie
  * 管理员账号密码
@@ -12,6 +14,20 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Admin {
+    private int id;
+
     private String name;
     private String password;
+
+    private Date createTime;
+    private Date modifiedTime;
+    /**
+     * 添加 只有账号密码的 构造 方法
+     * @param name
+     * @param password
+     */
+    public Admin(String name, String password) {
+        this.name = name;
+        this.password = password;
+    }
 }

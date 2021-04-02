@@ -1,6 +1,6 @@
 package cn.bookmanager.service;
 
-import cn.bookmanager.entity.Books;
+import cn.bookmanager.entity.Book;
 import cn.bookmanager.entity.Record;
 import cn.bookmanager.entity.User;
 import cn.bookmanager.mapper.BooksMapper;
@@ -21,13 +21,13 @@ import java.util.UUID;
 public class BooksServiceImpl implements BooksService {
 
     @Autowired
-    UserMapper userMapper;
+    private UserMapper userMapper;
 
     @Autowired
-    BooksMapper booksMapper;
+    private BooksMapper booksMapper;
 
     @Autowired
-    RecordMapper recordMapper;
+    private RecordMapper recordMapper;
 
     @Override
     public void addHot(String Isbn) {
@@ -35,10 +35,11 @@ public class BooksServiceImpl implements BooksService {
     }
 
     @Override
-    public Books getBookByIsbn(String Isbn) {
-        final int i = booksMapper.addHot(Isbn);
+    public Book getBookByIsbn(String isbn) {
+        System.out.println(booksMapper.getBookByIsbn(isbn));
+        final int i = booksMapper.addHot(isbn);
         if (i == 1){
-            return booksMapper.getBookByIsbn(Isbn);
+            return booksMapper.getBookByIsbn(isbn);
         }
         return null;
     }
@@ -49,14 +50,14 @@ public class BooksServiceImpl implements BooksService {
 
         User u = userMapper.getUserById(userId);
         // 满了！
-        if (u.getDefaultCount() == u.getCount()) {
+        if (u.getMax() == u.getCount()) {
             return "exceed the upper limit";
         }
         // 无💴！
         if (u.getBalance() <0){
             return "insufficient balance";
         }
-        Books b = booksMapper.getBooksInfo(isbn);
+        Book b = booksMapper.getBooksInfo(isbn);
         // 无📕！
         if (b.getNum() == 0){
             return "no remaining";
@@ -85,7 +86,7 @@ public class BooksServiceImpl implements BooksService {
             userMapper.overdueCost(userId,arrears);
             return -arrears + "￥ in arrears";
         }
-        booksMapper.returnBooks(recordId,isbn,userId);
+        booksMapper.returnBooks(recordId,isbn,userId,date);
 
         return "ok";
     }

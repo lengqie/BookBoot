@@ -9,6 +9,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 import java.util.UUID;
 
 
@@ -19,7 +20,7 @@ import java.util.UUID;
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    UserMapper userMapper;
+    private UserMapper userMapper;
 
 
     @Override
@@ -60,7 +61,9 @@ public class UserServiceImpl implements UserService {
             return "exist";
         }
         String id = UUID.randomUUID().toString().replace("-","");
-        userMapper.registered(id,name,password);
+
+        Date date = new Date();
+        userMapper.registered(id,name,password,date);
 
         return "Ok";
     }

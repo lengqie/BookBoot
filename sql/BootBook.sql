@@ -12,7 +12,7 @@ CREATE TABLE `user`(
 	`balance` DECIMAL DEFAULT 0
 );
 -- 书籍信息
-CREATE TABLE `books`(
+CREATE TABLE `book`(
 	`Isbn` VARCHAR(20) PRIMARY KEY,
 	`name` VARCHAR(20) UNIQUE,
 	`type` VARCHAR(10),
@@ -33,7 +33,7 @@ CREATE TABLE record(
 	`time` DATE,
 	`days` INT,
 	`success` INT,
-	FOREIGN KEY(`Isbn`) REFERENCES `books`(`Isbn`),
+	FOREIGN KEY(`Isbn`) REFERENCES `book`(`Isbn`),
 	FOREIGN KEY(`user_id`) REFERENCES `user`(`id`)
 );
 
@@ -55,7 +55,7 @@ INSERT INTO `admin` VALUES ('admin','root');
 
 INSERT INTO `user` VALUES ('2020','go','pass123',4,0,0,5);
 
-INSERT INTO `books` VALUES ('110-120-119-00','Java语言','编程',0,5),
+INSERT INTO `book` VALUES ('110-120-119-00','Java语言','编程',0,5),
                            ('110-120-119-01','JavaScript语言','编程',0,5),
                            ('110-120-119-10','Go语言','编程',0,5),
                            ('110-120-112-11','SpringBoot','编程',0,5),
@@ -82,5 +82,5 @@ INSERT INTO `books` VALUES ('110-120-119-00','Java语言','编程',0,5),
 
 -- Test SQL...
 SELECT COUNT(1) FROM admin WHERE `password`='123'
-select books.name,books., record.time,record.days from record, books where books.Isbn = record.Isbn AND record.user_id = 2020
+select book.name,book., record.time,record.days from record, book where book.Isbn = record.Isbn AND record.user_id = 2020
 ALTER TABLE user ADD UNIQUE (name)

@@ -5,29 +5,29 @@
 
 <mapper namespace="cn.bookmanager.mapper.BooksMapper">
 
-    <select id="getBooksInfo" parameterType="string" resultType="Books">
-        select * from books where Isbn = #{Isbn}
+    <select id="getBooksInfo" parameterType="string" resultType="Book">
+        select * from book where Isbn = #{Isbn}
     </select>
 
     <update id="addHot" parameterType="string">
-        update books set hot =hot +1 where Isbn =#{Isbn};
+        update book set hot =hot +1 where Isbn =#{Isbn};
     </update>
 
-    <select id="getBookByIsbn" parameterType="string" resultType="Books">
-        select * from books where Isbn =#{isbn}
+    <select id="getBookByIsbn" parameterType="string" resultType="Book">
+        select * from book where Isbn =#{isbn}
     </select>
 
     <update id="borrowBooks">
-        update books set num = num - 1 where Isbn = #{isbn};
+        update book set num = num - 1 where Isbn = #{isbn};
         update user set count = count + 1 where id = #{userId};
         update user set total = total + 1 where id = #{userId};
-        insert into record values (#{recordId},#{isbn},#{userId},#{time},#{days},0);
+        insert into record values (#{recordId},#{isbn},#{userId},#{createTime},#{days},0,#{createTime});
     </update>
 
     <update id="returnBooks">
-        update books set num = num + 1 where Isbn = #{isbn};
+        update book set num = num + 1 where Isbn = #{isbn};
         update user set count = count - 1 where id = #{userId};
-        update record set success = 1 where record_id = #{recordId}
+        update record set success = 1, modified_time = #{modifiedTime} where record_id = #{recordId};
     </update>
 
 </mapper>

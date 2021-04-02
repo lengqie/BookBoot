@@ -67,16 +67,16 @@ public class LoginInterceptor implements HandlerInterceptor {
             return false;
         }
 
-        String cookie_name_val =null;
+        String cookieNameVal =null;
         for (Cookie cookie : cookies) {
             // 找到 cookie_admin_name
             if (COOKIE_NAME.equals(cookie.getName())) {
-                cookie_name_val = cookie.getValue();
+                cookieNameVal = cookie.getValue();
                 break;
             }
         }
         // 没有 指定的Cookie
-        if (cookie_name_val ==null || "".equals(cookie_name_val)) {
+        if (cookieNameVal ==null || "".equals(cookieNameVal)) {
             final Map map = ReturnMapUtils.getMap("401", "unauthorized");
             String s = JSON.toJSONString(map);
             writer.write(s);
@@ -90,12 +90,12 @@ public class LoginInterceptor implements HandlerInterceptor {
         if (null == obj) {
             if ("session_admin".equals(SESSION_NAME)){
                 // 根据用户登录账号获取数据库中的用户信息
-                Admin admin = adminMapper.getAdminByName(cookie_name_val);
+                Admin admin = adminMapper.getAdminByName(cookieNameVal);
                 // 将用户保存到session中
                 session.setAttribute(SESSION_NAME, admin);
             }
             else{
-                User user = userMapper.getUserByName(cookie_name_val);
+                User user = userMapper.getUserByName(cookieNameVal);
                 // 将用户保存到session中
                 session.setAttribute(SESSION_NAME, user);
             }

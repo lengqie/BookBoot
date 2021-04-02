@@ -16,11 +16,11 @@
     </select>
 
     <update id="updateUser" parameterType="User">
-        update user set name = #{name}, password = #{password}, defaultCount =#{defaultCount}, balance =#{balance}
+        update user set name = #{name}, password = #{password}, max =#{max}, balance =#{balance}, modified_time =#{modifiedTime}
         where id = #{id};
     </update>
-    <update id="updateBook" parameterType="Books">
-        update books set Isbn =#{isbn},name =#{name}, type = #{type}, num = #{num} where isbn = #{isbn};
+    <update id="updateBook" parameterType="Book">
+        update book set isbn =#{isbn},name =#{name}, type = #{type}, num = #{num} ,modified_time =#{modifiedTime} where isbn = #{isbn};
     </update>
 
     <update id="updateRecord">

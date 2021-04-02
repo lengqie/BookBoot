@@ -1,6 +1,6 @@
 package cn.bookmanager.service;
 
-import cn.bookmanager.entity.Books;
+import cn.bookmanager.entity.Book;
 
 import java.util.List;
 
@@ -12,18 +12,18 @@ public interface IndexService {
      * 获取全部书籍
      * @return
      */
-    List<Books> getAllBooks();
+    List<Book> getAllBooks();
     /**
      * 获取全部书籍 排序后输出
      * @return
      */
-    List<Books> getAllBooksOrderByHot();
+    List<Book> getAllBooksOrderByHot();
 
     /**
      * 查询数据
      * @return
      */
-    List<Books> getBookByName(String name);
+    List<Book> getBookByName(String name);
 
 
     /**
@@ -37,5 +37,5 @@ public interface IndexService {
      * @param type
      * @return
      */
-    List<Books> getBooksByType(String type);
+    List<Book> getBooksByType(String type);
 }

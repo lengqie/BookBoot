@@ -1,12 +1,10 @@
 package cn.bookmanager.mapper;
 
-import cn.bookmanager.entity.Books;
-import cn.bookmanager.entity.Record;
+import cn.bookmanager.entity.Book;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * @author lengqie
@@ -20,7 +18,7 @@ public interface BooksMapper {
      * @param Isbn
      * @return
      */
-    Books getBooksInfo(String Isbn);
+    Book getBooksInfo(String Isbn);
 
     /**
      * 添加书籍的热度
@@ -34,24 +32,26 @@ public interface BooksMapper {
      * @param isbn
      * @return
      */
-    Books getBookByIsbn(String isbn);
+    Book getBookByIsbn(String isbn);
     /**
      * 借书
      * @param recordId
      * @param isbn
      * @param userId
-     * @param time
+     * @param createTime
      * @param days
      * @return
      */
-    void borrowBooks(String recordId, String isbn, String userId, Date time, int days);
+    void borrowBooks(String recordId, String isbn, String userId, Date createTime, int days);
 
     /**
      * 还书
      * @param recordId
      * @param isbn
+     * @param userId
+     * @param modifiedTime
      */
-    void returnBooks(String recordId,String isbn,String userId);
+    void returnBooks(String recordId,String isbn,String userId,Date modifiedTime);
 
 
 }

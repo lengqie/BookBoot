@@ -5,7 +5,8 @@ package cn.bookmanager.entity;
  * 推荐的书籍
  */
 public class Recommend {
+
     private String name;
-    private String Isbn;
+    private String isbn;
     private int success;
 }

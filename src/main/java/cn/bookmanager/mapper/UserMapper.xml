@@ -22,7 +22,7 @@
     </update>
 
     <insert id="registered" parameterType="User">
-        insert into user values (#{id},#{name},#{password},4,0,0,0);
+        insert into user values (#{id},#{name},#{password},4,0,0,0,#{date},#{date});
     </insert>
 
     <select id="isUniqueName" parameterType="string" resultType="int">

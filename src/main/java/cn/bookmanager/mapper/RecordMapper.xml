@@ -20,7 +20,7 @@
         <result column="time" property="time"/>
         <result column="days" property="days"/>
         <result column="success" property="success"/>
-        <association property="books" column="isbn" select="cn.bookmanager.mapper.BooksMapper.getBookByIsbn" javaType="Books"/>
+        <association property="book" column="isbn" select="cn.bookmanager.mapper.BooksMapper.getBookByIsbn" javaType="Book"/>
         <association property="user" column="user_id" select="cn.bookmanager.mapper.UserMapper.getUserById" javaType="User"/>
     </resultMap>
 

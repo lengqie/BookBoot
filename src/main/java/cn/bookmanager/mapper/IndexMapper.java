@@ -1,6 +1,6 @@
 package cn.bookmanager.mapper;
 
-import cn.bookmanager.entity.Books;
+import cn.bookmanager.entity.Book;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -17,20 +17,20 @@ public interface IndexMapper {
      * 查询全部书籍
      * @return
      */
-    List<Books> getAllBooks();
+    List<Book> getAllBooks();
 
     /**
      * 查询全部书籍 并排序
      * @return
      */
-    List<Books> getAllBooksOrderByHot();
+    List<Book> getAllBooksOrderByHot();
 
     /**
      * 通过书籍查找
      * @param name
      * @return
      */
-    List<Books> getBookByName(String name);
+    List<Book> getBookByName(String name);
 
     /**
      * 获取书籍的全部类型 根据热度 排序
@@ -43,6 +43,6 @@ public interface IndexMapper {
      * @param type
      * @return
      */
-    List<Books> getBooksByType(String type);
+    List<Book> getBooksByType(String type);
 
 }

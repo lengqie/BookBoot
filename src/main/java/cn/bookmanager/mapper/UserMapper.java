@@ -1,14 +1,10 @@
 package cn.bookmanager.mapper;
 
-import cn.bookmanager.entity.Admin;
-import cn.bookmanager.entity.Books;
-import cn.bookmanager.entity.Record;
 import cn.bookmanager.entity.User;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import java.util.Date;
 
 /**
  * @author lengqie
@@ -57,8 +53,9 @@ public interface UserMapper {
      * @param id
      * @param name
      * @param password
+     * @param date
      */
-    void registered(String id,String name,String password);
+    void registered(String id, String name, String password, Date date);
 
     /**
      * 注册名称 不可重复！

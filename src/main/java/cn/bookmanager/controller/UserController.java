@@ -27,10 +27,10 @@ import java.util.Map;
 public class UserController {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @Autowired
-    RecordService recordService;
+    private RecordService recordService;
 
     @PostMapping("/")
     public User index(String id){

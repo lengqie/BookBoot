@@ -1,7 +1,7 @@
 package cn.bookmanager.service;
 
 import cn.bookmanager.entity.Admin;
-import cn.bookmanager.entity.Books;
+import cn.bookmanager.entity.Book;
 import cn.bookmanager.entity.User;
 import cn.bookmanager.mapper.AdminMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ import javax.servlet.http.HttpSession;
 public class AdminServiceImpl implements AdminService{
 
     @Autowired
-    AdminMapper adminMapper;
+    private AdminMapper adminMapper;
 
 
     @Override
@@ -57,8 +57,8 @@ public class AdminServiceImpl implements AdminService{
     }
 
     @Override
-    public Boolean updateBook(Books books) {
-        return adminMapper.updateBook(books) == 1;
+    public Boolean updateBook(Book book) {
+        return adminMapper.updateBook(book) == 1;
     }
 
     @Override

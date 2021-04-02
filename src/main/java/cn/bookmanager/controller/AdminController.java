@@ -1,7 +1,7 @@
 package cn.bookmanager.controller;
 
 import cn.bookmanager.entity.Admin;
-import cn.bookmanager.entity.Books;
+import cn.bookmanager.entity.Book;
 import cn.bookmanager.entity.Record;
 import cn.bookmanager.entity.User;
 import cn.bookmanager.service.AdminService;
@@ -29,10 +29,10 @@ public class AdminController {
     // 更加推荐 使用构造方法
 
     @Autowired
-    AdminService adminService;
+    private AdminService adminService;
 
     @Autowired
-    RecordService recordService;
+    private RecordService recordService;
 
 
     @PostMapping("/login")
@@ -86,8 +86,8 @@ public class AdminController {
 
 
     @PostMapping("/updateBook")
-    public Map upBook(Books books){
-        if ( adminService.updateBook(books) ) {
+    public Map upBook(Book book){
+        if ( adminService.updateBook(book) ) {
             return ReturnMapUtils.getMap("200","ok");
         }
         return ReturnMapUtils.getMap("500","update book failed");

@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 /**
  * @author lengqie
  * 用户信息
@@ -15,10 +17,14 @@ public class User {
     private String id;
     private String name;
     private String password;
-    private int defaultCount;
+    private int max;
     private int count;
     private int total;
     private int balance;
+
+
+    private Date createTime;
+    private Date modifiedTime;
 
     /**
      * 添加 只有账号密码的 构造 方法

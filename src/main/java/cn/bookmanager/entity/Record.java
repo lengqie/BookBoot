@@ -15,9 +15,12 @@ import java.util.Date;
 @NoArgsConstructor
 public class Record {
     private String recordId;
-    private Books books;
+    private Book book;
     private User user;
     private Date time;
     private int days;
     private int success;
+
+    private Date createTime;
+    private Date modifiedTime;
 }
