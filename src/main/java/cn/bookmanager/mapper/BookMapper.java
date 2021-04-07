@@ -11,7 +11,7 @@ import java.util.Date;
  */
 @Mapper
 @Repository
-public interface BooksMapper {
+public interface BookMapper {
 
     /**
      * 获取书籍的信息
@@ -42,6 +42,34 @@ public interface BooksMapper {
      * @param days
      * @return
      */
+
+    /**
+     * 修改书籍
+     * @param book
+     * @return 操作的 数量 一般是 1
+     */
+    int updateBook(Book book);
+
+
+    /**
+     * 添加书籍
+     * @param isbn
+     * @param name
+     * @param type
+     * @param date
+     * @return
+     */
+    int addBook(String isbn,String name,String type, Date date);
+
+
+    /**
+     * 添加书籍
+     * @param isbn
+     * @return
+     */
+    int delBook(String isbn);
+
+
     void borrowBooks(String recordId, String isbn, String userId, Date createTime, int days);
 
     /**
@@ -52,6 +80,7 @@ public interface BooksMapper {
      * @param modifiedTime
      */
     void returnBooks(String recordId,String isbn,String userId,Date modifiedTime);
+
 
 
 }

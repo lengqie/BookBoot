@@ -21,11 +21,11 @@ public class IndexController {
     @Autowired
     private IndexService indexService;
 
-    @GetMapping("/allBooks")
+    @GetMapping("/all")
     public List<?> getAllBooks(){
         return indexService.getAllBooks();
     }
-    @GetMapping(value = "/allBooks/order")
+    @GetMapping("/all/order")
     public List<?> getAllBooksOrderByHot(){
         return indexService.getAllBooksOrderByHot();
     }
@@ -35,12 +35,12 @@ public class IndexController {
         return indexService.getBookByName(name);
     }
 
-    @GetMapping("/allType")
+    @GetMapping("/type")
     public List<String> getAllType(){
         return indexService.geAllType();
     }
 
-    @GetMapping("/search/{type}")
+    @GetMapping("/type/{type}")
     public List<Book> getBookByType(@PathVariable String type){
         return indexService.getBooksByType(type);
     }

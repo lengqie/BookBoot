@@ -4,16 +4,17 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="cn.bookmanager.mapper.IndexMapper">
-    <select id="getAllBooks" resultType="Book">
-        select * from book;
+
+    <select id="getAllBook" resultType="Book">
+        select * from book where online =1;
     </select>
 
-    <select id="getAllBooksOrderByHot" resultType="Book">
-        select * from book order by hot desc limit 0,5;
+    <select id="getAllBookOrderByHot" resultType="Book">
+        select * from book where online =1 order by hot desc limit 0,5;
     </select>
 
     <select id="getBookByName" resultType="Book" parameterType="string">
-        select * from book where name like '%${name}%' order by hot desc;
+        select * from book where where online =1 and name like '%${name}%' order by hot desc;
     </select>
 
     <select id="geAllType" resultType="string" parameterType="Book">
@@ -21,7 +22,7 @@
             select type, sum(hot) as total from book group by type order by total desc) as t;
     </select>
 
-    <select id="getBooksByType" resultType="Book">
-        select * from book where type = #{type} order by hot desc;
+    <select id="getBookByType" resultType="Book">
+        select * from book where  online =1 and type = #{type} order by hot desc;
     </select>
 </mapper>

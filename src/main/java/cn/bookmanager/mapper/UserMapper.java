@@ -40,6 +40,15 @@ public interface UserMapper {
      */
     User getUserByName(String name);
 
+
+    /**
+     * 修改用户
+     * @param user
+     * @return 操作的 数量 一般是 1
+     */
+    int updateUser(User user);
+
+
     void overdueCost(String id, double cost);
 
     /**
@@ -60,9 +69,27 @@ public interface UserMapper {
     /**
      * 注册名称 不可重复！
      * @param name
-     * @retnr
+     * @return
      */
     int isUniqueName(String name);
 
+
+    /**创建 预约书
+     *
+     * @param isbn
+     * @param userId
+     * @param date
+     * @return
+     */
+    int reserve(String isbn, String userId, Date date);
+
+    /** 推荐购买
+     * @param name
+     * @param isbn
+     * @param type
+     * @param date
+     * @return
+     */
+    int recommend(String name, String isbn,String type, Date date);
 
 }

@@ -7,6 +7,7 @@ import java.util.Map;
  * 用于返回Json...
  * @author lengqie
  */
+@Deprecated
 public class ReturnMapUtils {
 
 

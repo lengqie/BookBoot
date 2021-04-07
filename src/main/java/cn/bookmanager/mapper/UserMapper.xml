@@ -13,6 +13,11 @@
         select * from user where id=#{id}
     </select>
 
+    <update id="updateUser" parameterType="User">
+        update user set name = #{name}, password = #{password}, max =#{max}, balance =#{balance}, modified_time =#{modifiedTime}
+        where id = #{id};
+    </update>
+
     <update id="overdueCost">
         update user set balance = #{cost} where id=#{id};
     </update>
@@ -31,4 +36,14 @@
     <select id="getUserByName" resultType="cn.bookmanager.entity.User">
         select * from user where name = #{name}
     </select>
+
+    <insert id="reserve">
+        insert  into reserve(isbn,user_id,success,create_time,modified_time) values (#{isbn},#{user_id},0,#{date},#{date});
+    </insert>
+
+    <update id="recommend">
+        insert into recommend(name,isbn,type, success, create_time, modified_time) values (#{name},#{isbn},0,#{date},#{date})
+    </update>
+
+
 </mapper>

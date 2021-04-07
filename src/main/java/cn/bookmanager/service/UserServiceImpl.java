@@ -64,8 +64,20 @@ public class UserServiceImpl implements UserService {
 
         Date date = new Date();
         userMapper.registered(id,name,password,date);
-
         return "Ok";
     }
+
+    @Override
+    public boolean reserve(String isbn, String userId, Date date) {
+        final int i = userMapper.reserve(isbn, userId, date);
+        return i == 1;
+    }
+
+    @Override
+    public boolean recommend(String name, String isbn, String type, Date date) {
+        final int i = userMapper.recommend(name, isbn ,type, date);
+        return i == 1;
+    }
+
 
 }

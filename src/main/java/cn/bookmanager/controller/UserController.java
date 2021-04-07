@@ -4,19 +4,16 @@ import cn.bookmanager.entity.Record;
 import cn.bookmanager.entity.User;
 import cn.bookmanager.service.RecordService;
 import cn.bookmanager.service.UserService;
-import cn.bookmanager.utils.ReturnMapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author lengqie
@@ -32,58 +29,71 @@ public class UserController {
     @Autowired
     private RecordService recordService;
 
-    @PostMapping("/")
+    @GetMapping("/")
     public User index(String id){
         return userService.getUserById(id);
     }
 
     @PostMapping("/login")
-    public Map login(String name, String password, HttpSession session, HttpServletRequest request, HttpServletResponse response){
+    public void login(String name, String password, HttpSession session, HttpServletRequest request, HttpServletResponse response){
 
         final Boolean login = userService.isLogin(new User(name, password),session,request,response);
 
-        if (login){
-            return ReturnMapUtils.getMap("200","ok");
+        if (!login){
+            response.setStatus(HttpStatus.UNAUTHORIZED.value());
         }
-        return ReturnMapUtils.getMap("500","username or password error!");
 
     }
 
     @PostMapping("/logout")
-    public Map logout(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+    public void logout(HttpSession session, HttpServletResponse response) {
 
         session.removeAttribute("session_user");
-        Cookie cookie_username = new Cookie("cookie_user", "");
-        cookie_username.setMaxAge(0);
-        cookie_username.setPath("/");
-        response.addCookie(cookie_username);
-        return ReturnMapUtils.getMap("301","logout successful!");
+        Cookie cookieUsername = new Cookie("cookie_user", "");
+        cookieUsername.setMaxAge(0);
+        cookieUsername.setPath("/");
+        response.addCookie(cookieUsername);
+        // 302
+        response.setStatus(HttpStatus.FOUND.value());
     }
     @PostMapping("/pay")
-    public Map pay(String id){
+    public void pay(String id){
 
         userService.overduePay(id);
-
-        return ReturnMapUtils.getMap("200","Paid!");
-
     }
 
     @PostMapping("/register")
-    public Map register(String name, String password){
+    public void register(String name, String password, HttpServletResponse response){
 
         final String s = userService.registered(name, password);
 
+        // '409' : 'Conflict', //指令冲突
         if ("exist".equals(s)){
-            return ReturnMapUtils.getMap("500","username exist!");
+            response.setStatus(HttpStatus.CONFLICT.value());
         }
-
-        return ReturnMapUtils.getMap("200","ok");
     }
 
     @GetMapping("/record")
-    public List<Record> getAllRecord(HttpSession session){
+    public List<Record> getUserRecord(HttpSession session){
         final User user = (User) session.getAttribute("session_user");
 
         return recordService.getRecordByUserId(user.getId());
+    }
+
+    @PostMapping("/reserve")
+    public void reserve(String isbn, String userId, HttpServletResponse response){
+        Date date = new Date();
+        if (!userService.reserve(isbn,userId,date)) {
+            // 406 not acceptable
+            response.setStatus(HttpStatus.NOT_ACCEPTABLE.value());
+        }
+    }
+
+    @PostMapping("/recommend")
+    public void recommend(String name, String isbn,String type, HttpServletResponse response){
+        Date date = new Date();
+        if (!userService.recommend(name,isbn,type,date)){
+            response.setStatus(HttpStatus.NOT_ACCEPTABLE.value());
+        }
     }
 }

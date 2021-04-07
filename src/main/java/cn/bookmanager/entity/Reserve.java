@@ -8,22 +8,20 @@ import java.util.Date;
 
 /**
  * @author lengqie
- * 推荐的书籍
+ * 预定书籍记录
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Recommend {
-
+public class Reserve {
     private int id;
 
-    private String name;
     private String isbn;
-    private String type;
-    private int success;
+    private String userId;
 
+
+    private int success;
 
     private Date createTime;
     private Date modifiedTime;
-
 }

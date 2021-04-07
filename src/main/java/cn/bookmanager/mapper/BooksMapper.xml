@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="cn.bookmanager.mapper.BooksMapper">
+<mapper namespace="cn.bookmanager.mapper.BookMapper">
 
     <select id="getBooksInfo" parameterType="string" resultType="Book">
         select * from book where Isbn = #{Isbn}
@@ -14,8 +14,20 @@
     </update>
 
     <select id="getBookByIsbn" parameterType="string" resultType="Book">
-        select * from book where Isbn =#{isbn}
+        select * from book where Isbn =#{isbn};
     </select>
+
+    <insert id="addBook">
+        insert into book(isbn, name, type, create_time, modified_time) VALUES (#{isbn},#{name},#{type},#{date},#{date});
+    </insert>
+
+    <update id="delBook">
+        update book set online = 0 where isbn = #{isbn};
+    </update>
+
+    <update id="updateBook" parameterType="Book">
+        update book set isbn =#{isbn},name =#{name}, type = #{type}, num = #{num} ,modified_time =#{modifiedTime} where isbn = #{isbn};
+    </update>
 
     <update id="borrowBooks">
         update book set num = num - 1 where Isbn = #{isbn};
@@ -29,5 +41,7 @@
         update user set count = count - 1 where id = #{userId};
         update record set success = 1, modified_time = #{modifiedTime} where record_id = #{recordId};
     </update>
+
+
 
 </mapper>

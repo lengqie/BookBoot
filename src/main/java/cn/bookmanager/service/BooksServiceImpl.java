@@ -3,7 +3,7 @@ package cn.bookmanager.service;
 import cn.bookmanager.entity.Book;
 import cn.bookmanager.entity.Record;
 import cn.bookmanager.entity.User;
-import cn.bookmanager.mapper.BooksMapper;
+import cn.bookmanager.mapper.BookMapper;
 import cn.bookmanager.mapper.RecordMapper;
 import cn.bookmanager.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,22 +24,22 @@ public class BooksServiceImpl implements BooksService {
     private UserMapper userMapper;
 
     @Autowired
-    private BooksMapper booksMapper;
+    private BookMapper bookMapper;
 
     @Autowired
     private RecordMapper recordMapper;
 
     @Override
-    public void addHot(String Isbn) {
-        booksMapper.addHot(Isbn);
+    public boolean addHot(String isbn) {
+        return bookMapper.addHot(isbn) != 0;
     }
 
     @Override
     public Book getBookByIsbn(String isbn) {
-        System.out.println(booksMapper.getBookByIsbn(isbn));
-        final int i = booksMapper.addHot(isbn);
+        System.out.println(bookMapper.getBookByIsbn(isbn));
+        final int i = bookMapper.addHot(isbn);
         if (i == 1){
-            return booksMapper.getBookByIsbn(isbn);
+            return bookMapper.getBookByIsbn(isbn);
         }
         return null;
     }
@@ -57,7 +57,7 @@ public class BooksServiceImpl implements BooksService {
         if (u.getBalance() <0){
             return "insufficient balance";
         }
-        Book b = booksMapper.getBooksInfo(isbn);
+        Book b = bookMapper.getBooksInfo(isbn);
         // 无📕！
         if (b.getNum() == 0){
             return "no remaining";
@@ -65,7 +65,7 @@ public class BooksServiceImpl implements BooksService {
 
         String recordId = UUID.randomUUID().toString().replace("-","");
 
-        booksMapper.borrowBooks(recordId,isbn,userId,time,days);
+        bookMapper.borrowBooks(recordId,isbn,userId,time,days);
         return "Ok";
     }
 
@@ -86,7 +86,7 @@ public class BooksServiceImpl implements BooksService {
             userMapper.overdueCost(userId,arrears);
             return -arrears + "￥ in arrears";
         }
-        booksMapper.returnBooks(recordId,isbn,userId,date);
+        bookMapper.returnBooks(recordId,isbn,userId,date);
 
         return "ok";
     }

@@ -30,4 +30,12 @@ public interface RecordMapper {
      * @return
      */
     List<Record> getRecordByUserId(String userId);
+
+    /**
+     * 修改记录
+     * @param recordId
+     * @param  success
+     * @return 操作的 数量 一般是 将状态码设置为 1
+     */
+    int updateRecord(String recordId, int success);
 }

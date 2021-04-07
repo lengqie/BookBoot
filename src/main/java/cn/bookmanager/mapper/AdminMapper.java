@@ -36,26 +36,4 @@ public interface AdminMapper {
      */
     Admin getAdminByName(String name);
 
-    /**
-     * 修改用户
-     * @param user
-     * @return 操作的 数量 一般是 1
-     */
-    int updateUser(User user);
-
-    /**
-     * 修改书籍
-     * @param book
-     * @return 操作的 数量 一般是 1
-     */
-    int updateBook(Book book);
-
-    /**
-     * 修改记录
-     * @param recordId
-     * @param  success
-     * @return 操作的 数量 一般是 1
-     */
-    int updateRecord(String recordId, int success);
-
 }

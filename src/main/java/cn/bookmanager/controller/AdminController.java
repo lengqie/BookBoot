@@ -1,22 +1,18 @@
 package cn.bookmanager.controller;
 
-import cn.bookmanager.entity.Admin;
-import cn.bookmanager.entity.Book;
-import cn.bookmanager.entity.Record;
-import cn.bookmanager.entity.User;
+import cn.bookmanager.entity.*;
 import cn.bookmanager.service.AdminService;
 import cn.bookmanager.service.RecordService;
-import cn.bookmanager.utils.ReturnMapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author lengqie
@@ -36,13 +32,13 @@ public class AdminController {
 
 
     @PostMapping("/login")
-    public Map<String, String> login(String name, String password, HttpSession session, HttpServletRequest request, HttpServletResponse response){
+    public void login(String name, String password, HttpSession session, HttpServletRequest request, HttpServletResponse response){
         final Boolean login = adminService.isLogin(new Admin(name, password),session,request,response);
 
-        if (login){
-            return ReturnMapUtils.getMap("200","ok");
+        if (!login){
+            response.setStatus(HttpStatus.UNAUTHORIZED.value());
         }
-        return ReturnMapUtils.getMap("500","username or password error!");
+        response.setStatus(HttpStatus.ACCEPTED.value());
     }
 
     @GetMapping("/info")
@@ -51,54 +47,89 @@ public class AdminController {
     }
 
     @GetMapping("/logout")
-    public Map logout(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+    public void logout(HttpSession session, HttpServletResponse response) {
         session.removeAttribute("session_admin");
         Cookie cookieUsername = new Cookie("cookie_admin", "");
         cookieUsername.setMaxAge(0);
         cookieUsername.setPath("/");
         response.addCookie(cookieUsername);
-        return ReturnMapUtils.getMap("500","username or password error!");
+
+        // 302
+        response.setStatus(HttpStatus.FOUND.value());
+        // return ReturnMapUtils.getMap("500","username or password error!");
     }
 
+
     @GetMapping("/record")
-    public Map getAllRecord(){
-        final List<Record> record = recordService.getAllRecord();
-        return ReturnMapUtils.getMap("200","ok",record);
+    public List<Record> getAllRecord(){
+        return recordService.getAllRecord();
+    }
+
+    @PutMapping("/record/{recordId}")
+    public void upRecord(int success, HttpServletResponse response, @PathVariable String recordId){
+        if ( !adminService.updateRecord(recordId,success) ) {
+            response.setStatus(HttpStatus.BAD_REQUEST.value());
+            // return ReturnMapUtils.getMap("200","ok");
+        }
+        // return ReturnMapUtils.getMap("500","update record failed");
     }
 
     @GetMapping("/record/{recordId}")
-    public Map getRecordByRecordId(@PathVariable String recordId){
+    public Record getRecordByRecordId(@PathVariable String recordId,HttpServletResponse response){
         final Record record = recordService.getRecordByRecordId(recordId);
 
         if (record == null) {
-            return ReturnMapUtils.getMap("404","not found");
+            response.setStatus(HttpStatus.NOT_FOUND.value());
         }
-        return ReturnMapUtils.getMap("200","ok",record);
-    }
-
-    @PostMapping("/updateUser")
-    public Map upUser(User user){
-        if ( adminService.updateUser(user) ) {
-            return ReturnMapUtils.getMap("200","ok");
-        }
-        return ReturnMapUtils.getMap("500","update book failed");
+        return record;
     }
 
 
-    @PostMapping("/updateBook")
-    public Map upBook(Book book){
-        if ( adminService.updateBook(book) ) {
-            return ReturnMapUtils.getMap("200","ok");
+    @PutMapping("/user")
+    public void upUser(User user, HttpServletResponse response){
+        if (!adminService.updateUser(user) ) {
+            response.setStatus(HttpStatus.BAD_REQUEST.value());
         }
-        return ReturnMapUtils.getMap("500","update book failed");
     }
 
-    @PostMapping("/updateRecord")
-    public Map upRecord(String recordId, int success){
-        if ( adminService.updateRecord(recordId,success) ) {
-            return ReturnMapUtils.getMap("200","ok");
+
+    @PostMapping("/book")
+    public void addBook(String isbn,String name ,String type, HttpServletResponse response){
+        Date date = new Date();
+        if (!adminService.addBook(isbn,name, type,date)) {
+            response.setStatus(HttpStatus.BAD_REQUEST.value());
         }
-        return ReturnMapUtils.getMap("500","update record failed");
+    }
+    @PostMapping("/book/recommend/{id}")
+    public void addBookFromRecommend(@PathVariable String id){
+        adminService.addBookFromRecommend(id);
+
+    }
+
+    @DeleteMapping("/book/{isbn}")
+    public void delBookByIsbn(@PathVariable String isbn){
+        adminService.delBook(isbn);
+    }
+
+    @PutMapping("/book/{isbn}")
+    public void upBook(Book book,@PathVariable String isbn, HttpServletResponse response){
+        if (!adminService.updateBook(book,isbn) ) {
+            response.setStatus(HttpStatus.BAD_REQUEST.value());
+        }
+    }
+
+    @GetMapping("/recommend/all")
+    public List<Recommend> getAllRecommend(){
+        return adminService.getAllRecommend();
+    }
+
+    @GetMapping("/recommend/{id}")
+    public Recommend getRecommendById(@PathVariable String id,HttpServletResponse response){
+        final Recommend recommend = adminService.getRecommendById(id);
+        if (recommend == null) {
+            response.setStatus(HttpStatus.NOT_FOUND.value());
+        }
+        return recommend;
     }
 
 }

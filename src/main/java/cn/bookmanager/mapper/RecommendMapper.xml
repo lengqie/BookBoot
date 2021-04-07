@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.bookmanager.mapper.RecommendMapper">
+
+    <select id="getAllRecommend" resultType="cn.bookmanager.entity.Recommend">
+        select * from recommend;
+    </select>
+    <select id="getRecommendById" resultType="cn.bookmanager.entity.Recommend">
+        select * from recommend where id = #{id};
+    </select>
+    <insert id="addBookFromRecommend">
+        update recommend set success = 1 , modified_time = #{data} where id = #{id};
+    </insert>
+
+</mapper>

@@ -12,9 +12,9 @@ public interface BooksService {
 
     /**
      * 为所选的书籍 增加热度
-     * @param Isbn
+     * @param isbn
      */
-    void addHot(String Isbn);
+    boolean addHot(String isbn);
 
     /**
      * 获取书的详情

@@ -2,8 +2,9 @@ package cn.bookmanager.service;
 
 import cn.bookmanager.entity.Admin;
 import cn.bookmanager.entity.Book;
+import cn.bookmanager.entity.Recommend;
 import cn.bookmanager.entity.User;
-import cn.bookmanager.mapper.AdminMapper;
+import cn.bookmanager.mapper.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +12,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.Date;
+import java.util.List;
 
 /**
  * @author lengqie
@@ -20,6 +23,21 @@ public class AdminServiceImpl implements AdminService{
 
     @Autowired
     private AdminMapper adminMapper;
+
+    @Autowired
+    private RecommendMapper recommendMapper;
+
+    @Autowired
+    private UserMapper userMapper;
+
+    @Autowired
+    private BookMapper bookMapper;
+
+    @Autowired
+    private RecordMapper recordMapper;
+
+    @Autowired
+    private IndexMapper indexMapper;
 
 
     @Override
@@ -52,17 +70,60 @@ public class AdminServiceImpl implements AdminService{
 
     @Override
     public Boolean updateUser(User user) {
-        final int i = adminMapper.updateUser(user);
+        final int i = userMapper.updateUser(user);
         return i == 1;
     }
 
-    @Override
-    public Boolean updateBook(Book book) {
-        return adminMapper.updateBook(book) == 1;
-    }
 
     @Override
     public Boolean updateRecord(String recordId, int success) {
-        return adminMapper.updateRecord(recordId,success) == 1;
+        return recordMapper.updateRecord(recordId,success) == 1;
+    }
+
+    @Override
+    public List<Recommend> getAllRecommend() {
+        return recommendMapper.getAllRecommend();
+    }
+
+
+    @Override
+    public Recommend getRecommendById(String id) {
+        return recommendMapper.getRecommendById(id);
+    }
+
+
+    @Override
+    public Boolean addBook(String isbn, String name, String type, Date date) {
+        final int i = bookMapper.addBook(isbn, name, type, date);
+        return i==1;
+    }
+    /**
+     * 这个地方 有脱裤子放屁之嫌
+     * @param book
+     * @param isbn
+     * @return
+     */
+    @Override
+    public Boolean updateBook(Book book,String isbn) {
+        final Book bookByIsbn = bookMapper.getBookByIsbn(isbn);
+
+        return bookMapper.updateBook(book) == 1;
+    }
+
+    @Override
+    public Boolean delBook(String isbn) {
+        return bookMapper.delBook(isbn)!=1;
+    }
+
+    @Override
+    public Boolean addBookFromRecommend(String id) {
+        Recommend recommend = recommendMapper.getRecommendById(id);
+        final String name = recommend.getName();
+        final String isbn = recommend.getIsbn();
+        final String type = recommend.getType();
+
+        Date date = new Date();
+        bookMapper.addBook(isbn, name, type, date);
+        return true;
     }
 }

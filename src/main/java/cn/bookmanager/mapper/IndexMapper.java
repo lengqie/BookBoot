@@ -17,13 +17,13 @@ public interface IndexMapper {
      * 查询全部书籍
      * @return
      */
-    List<Book> getAllBooks();
+    List<Book> getAllBook();
 
     /**
-     * 查询全部书籍 并排序
+     * 查询全部书籍 并排序 Top5
      * @return
      */
-    List<Book> getAllBooksOrderByHot();
+    List<Book> getAllBookOrderByHot();
 
     /**
      * 通过书籍查找
@@ -43,6 +43,6 @@ public interface IndexMapper {
      * @param type
      * @return
      */
-    List<Book> getBooksByType(String type);
+    List<Book> getBookByType(String type);
 
 }

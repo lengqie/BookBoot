@@ -4,9 +4,8 @@ import cn.bookmanager.entity.Admin;
 import cn.bookmanager.entity.User;
 import cn.bookmanager.mapper.AdminMapper;
 import cn.bookmanager.mapper.UserMapper;
-import cn.bookmanager.utils.ReturnMapUtils;
-import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -17,9 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import java.io.PrintWriter;
-import java.util.Map;
-
-import static javax.servlet.http.HttpServletResponse.SC_UNAUTHORIZED;
 
 /**
  * 权限拦截器...
@@ -61,9 +57,11 @@ public class LoginInterceptor implements HandlerInterceptor {
 
         // 无Cookie
         if (cookies == null ){
-            final Map map = ReturnMapUtils.getMap("401", "unauthorized");
-            String s = JSON.toJSONString(map);
-            writer.write(s);
+            // final Map map = ReturnMapUtils.getMap("401", "unauthorized");
+            // String s = JSON.toJSONString(map);
+            // writer.write(s);
+
+            response.setStatus(HttpStatus.UNAUTHORIZED.value());
             return false;
         }
 
@@ -77,9 +75,11 @@ public class LoginInterceptor implements HandlerInterceptor {
         }
         // 没有 指定的Cookie
         if (cookieNameVal ==null || "".equals(cookieNameVal)) {
-            final Map map = ReturnMapUtils.getMap("401", "unauthorized");
-            String s = JSON.toJSONString(map);
-            writer.write(s);
+            // final Map map = ReturnMapUtils.getMap("401", "unauthorized");
+            // String s = JSON.toJSONString(map);
+            // writer.write(s);
+
+            response.setStatus(HttpStatus.UNAUTHORIZED.value());
             return false;
         }
         // 获取HttpSession对象
