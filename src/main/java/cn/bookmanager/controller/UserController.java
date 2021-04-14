@@ -2,12 +2,19 @@ package cn.bookmanager.controller;
 
 import cn.bookmanager.entity.Record;
 import cn.bookmanager.entity.User;
+import cn.bookmanager.service.AdminService;
 import cn.bookmanager.service.RecordService;
 import cn.bookmanager.service.UserService;
+import cn.bookmanager.utils.Base64Util;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.mgt.SecurityManager;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.naming.AuthenticationException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,15 +36,38 @@ public class UserController {
     @Autowired
     private RecordService recordService;
 
+    @Autowired
+    private AdminService adminService;
+
     @GetMapping("/")
-    public User index(String id){
-        return userService.getUserById(id);
+    public User index(HttpServletRequest request,HttpServletResponse response){
+        for (Cookie cookie : request.getCookies()) {
+            if ("cookie_user".equals(cookie.getName())) {
+                String name = cookie.getValue();
+                // System.out.println(name);
+                name = Base64Util.decoder(name);
+                return userService.getUserByName(name);
+            }
+        }
+        response.setStatus(HttpStatus.NOT_FOUND.value());
+        return null;
+
+    }
+
+
+    @PutMapping("/")
+    public void update(User user,HttpServletRequest request){
+        adminService.updateUser(user);
     }
 
     @PostMapping("/login")
     public void login(String name, String password, HttpSession session, HttpServletRequest request, HttpServletResponse response){
 
         final Boolean login = userService.isLogin(new User(name, password),session,request,response);
+
+        Subject subject = SecurityUtils.getSubject();
+        subject.login(new UsernamePasswordToken(name, password));
+        System.out.println("登录成功!");
 
         if (!login){
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
@@ -48,17 +78,26 @@ public class UserController {
     @PostMapping("/logout")
     public void logout(HttpSession session, HttpServletResponse response) {
 
+        //Shiro
+        Subject subject  = SecurityUtils.getSubject();
+
+        System.out.println(((String) subject.getPrincipal()) +  "logout 了！");
+
         session.removeAttribute("session_user");
         Cookie cookieUsername = new Cookie("cookie_user", "");
         cookieUsername.setMaxAge(0);
         cookieUsername.setPath("/");
         response.addCookie(cookieUsername);
+
+        //Shiro
+        subject.logout();
+
         // 302
         response.setStatus(HttpStatus.FOUND.value());
     }
     @PostMapping("/pay")
     public void pay(String id){
-
+        System.out.println(id);
         userService.overduePay(id);
     }
 

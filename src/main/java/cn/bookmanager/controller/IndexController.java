@@ -21,6 +21,10 @@ public class IndexController {
     @Autowired
     private IndexService indexService;
 
+    @GetMapping("/401")
+    public String notFound(){
+        return "401";
+    }
     @GetMapping("/all")
     public List<?> getAllBooks(){
         return indexService.getAllBooks();

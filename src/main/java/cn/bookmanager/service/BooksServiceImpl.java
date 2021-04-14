@@ -8,6 +8,7 @@ import cn.bookmanager.mapper.RecordMapper;
 import cn.bookmanager.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.UUID;
@@ -18,6 +19,7 @@ import java.util.UUID;
  */
 
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class BooksServiceImpl implements BooksService {
 
     @Autowired

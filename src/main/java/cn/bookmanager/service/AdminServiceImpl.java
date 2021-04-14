@@ -7,6 +7,7 @@ import cn.bookmanager.entity.User;
 import cn.bookmanager.mapper.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +20,7 @@ import java.util.List;
  * @author lengqie
  */
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class AdminServiceImpl implements AdminService{
 
     @Autowired

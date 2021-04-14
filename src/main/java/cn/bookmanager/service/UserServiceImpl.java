@@ -2,8 +2,10 @@ package cn.bookmanager.service;
 
 import cn.bookmanager.entity.User;
 import cn.bookmanager.mapper.UserMapper;
+import cn.bookmanager.utils.Base64Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +19,7 @@ import java.util.UUID;
  * @author lengqie
  */
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class UserServiceImpl implements UserService {
 
     @Autowired
@@ -29,10 +32,10 @@ public class UserServiceImpl implements UserService {
         // 登录成功 则 写入Cookie！
         if (login ==1){
             session.setAttribute("session_user",user);
-            Cookie cookie_admin = new Cookie("cookie_user",user.getName());
-            cookie_admin.setMaxAge(60 * 60 * 24 * 7);
-            cookie_admin.setPath("/");
-            response.addCookie(cookie_admin);
+            Cookie cookieAdmin = new Cookie("cookie_user", Base64Util.encoder( user.getName() ) );
+            cookieAdmin.setMaxAge(60 * 60 * 24 * 7);
+            cookieAdmin.setPath("/");
+            response.addCookie(cookieAdmin);
 
             return true;
         }
@@ -42,6 +45,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserById(String id) {
         return userMapper.getUserById(id);
+    }
+
+    @Override
+    public User getUserByName(String name) {
+        return userMapper.getUserByName(name);
     }
 
     @Override

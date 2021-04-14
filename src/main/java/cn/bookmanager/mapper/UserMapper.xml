@@ -33,6 +33,7 @@
     <select id="isUniqueName" parameterType="string" resultType="int">
         select count(*) from user where name = #{name};
     </select>
+
     <select id="getUserByName" resultType="cn.bookmanager.entity.User">
         select * from user where name = #{name}
     </select>

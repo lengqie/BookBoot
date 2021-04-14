@@ -3,6 +3,9 @@ package cn.bookmanager.controller;
 import cn.bookmanager.entity.*;
 import cn.bookmanager.service.AdminService;
 import cn.bookmanager.service.RecordService;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -33,7 +36,11 @@ public class AdminController {
 
     @PostMapping("/login")
     public void login(String name, String password, HttpSession session, HttpServletRequest request, HttpServletResponse response){
+
         final Boolean login = adminService.isLogin(new Admin(name, password),session,request,response);
+
+        Subject subject = SecurityUtils.getSubject();
+        subject.login(new UsernamePasswordToken(name, password));
 
         if (!login){
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
@@ -100,11 +107,6 @@ public class AdminController {
             response.setStatus(HttpStatus.BAD_REQUEST.value());
         }
     }
-    @PostMapping("/book/recommend/{id}")
-    public void addBookFromRecommend(@PathVariable String id){
-        adminService.addBookFromRecommend(id);
-
-    }
 
     @DeleteMapping("/book/{isbn}")
     public void delBookByIsbn(@PathVariable String isbn){
@@ -118,6 +120,11 @@ public class AdminController {
         }
     }
 
+    @PostMapping("/book/recommend/{id}")
+    public void addBookFromRecommend(@PathVariable String id){
+        adminService.addBookFromRecommend(id);
+
+    }
     @GetMapping("/recommend/all")
     public List<Recommend> getAllRecommend(){
         return adminService.getAllRecommend();

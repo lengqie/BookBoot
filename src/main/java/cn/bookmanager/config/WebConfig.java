@@ -10,7 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 /**拦截器的配置...
  * @author lengqie
  */
-@Configuration
+// @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
     @Autowired

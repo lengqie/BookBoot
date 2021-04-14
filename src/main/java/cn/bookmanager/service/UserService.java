@@ -29,6 +29,13 @@ public interface UserService {
      */
     User getUserById(String id);
 
+    /**
+     * 获取用户信息
+     * @param name
+     * @return
+     */
+    User getUserByName(String name);
+
 
 
     /**

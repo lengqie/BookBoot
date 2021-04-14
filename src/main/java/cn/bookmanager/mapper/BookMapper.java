@@ -69,7 +69,14 @@ public interface BookMapper {
      */
     int delBook(String isbn);
 
-
+    /**
+     * 借书
+     * @param recordId
+     * @param isbn
+     * @param userId
+     * @param createTime
+     * @param days
+     */
     void borrowBooks(String recordId, String isbn, String userId, Date createTime, int days);
 
     /**
