@@ -5,6 +5,7 @@ import cn.bookmanager.service.AdminService;
 import cn.bookmanager.service.RecordService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -50,6 +51,9 @@ public class AdminController {
 
     @GetMapping("/info")
     public Admin info(){
+        SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+
+        System.out.println();
         return adminService.getAdmin();
     }
 

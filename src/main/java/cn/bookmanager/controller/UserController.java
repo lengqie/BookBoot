@@ -41,6 +41,10 @@ public class UserController {
 
     @GetMapping("/")
     public User index(HttpServletRequest request,HttpServletResponse response){
+
+        Subject subject = SecurityUtils.getSubject();
+        System.out.println(subject.getPrincipal());
+
         for (Cookie cookie : request.getCookies()) {
             if ("cookie_user".equals(cookie.getName())) {
                 String name = cookie.getValue();
@@ -67,7 +71,6 @@ public class UserController {
 
         Subject subject = SecurityUtils.getSubject();
         subject.login(new UsernamePasswordToken(name, password));
-        System.out.println("登录成功!");
 
         if (!login){
             response.setStatus(HttpStatus.UNAUTHORIZED.value());

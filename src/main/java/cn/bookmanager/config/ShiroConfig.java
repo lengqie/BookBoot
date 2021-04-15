@@ -51,19 +51,21 @@ public class ShiroConfig {
 
         bean.setSecurityManager(securityManager());
         bean.setLoginUrl("/");
+        bean.setUnauthorizedUrl("/401");
 
         // 拦截器
         Map<String,String> filterChainDefinitionMap = new LinkedHashMap<>();
         filterChainDefinitionMap.put("/index","anon");
+
         filterChainDefinitionMap.put("/user/login","anon");
         filterChainDefinitionMap.put("/user/**","roles[user]");
         filterChainDefinitionMap.put("/admin/login","anon");
         filterChainDefinitionMap.put("/admin/**","roles[admin]");
 
         filterChainDefinitionMap.put("/swagger-ui/**","anon");
-        filterChainDefinitionMap.put("/swagger-resources","anon");
+        filterChainDefinitionMap.put("/swagger-resources/**","anon");
         filterChainDefinitionMap.put("/v3/api-docs/**","anon");
-        filterChainDefinitionMap.put("/api/**","anon");
+
 
         filterChainDefinitionMap.put("/**", "authc");
         bean.setFilterChainDefinitionMap(filterChainDefinitionMap);

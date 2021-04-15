@@ -23,7 +23,7 @@ public class IndexController {
 
     @GetMapping("/401")
     public String notFound(){
-        return "401";
+        return " 冇得权限 401！";
     }
     @GetMapping("/all")
     public List<?> getAllBooks(){

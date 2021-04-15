@@ -23,27 +23,34 @@ public class AdminRealm extends AuthorizingRealm {
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        System.out.println("✨ Authorization...");
+        System.out.println("✨ UserRealm Authorization...");
         System.out.println("getName："+getName());
 
 
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 
         // 获取角色
+
         final String username = (String) principalCollection.getPrimaryPrincipal();
-        //... 数据库...
+
+        //... （假装）数据库...
+        if ( !"admin".equals(username) ){
+            return null;
+        }
         String role = "admin";
 
         Set<String> set  =new HashSet<>();
         set.add(role);
 
         info.setRoles(set);
+
+        System.out.println("🤔 >> AdminRealm："+info.getRoles());
         return info;
     }
 
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
-        System.out.println("🎶 Authentication...");
+        System.out.println("🎶 AdminRealm Authentication...");
 
         UsernamePasswordToken token = (UsernamePasswordToken)authenticationToken;
 
@@ -54,7 +61,7 @@ public class AdminRealm extends AuthorizingRealm {
         if (login == 0 ) {
             throw new AuthenticationException("Wrong_user_name_or_password！！");
         }
-
+        System.out.println("✔ >> AdminRealm：登录成功");
         SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(token.getPrincipal(),password,this.getName());
         return info;
     }
