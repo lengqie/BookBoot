@@ -1,4 +1,4 @@
-package cn.bookmanager.utils;
+package cn.bookmanager.util;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,13 +11,6 @@ import java.util.Map;
 public class ReturnMapUtil {
 
 
-    public static Map getMap(String status, String msg,Object data){
-        Map<String,Object> map =new HashMap<>(1);
-        map.put("status",status);
-        map.put("msg",msg);
-        map.put("data",data);
-        return map;
-    }
     public static Map getMap(String status,Object data){
         Map<String,Object> map =new HashMap<>(1);
         map.put("status",status);

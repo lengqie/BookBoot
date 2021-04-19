@@ -16,21 +16,21 @@ import java.util.List;
 public interface RecommendMapper {
     /**
      * 获取全部的推荐信息
-     * @return
+     * @return Recommend s
      */
     List<Recommend> getAllRecommend();
 
     /**
      * 获取指定的推荐
-     * @param id
-     * @return
+     * @param id Recommend.Id
+     * @return Recommend s
      */
     Recommend getRecommendById(String id);
 
     /**
      * 将推荐书籍添加到 书籍库中
-     * @param id
-     * @param date
+     * @param id Recommend.Id
+     * @param date Date
      */
     void addBookFromRecommend(int id, Date date);
 }

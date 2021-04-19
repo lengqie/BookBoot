@@ -13,6 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Shiro UserRealm
+ * @author lengqie
+ */
 public class UserRealm extends AuthorizingRealm {
 
     @Autowired

@@ -14,28 +14,28 @@ import java.util.List;
 public interface RecordMapper {
     /**
      * 获取全部的记录
-     * @return
+     * @return Record s
      */
     List<Record> getAllRecord();
 
     /**
      * 通过id 获取记录
-     * @param recordId
-     * @return
+     * @param recordId Record.Id
+     * @return Record
      */
     Record getRecordByRecordId(String recordId);
     /**
      * 通过id 获取记录
-     * @param userId
-     * @return
+     * @param userId User.Id
+     * @return Record s
      */
     List<Record> getRecordByUserId(String userId);
 
     /**
      * 修改记录
-     * @param recordId
-     * @param  success
-     * @return 操作的 数量 一般是 将状态码设置为 1
+     * @param recordId Record.Id
+     * @param  success Success
+     * @return 操作的数量 一般是将状态码设置为 1
      */
     int updateRecord(String recordId, int success);
 }

@@ -2,7 +2,7 @@ package cn.bookmanager.service;
 
 import cn.bookmanager.entity.User;
 import cn.bookmanager.mapper.UserMapper;
-import cn.bookmanager.utils.Base64Util;
+import cn.bookmanager.util.Base64Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

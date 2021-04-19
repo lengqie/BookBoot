@@ -1,10 +1,7 @@
 package cn.bookmanager.realm;
 
 import cn.bookmanager.entity.Admin;
-import cn.bookmanager.entity.User;
 import cn.bookmanager.mapper.AdminMapper;
-import cn.bookmanager.mapper.UserMapper;
-import cn.bookmanager.service.UserService;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -15,6 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Shiro AdminRealm
+ * @author lengqie
+ */
 public class AdminRealm extends AuthorizingRealm {
 
     @Autowired

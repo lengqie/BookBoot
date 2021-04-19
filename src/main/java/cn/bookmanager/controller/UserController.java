@@ -5,16 +5,14 @@ import cn.bookmanager.entity.User;
 import cn.bookmanager.service.AdminService;
 import cn.bookmanager.service.RecordService;
 import cn.bookmanager.service.UserService;
-import cn.bookmanager.utils.Base64Util;
+import cn.bookmanager.util.Base64Util;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import javax.naming.AuthenticationException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

@@ -1,5 +1,6 @@
 package cn.bookmanager.interceptor;
 
+import cn.bookmanager.constant.CookieEnum;
 import cn.bookmanager.entity.Admin;
 import cn.bookmanager.entity.User;
 import cn.bookmanager.mapper.AdminMapper;
@@ -32,20 +33,21 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        
+        
+        String sessionName;
+        String cookieName;
 
-
-        String SESSION_NAME;
-        String COOKIE_NAME;
-
-        if (request.getServletPath().contains("/admin")) {
-            SESSION_NAME ="session_admin";
-            COOKIE_NAME = "cookie_admin";
+        String adminPath = "/admin";
+        if (request.getServletPath().contains(adminPath)) {
+            sessionName = CookieEnum.SESSION_ADMIN.value();
+            cookieName = CookieEnum.COOKIE_ADMIN.value();
 
 
         }
         else {
-            SESSION_NAME ="session_user";
-            COOKIE_NAME = "cookie_user";
+            sessionName =CookieEnum.SESSION_USER.value();
+            cookieName = CookieEnum.COOKIE_USER.value();
         }
 
         final Cookie[] cookies = request.getCookies();
@@ -68,7 +70,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         String cookieNameVal =null;
         for (Cookie cookie : cookies) {
             // 找到 cookie_admin_name
-            if (COOKIE_NAME.equals(cookie.getName())) {
+            if (cookieName.equals(cookie.getName())) {
                 cookieNameVal = cookie.getValue();
                 break;
             }
@@ -86,18 +88,18 @@ public class LoginInterceptor implements HandlerInterceptor {
         HttpSession session = request.getSession();
         // 获取我们登录后存在session中的用户信息，如果为空，表示session已经过期
 
-        Object obj = session.getAttribute(SESSION_NAME);
+        Object obj = session.getAttribute(sessionName);
         if (null == obj) {
-            if ("session_admin".equals(SESSION_NAME)){
+            if (CookieEnum.SESSION_ADMIN.value().equals(sessionName)){
                 // 根据用户登录账号获取数据库中的用户信息
                 Admin admin = adminMapper.getAdminByName(cookieNameVal);
                 // 将用户保存到session中
-                session.setAttribute(SESSION_NAME, admin);
+                session.setAttribute(sessionName, admin);
             }
             else{
                 User user = userMapper.getUserByName(cookieNameVal);
                 // 将用户保存到session中
-                session.setAttribute(SESSION_NAME, user);
+                session.setAttribute(sessionName, user);
             }
         }
         //已经登录

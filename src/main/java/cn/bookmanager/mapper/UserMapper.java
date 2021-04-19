@@ -15,80 +15,76 @@ public interface UserMapper {
 
     /**
      * 登录
-     * @param user
-     * @return
+     * @param user User
+     * @return 结果的数量 成功返回1
      */
     int isLogin(User user);
 
     /**
      * 获取用户信息
-     * @param id
-     * @return
+     * @param id User.Id
+     * @return User
      */
     User getUserById(String id);
-
-    /**
-     * 逾期扣款
-     * @param id
-     * @param cost
-     */
-
     /**
      * 通过 name 获取
-     * @param name
-     * @return
+     * @param name User.Name
+     * @return User
      */
     User getUserByName(String name);
 
-
     /**
      * 修改用户
-     * @param user
-     * @return 操作的 数量 一般是 1
+     * @param user User
+     * @return 操作的数量 成功返回1
      */
     int updateUser(User user);
 
-
+    /**
+     * 逾期费用
+     * @param id User.id
+     * @param cost User.Cost
+     */
     void overdueCost(String id, double cost);
 
     /**
      * 逾期支付
-     * @param id
+     * @param id User.id
      */
     void overduePay(String id);
 
     /**
      * 注册用户
-     * @param id
-     * @param name
-     * @param password
-     * @param date
+     * @param id User.Id
+     * @param name User.name
+     * @param password User.Password
+     * @param date User.*Time
      */
     void registered(String id, String name, String password, Date date);
 
     /**
      * 注册名称 不可重复！
-     * @param name
-     * @return
+     * @param name User.Name
+     * @return 查询的数量 存在返回1 不支持
      */
     int isUniqueName(String name);
 
 
-    /**创建 预约书
-     *
-     * @param isbn
-     * @param userId
-     * @param date
-     * @return
+    /**
+     * 创建 预约书 @Deprecated
+     * @param isbn Isbn
+     * @param userId User.Id
+     * @param date *Time
+     * @return 查询的数量 存在返回1 不支持
      */
     int reserve(String isbn, String userId, Date date);
 
     /** 推荐购买
-     * @param name
-     * @param isbn
-     * @param type
-     * @param date
-     * @return
+     * @param name Book.Name
+     * @param isbn Isbn
+     * @param type Book.Type
+     * @param date Book.*Time
+     * @return  操作的数量 成功返回1
      */
     int recommend(String name, String isbn,String type, Date date);
 

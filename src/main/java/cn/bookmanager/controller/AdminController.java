@@ -114,7 +114,9 @@ public class AdminController {
 
     @DeleteMapping("/book/{isbn}")
     public void delBookByIsbn(@PathVariable String isbn){
-        adminService.delBook(isbn);
+        if (adminService.delBook(isbn)) {
+
+        }
     }
 
     @PutMapping("/book/{isbn}")

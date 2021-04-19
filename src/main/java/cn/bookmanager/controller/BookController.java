@@ -1,6 +1,7 @@
 package cn.bookmanager.controller;
 
 
+import cn.bookmanager.constant.CookieEnum;
 import cn.bookmanager.entity.Book;
 import cn.bookmanager.entity.User;
 import cn.bookmanager.service.BooksService;
@@ -33,7 +34,7 @@ public class BookController {
         // 默认当天
         Date date =new Date();
 
-        final User user = (User) session.getAttribute("session_user");
+        final User user = (User) session.getAttribute(CookieEnum.COOKIE_USER.value());
 
         booksService.borrowBooks(isbn, user.getId(), date, days);
 
@@ -45,7 +46,7 @@ public class BookController {
         // 默认当天
         Date date =new Date();
 
-        final User user = (User) session.getAttribute("session_user");
+        final User user = (User) session.getAttribute(CookieEnum.SESSION_ADMIN.value());
 
         booksService.returnBooks(isbn, user.getId(),recordId,date);
     }

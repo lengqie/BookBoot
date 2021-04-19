@@ -16,23 +16,23 @@ import org.apache.ibatis.annotations.Mapper;
 public interface AdminMapper {
     /**
      * 管理员登录
-     * @param name
-     * @param password
-     * @return 数据库查找 结果小于 1 则表示 查找失败
+     * @param name Admin.Name
+     * @param password Admin.Password
+     * @return Admin
      */
     Admin login(@Param("name") String name, @Param("password") String password);
 
     /**
      * 管理员登录
-     * @param admin
-     * @return
+     * @param admin Admin
+     * @return 查询的数量 成功返回1
      */
     int isLogin(Admin admin);
 
     /**
      * 通过 name 获取
-     * @param name
-     * @return
+     * @param name Admin.Name
+     * @return Admin
      */
     Admin getAdminByName(String name);
 

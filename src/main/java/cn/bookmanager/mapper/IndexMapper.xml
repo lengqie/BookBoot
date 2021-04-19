@@ -14,7 +14,7 @@
     </select>
 
     <select id="getBookByName" resultType="Book" parameterType="string">
-        select * from book where where online =1 and name like '%${name}%' order by hot desc;
+        select * from book where online =1 and name like '%${name}%' order by hot desc;
     </select>
 
     <select id="geAllType" resultType="string" parameterType="Book">

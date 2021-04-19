@@ -1,26 +1,29 @@
-package cn.bookmanager.utils;
+package cn.bookmanager.constant;
 
-/**常量
+/**
+ * Cookie And Session Name
  * @author lengqie
  */
 
-public enum ConstantsUtil {
+public enum CookieEnum {
+
     /**
-     * 已经存在
+     * 用户、管理员的 cookie session
      */
-    EXIST("exist"),
-    SESSION_ADMIN("session_admin"),
     COOKIE_ADMIN("cookie_admin"),
-    SESSION_USER("session_user"),
     COOKIE_USER("cookie_user"),
+    SESSION_ADMIN("session_admin"),
+    SESSION_USER("session_user"),
     ;
 
     private final String value;
 
-    ConstantsUtil(String value) {
+    CookieEnum(String value) {
         this.value = value;
     }
+
     public String value() {
         return this.value;
     }
+
 }

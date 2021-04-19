@@ -1,13 +1,12 @@
 package cn.bookmanager;
 
-import cn.bookmanager.utils.Base64Util;
-import cn.bookmanager.utils.ConstantsUtil;
+import cn.bookmanager.util.Base64Util;
 import org.junit.jupiter.api.Test;
 
 import java.util.Base64;
 
 
-public class TestYa {
+public class MyTest {
 
     @Test
     public void myTest() throws Exception {

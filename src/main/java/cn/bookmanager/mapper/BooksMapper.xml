@@ -6,7 +6,7 @@
 <mapper namespace="cn.bookmanager.mapper.BookMapper">
 
     <select id="getBooksInfo" parameterType="string" resultType="Book">
-        select * from book where Isbn = #{Isbn}
+        select * from book where Isbn = #{isbn}
     </select>
 
     <update id="addHot" parameterType="string">
