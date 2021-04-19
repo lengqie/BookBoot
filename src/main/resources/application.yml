@@ -14,7 +14,7 @@ spring:
 
 logging:
   level:
-    cn.bookmanager.mapper: debug
+    cn.bookmanager.mapper: DEBUG
 
 mybatis:
   type-aliases-package: cn.bookmanager.entity

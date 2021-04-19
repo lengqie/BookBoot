@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!--先定义所有的appender-->
+    <appenders>
+        <!--输出控制台的配置-->
+        <console name="Console" target="SYSTEM_OUT">
+            <!--输出日志的格式-->
+            <!--<patternlayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%p] %c %m
+            %n"/>-->
+            <patternlayout pattern="🐳 [%p] %m %n"/>
+        </console>
+    </appenders>
+    <!-- 然后定义logger，只有定义了logger并引入的appender，appender才会生效-->
+    <!-- 日志级别以及优先级排序: OFF > FATAL > ERROR > WARN > INFO > DEBUG > TRACE >
+    ALL -->
+    <loggers>
+        <root level="WARN">
+            <!--输出到控制台-->
+            <appender-ref ref="Console"/>
+        </root>
+        <!--org.springframework-->
+        <logger name="org.springframework" level="INFO"/>-->
+    </loggers>
+</configuration>
