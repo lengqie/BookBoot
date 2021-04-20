@@ -70,15 +70,6 @@ public interface UserMapper {
     int isUniqueName(String name);
 
 
-    /**
-     * 创建 预约书 @Deprecated
-     * @param isbn Isbn
-     * @param userId User.Id
-     * @param date *Time
-     * @return 查询的数量 存在返回1 不支持
-     */
-    int reserve(String isbn, String userId, Date date);
-
     /** 推荐购买
      * @param name Book.Name
      * @param isbn Isbn

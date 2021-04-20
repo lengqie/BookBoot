@@ -22,12 +22,12 @@ public interface AdminService {
      * @param name Admin.Name
      * @param password Admin.Password
      * @return Admin
+     * @deprecated
      */
-    @Deprecated
     Admin login(String name, String password);
 
     /**
-     * 登录
+     * 登录后 并设置Cookie
      * @param admin Admin
      * @param session HttpSession
      * @param request HttpSession
@@ -38,22 +38,10 @@ public interface AdminService {
 
     /**
      * 获取Admin
-     * @return
+     * @param name Admin.Name
+     * @return Admin
      */
-    Admin getAdmin();
-
-    Boolean updateUser(User user);
-
-    Recommend getRecommendById(String id);
-    Boolean updateRecord(String recordId, int success);
-    List<Recommend> getAllRecommend();
-
-
-    Boolean updateBook(Book book,String isbn);
-    Boolean addBook(String isbn, String name, String type, Date date);
-    Boolean delBook(String isbn);
-
-    Boolean addBookFromRecommend(String id);
+    Admin getAdmin(String name);
 
 
 }

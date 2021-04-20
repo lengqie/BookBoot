@@ -46,7 +46,6 @@ public class UserController {
         for (Cookie cookie : request.getCookies()) {
             if ("cookie_user".equals(cookie.getName())) {
                 String name = cookie.getValue();
-                // System.out.println(name);
                 name = Base64Util.decoder(name);
                 return userService.getUserByName(name);
             }
@@ -56,10 +55,11 @@ public class UserController {
 
     }
 
-
-    @PutMapping("/")
-    public void update(User user,HttpServletRequest request){
-        adminService.updateUser(user);
+    @PutMapping("/user")
+    public void updateUser(User user, HttpServletResponse response){
+        if (!userService.updateUser(user) ) {
+            response.setStatus(HttpStatus.BAD_REQUEST.value());
+        }
     }
 
     @PostMapping("/login")

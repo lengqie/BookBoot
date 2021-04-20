@@ -17,14 +17,14 @@
 
 
     <update id="updateRecord">
-        update record set success = #{success} where record_id = #{recordId};
+        update record set status = #{success} where record_id = #{recordId};
     </update>
 
     <resultMap id="recordMap" type="Record">
         <id column="record_id" property="recordId"/>
         <result column="time" property="time"/>
         <result column="days" property="days"/>
-        <result column="success" property="success"/>
+        <result column="status" property="status"/>
         <association property="book" column="isbn" select="cn.bookmanager.mapper.BookMapper.getBookByIsbn" javaType="Book"/>
         <association property="user" column="user_id" select="cn.bookmanager.mapper.UserMapper.getUserById" javaType="User"/>
     </resultMap>

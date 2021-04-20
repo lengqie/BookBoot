@@ -20,7 +20,7 @@ public class Recommend {
     private String name;
     private String isbn;
     private String type;
-    private int success;
+    private int status;
 
 
     private Date createTime;

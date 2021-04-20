@@ -25,28 +25,5 @@ public class IndexController {
     public String notFound(){
         return " 冇得权限 401！";
     }
-    @GetMapping("/all")
-    public List<?> getAllBooks(){
-        return indexService.getAllBooks();
-    }
-    @GetMapping("/all/order")
-    public List<?> getAllBooksOrderByHot(){
-        return indexService.getAllBooksOrderByHot();
-    }
-
-    @GetMapping("/search")
-    public List<?> getBookByName(String name){
-        return indexService.getBookByName(name);
-    }
-
-    @GetMapping("/type")
-    public List<String> getAllType(){
-        return indexService.geAllType();
-    }
-
-    @GetMapping("/type/{type}")
-    public List<Book> getBookByType(@PathVariable String type){
-        return indexService.getBooksByType(type);
-    }
 
 }

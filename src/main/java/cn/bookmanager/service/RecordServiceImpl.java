@@ -32,4 +32,9 @@ public class RecordServiceImpl implements RecordService {
     public List<Record> getRecordByUserId(String userId) {
         return recordMapper.getRecordByUserId(userId);
     }
+
+    @Override
+    public Boolean updateRecord(String recordId, int success) {
+        return recordMapper.updateRecord(recordId,success) == 1;
+    }
 }

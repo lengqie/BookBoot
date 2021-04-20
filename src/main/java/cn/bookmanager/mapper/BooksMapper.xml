@@ -13,6 +13,27 @@
         update book set hot =hot +1 where Isbn =#{Isbn};
     </update>
 
+    <select id="getAllBook" resultType="Book">
+        select * from book where status =1;
+    </select>
+
+    <select id="getAllBookOrderByHot" resultType="Book">
+        select * from book where status =1 order by hot desc limit 0,5;
+    </select>
+
+    <select id="getBookByName" resultType="Book" parameterType="string">
+        select * from book where status =1 and name like '%${name}%' order by hot desc;
+    </select>
+
+    <select id="geAllType" resultType="string" parameterType="Book">
+        select type from (
+                             select type, sum(hot) as total from book group by type order by total desc) as t;
+    </select>
+
+    <select id="getBookByType" resultType="Book">
+        select * from book where  status =1 and type = #{type} order by hot desc;
+    </select>
+
     <select id="getBookByIsbn" parameterType="string" resultType="Book">
         select * from book where Isbn =#{isbn};
     </select>
@@ -22,7 +43,7 @@
     </insert>
 
     <update id="delBook">
-        update book set online = 0 where isbn = #{isbn};
+        update book set status = 0 where isbn = #{isbn};
     </update>
 
     <update id="updateBook" parameterType="Book">
@@ -39,7 +60,7 @@
     <update id="returnBooks">
         update book set num = num + 1 where Isbn = #{isbn};
         update user set count = count - 1 where id = #{userId};
-        update record set success = 1, modified_time = #{modifiedTime} where record_id = #{recordId};
+        update record set status = 1, modified_time = #{modifiedTime} where record_id = #{recordId};
     </update>
 
 

@@ -20,8 +20,7 @@ public class Book {
     private int hot;
     private int num;
 
-
+    private int status;
     private Date createTime;
     private Date modifiedTime;
-    private int online;
 }

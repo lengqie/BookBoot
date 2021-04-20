@@ -38,12 +38,9 @@
         select * from user where name = #{name}
     </select>
 
-    <insert id="reserve">
-        insert  into reserve(isbn,user_id,success,create_time,modified_time) values (#{isbn},#{user_id},0,#{date},#{date});
-    </insert>
 
     <update id="recommend">
-        insert into recommend(name,isbn,type, success, create_time, modified_time) values (#{name},#{isbn},#{type},0,#{date},#{date})
+        insert into recommend(name,isbn,type, status, create_time, modified_time) values (#{name},#{isbn},#{type},0,#{date},#{date})
     </update>
 
 

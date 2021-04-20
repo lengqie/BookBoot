@@ -14,7 +14,7 @@
     <!-- 日志级别以及优先级排序: OFF > FATAL > ERROR > WARN > INFO > DEBUG > TRACE >
     ALL -->
     <loggers>
-        <root level="WARN">
+        <root level="Warn">
             <!--输出到控制台-->
             <appender-ref ref="Console"/>
         </root>

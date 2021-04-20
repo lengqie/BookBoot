@@ -1,5 +1,6 @@
 package cn.bookmanager.entity;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,22 +8,16 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 
 /**
+ * 逾期交易记录
  * @author lengqie
- * 预定书籍记录
- * 未实现
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Reserve {
-    private int id;
-
-    private String isbn;
-    private String userId;
-
-
-    private int success;
-
+public class Payment {
+    private long id;
+    private User user;
+    private Record record;
+    private Double amount;
     private Date createTime;
-    private Date modifiedTime;
 }

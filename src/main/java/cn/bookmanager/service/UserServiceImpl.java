@@ -1,5 +1,6 @@
 package cn.bookmanager.service;
 
+import cn.bookmanager.constant.CookieEnum;
 import cn.bookmanager.entity.User;
 import cn.bookmanager.mapper.UserMapper;
 import cn.bookmanager.util.Base64Util;
@@ -31,11 +32,11 @@ public class UserServiceImpl implements UserService {
         final int login = userMapper.isLogin(user);
         // 登录成功 则 写入Cookie！
         if (login ==1){
-            session.setAttribute("session_user",user);
-            Cookie cookieAdmin = new Cookie("cookie_user", Base64Util.encoder( user.getName() ) );
-            cookieAdmin.setMaxAge(60 * 60 * 24 * 7);
-            cookieAdmin.setPath("/");
-            response.addCookie(cookieAdmin);
+            session.setAttribute(CookieEnum.SESSION_USER.value(),user);
+            Cookie cookie = new Cookie(CookieEnum.COOKIE_USER.value(), Base64Util.encoder( user.getName() ) );
+            cookie.setMaxAge(60 * 60 * 24 * 7);
+            cookie.setPath("/");
+            response.addCookie(cookie);
 
             return true;
         }
@@ -57,6 +58,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Boolean updateUser(User user) {
+        final int i = userMapper.updateUser(user);
+        return i == 1;
+    }
+
+    @Override
     public void overduePay(String id) {
         userMapper.overduePay(id);
     }
@@ -64,15 +71,17 @@ public class UserServiceImpl implements UserService {
     @Override
     public String registered(String name, String password) {
         // 用户名 不能重复
+        // ali:A0111 用户名已存在
         final int i = userMapper.isUniqueName(name);
         if (i==1){
-            return "exist";
+            return "A0111";
         }
         String id = UUID.randomUUID().toString().replace("-","");
 
         Date date = new Date();
         userMapper.registered(id,name,password,date);
-        return "Ok";
+        // ali:00000 一切OK
+        return "00000";
     }
 
     @Override

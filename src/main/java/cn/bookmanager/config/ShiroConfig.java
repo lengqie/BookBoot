@@ -55,7 +55,7 @@ public class ShiroConfig {
 
         // 拦截器
         Map<String,String> filterChainDefinitionMap = new LinkedHashMap<>();
-        filterChainDefinitionMap.put("/index","anon");
+        filterChainDefinitionMap.put("/401","anon");
 
         filterChainDefinitionMap.put("/user/login","anon");
         filterChainDefinitionMap.put("/user/**","roles[user]");

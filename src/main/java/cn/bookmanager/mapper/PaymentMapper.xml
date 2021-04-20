@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.bookmanager.mapper.PaymentMapper">
+
+    <sql id="field">
+        select id,user_id,record_id,amount,create_time from payment
+    </sql>
+
+    <insert id="pay">
+        insert into payment values (#{id},#{userId},#{recordId},#{amount},#{date});
+    </insert>
+    <select id="getPaymentById" resultType="cn.bookmanager.entity.Payment">
+        <include refid="field"/> where id = #{id};
+    </select>
+    <select id="getAllPayment" resultType="cn.bookmanager.entity.Payment">
+        <include refid="field"/>
+    </select>
+
+</mapper>

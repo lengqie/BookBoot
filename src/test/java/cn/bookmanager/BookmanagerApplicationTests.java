@@ -1,11 +1,9 @@
 package cn.bookmanager;
 
 import cn.bookmanager.entity.Admin;
-import cn.bookmanager.entity.Record;
 import cn.bookmanager.mapper.AdminMapper;
-import cn.bookmanager.mapper.RecordMapper;
 import cn.bookmanager.service.AdminService;
-import cn.bookmanager.service.BooksService;
+import cn.bookmanager.service.BookService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -33,7 +31,7 @@ class BookmanagerApplicationTests {
     }
 
     @Autowired
-    BooksService booksService;
+    BookService bookService;
     @Test
     void SdfTest() throws ParseException {
         // booksService.borrowBooks("110-120-112-11", "2020", new Date(),30);

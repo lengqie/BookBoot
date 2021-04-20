@@ -19,7 +19,7 @@ public class Record {
     private User user;
     private Date time;
     private int days;
-    private int success;
+    private int status;
 
     private Date createTime;
     private Date modifiedTime;

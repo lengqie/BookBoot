@@ -14,62 +14,70 @@ import java.util.Date;
 public interface UserService {
 
     /**
-     * 判断 是否能够 登录
-     * @param user
-     * @return
+     * 登录
+     * @param user User
+     * @param session HttpSession
+     * @param request HttpServletRequest
+     * @param response HttpServletResponse
+     * @return 是否登录
      */
-
     Boolean isLogin(User user, HttpSession session, HttpServletRequest request, HttpServletResponse response);
 
 
     /**
      * 获取用户信息
-     * @param id
-     * @return
+     * @param id User.Id
+     * @return User
      */
     User getUserById(String id);
 
     /**
      * 获取用户信息
-     * @param name
-     * @return
+     * @param name User.Name
+     * @return User
      */
     User getUserByName(String name);
 
+    /**
+     * 修改User
+     * @param user User
+     * @return 是否修改成功
+     */
+    Boolean updateUser(User user);
 
 
     /**
      * 逾期扣款
-     * @param id
-     * @param cost
+     * @param id User.id
+     * @param cost User.Cost
      */
     void overdueCost(String id, double cost);
 
     /**
      * 逾期支付
-     * @param id
+     * @param id User.id
      */
     void overduePay(String id);
 
 
     /**
      * 注册用户
-     * @param name
-     * @param password
-     * @return
+     * @param name User.name
+     * @param password User.Password
+     * @return 状态
      */
     String registered(String name,String password);
 
     /**预约
-     * @param isbn
-     * @param userId
-     * @param date
-     * @return
+     * @param isbn Isbn
+     * @param userId User.Id
+     * @param date Date
+     * @return 是否成功
      */
     boolean reserve(String isbn, String userId, Date date);
 
     /**创建 一条新记录
-     * @param name
+     * @param name 
      * @param isbn
      * @param type
      * @param date

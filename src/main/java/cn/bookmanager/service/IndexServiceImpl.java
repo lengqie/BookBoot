@@ -17,42 +17,4 @@ import java.util.List;
 @Transactional(rollbackFor = Exception.class)
 public class IndexServiceImpl implements IndexService {
 
-    @Autowired
-    private IndexMapper indexMapper;
-
-    @Autowired
-    private BookMapper bookMapper;
-
-    @Override
-    public List<Book> getAllBooks() {
-        final List<Book> books = indexMapper.getAllBook();
-
-        return books;
-    }
-
-    @Override
-    public List<Book> getAllBooksOrderByHot() {
-        final List<Book> books = indexMapper.getAllBookOrderByHot();
-
-        return books;
-    }
-
-    @Override
-    public List<Book>  getBookByName(String name) {
-        final List<Book> books = indexMapper.getBookByName(name);
-        for (Book book : books) {
-            bookMapper.addHot(book.getIsbn());
-        }
-        return books;
-    }
-
-    @Override
-    public List<String> geAllType() {
-        return indexMapper.geAllType();
-    }
-
-    @Override
-    public List<Book> getBooksByType(String type) {
-        return indexMapper.getBookByType(type);
-    }
 }
