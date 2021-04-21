@@ -5,12 +5,21 @@
 
 <mapper namespace="cn.bookmanager.mapper.UserMapper">
 
+    <sql id="userField">
+#         select id, name, password, max, count, total, balance, create_time, status, modified_time from user
+        select id, name, max, count, total, balance, create_time, status, modified_time from user
+    </sql>
+
     <select id="isLogin" resultType="int" parameterType="User">
-    select count(1) from user where name=#{name} and password =#{password}
+        select count(1) from user where name=#{name} and password =#{password}
     </select>
 
     <select id="getUserById" resultType="cn.bookmanager.entity.User">
-        select * from user where id=#{id}
+        <include refid="userField"/> where id=#{id}
+    </select>
+
+    <select id="getUserByName" resultType="cn.bookmanager.entity.User">
+        <include refid="userField"/> where name = #{name}
     </select>
 
     <update id="updateUser" parameterType="User">
@@ -33,11 +42,6 @@
     <select id="isUniqueName" parameterType="string" resultType="int">
         select count(*) from user where name = #{name};
     </select>
-
-    <select id="getUserByName" resultType="cn.bookmanager.entity.User">
-        select * from user where name = #{name}
-    </select>
-
 
     <update id="recommend">
         insert into recommend(name,isbn,type, status, create_time, modified_time) values (#{name},#{isbn},#{type},0,#{date},#{date})

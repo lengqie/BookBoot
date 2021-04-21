@@ -15,13 +15,6 @@ import java.util.List;
 public interface BookMapper {
 
     /**
-     * 获取书籍的信息
-     * @param isbn ISBN
-     * @return Book
-     */
-    Book getBooksInfo(String isbn);
-
-    /**
      * 添加书籍的热度
      * @param isbn ISBN
      * @return 操作的数量 成功返回1
@@ -111,7 +104,6 @@ public interface BookMapper {
      * @param modifiedTime ModifiedTime
      */
     void returnBooks(String recordId,String isbn,String userId,Date modifiedTime);
-
 
 
 }

@@ -134,7 +134,7 @@ public class BookServiceImpl implements BookService {
         if (u.getBalance() <0){
             return "A0601";
         }
-        Book b = bookMapper.getBooksInfo(isbn);
+        Book b = bookMapper.getBookByIsbn(isbn);
         // 书库存不足
         // Alibaba错误码 数量超出限制 A0425
         if (b.getNum() == 0){
@@ -150,7 +150,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public String returnBooks(String recordId,String isbn, String userId,Date date) {
-        final Record record = recordMapper.getRecordByRecordId(recordId);
+        final Record record = recordMapper.getRecordById(recordId);
 
         int days =record.getDays();
 

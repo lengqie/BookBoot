@@ -21,8 +21,8 @@ public class PaymentServiceImpl implements PaymentService {
     PaymentMapper paymentMapper;
 
     @Override
-    public boolean pay(long id, String userId, String recordId, Double amount, Date date) {
-        return paymentMapper.pay(id,userId,recordId,amount,date)==1;
+    public boolean pay(String userId, String recordId, Double amount, Date date) {
+        return paymentMapper.pay(userId,recordId,amount,date)==1;
     }
 
     @Override

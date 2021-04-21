@@ -74,7 +74,8 @@ public interface UserService {
      * @param date Date
      * @return 是否成功
      */
-    boolean reserve(String isbn, String userId, Date date);
+    // @Deprecated
+    // boolean reserve(String isbn, String userId, Date date);
 
     /**创建 一条新记录
      * @param name 

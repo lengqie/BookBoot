@@ -25,7 +25,7 @@ public class RecordServiceImpl implements RecordService {
 
     @Override
     public Record getRecordByRecordId(String recordId) {
-        return recordMapper.getRecordByRecordId(recordId);
+        return recordMapper.getRecordById(recordId);
     }
 
     @Override

@@ -26,4 +26,10 @@ public class MyTest {
         System.out.println(Base64Util.decoder("SGVsbG9GbGFn").substring(0,s.length() - 4));
         System.out.println(Base64.getEncoder().encodeToString(s.getBytes()));
     }
+
+    @Test
+    public void Base64(){
+        System.out.println(Base64Util.encoder("li4"));
+        System.out.println(Base64Util.decoder("bGk0RmxhZw"));
+    }
 }

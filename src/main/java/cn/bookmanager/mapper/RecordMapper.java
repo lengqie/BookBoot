@@ -23,7 +23,7 @@ public interface RecordMapper {
      * @param recordId Record.Id
      * @return Record
      */
-    Record getRecordByRecordId(String recordId);
+    Record getRecordById(String recordId);
     /**
      * 通过id 获取记录
      * @param userId User.Id

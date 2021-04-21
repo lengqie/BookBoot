@@ -5,23 +5,27 @@
 
 <mapper namespace="cn.bookmanager.mapper.RecordMapper">
 
+    <sql id="recordField">
+        select id, isbn, user_id, days, status, create_time, modified_time from record
+    </sql>
+
     <select id="getAllRecord" resultMap="recordMap">
-        select * from record;
+       <include refid="recordField"/>
     </select>
-    <select id="getRecordByRecordId" resultMap="recordMap">
-        select * from record where record_id = #{recordId};
+    <select id="getRecordById" resultMap="recordMap">
+        <include refid="recordField"/>where id = #{recordId};
     </select>
     <select id="getRecordByUserId" resultMap="recordMap">
-        select * from record where user_id = #{userId};
+        <include refid="recordField"/> where user_id = #{userId};
     </select>
 
 
     <update id="updateRecord">
-        update record set status = #{success} where record_id = #{recordId};
+        update record set status = #{success} where id = #{recordId};
     </update>
 
     <resultMap id="recordMap" type="Record">
-        <id column="record_id" property="recordId"/>
+        <id column="record_id" property="id"/>
         <result column="time" property="time"/>
         <result column="days" property="days"/>
         <result column="status" property="status"/>

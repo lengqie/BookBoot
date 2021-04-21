@@ -120,14 +120,6 @@ public class UserController {
         return recordService.getRecordByUserId(user.getId());
     }
 
-    @PostMapping("/reserve")
-    public void reserve(String isbn, String userId, HttpServletResponse response){
-        Date date = new Date();
-        if (!userService.reserve(isbn,userId,date)) {
-            // 406 not acceptable
-            response.setStatus(HttpStatus.NOT_ACCEPTABLE.value());
-        }
-    }
 
     @PostMapping("/recommend")
     public void recommend(String name, String isbn,String type, HttpServletResponse response){

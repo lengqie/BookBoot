@@ -67,7 +67,7 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/v3/api-docs/**","anon");
 
 
-        filterChainDefinitionMap.put("/**", "authc");
+        filterChainDefinitionMap.put("/**", "anon");
         bean.setFilterChainDefinitionMap(filterChainDefinitionMap);
 
         return bean;

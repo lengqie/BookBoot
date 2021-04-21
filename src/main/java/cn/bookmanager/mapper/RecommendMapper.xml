@@ -5,11 +5,16 @@
 
 <mapper namespace="cn.bookmanager.mapper.RecommendMapper">
 
+    <sql id="recommendField">
+        select id, name, isbn, type, status, create_time, modified_time from recommend
+    </sql>
+
     <select id="getAllRecommend" resultType="cn.bookmanager.entity.Recommend">
-        select * from recommend;
+       <include refid="recommendField"/>
     </select>
     <select id="getRecommendById" resultType="cn.bookmanager.entity.Recommend">
-        select * from recommend where id = #{id};
+        <include refid="recommendField"/>
+        where id = #{id};
     </select>
     <insert id="addBookFromRecommend">
         update recommend set status = 1 , modified_time = #{data} where id = #{id};

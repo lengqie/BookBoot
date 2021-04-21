@@ -5,18 +5,29 @@
 
 <mapper namespace="cn.bookmanager.mapper.PaymentMapper">
 
-    <sql id="field">
+    <sql id="paymentField">
         select id,user_id,record_id,amount,create_time from payment
     </sql>
 
     <insert id="pay">
-        insert into payment values (#{id},#{userId},#{recordId},#{amount},#{date});
+        insert into payment (user_id,record_id,amount,create_time) values (#{userId},#{recordId},#{amount},#{date});
     </insert>
-    <select id="getPaymentById" resultType="cn.bookmanager.entity.Payment">
-        <include refid="field"/> where id = #{id};
+    <select id="getPaymentById" resultMap="paymentMap">
+        <include refid="paymentField"/> where id = #{id};
     </select>
-    <select id="getAllPayment" resultType="cn.bookmanager.entity.Payment">
-        <include refid="field"/>
+    <select id="getAllPayment" resultMap="paymentMap">
+        <include refid="paymentField"/>
     </select>
+
+
+    <resultMap id="paymentMap" type="Payment">
+        <id column="id" property="id"/>
+        <result column="amount" property="amount"/>
+        <result column="create_time" property="createTime"/>
+
+        <association property="user" column="user_id" select="cn.bookmanager.mapper.UserMapper.getUserById" javaType="User"/>
+        <association property="record" column="record_id" select="cn.bookmanager.mapper.RecordMapper.getRecordById" javaType="Record"/>
+
+    </resultMap>
 
 </mapper>

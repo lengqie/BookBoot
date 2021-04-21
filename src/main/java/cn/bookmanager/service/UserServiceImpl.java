@@ -84,11 +84,6 @@ public class UserServiceImpl implements UserService {
         return "00000";
     }
 
-    @Override
-    public boolean reserve(String isbn, String userId, Date date) {
-        final int i = userMapper.reserve(isbn, userId, date);
-        return i == 1;
-    }
 
     @Override
     public boolean recommend(String name, String isbn, String type, Date date) {
