@@ -20,7 +20,7 @@ public class Admin {
     private String password;
 
     private Date createTime;
-    private Date modifiedTime;
+    private Date updateTime;
     /**
      * 添加 只有账号密码的 构造 方法
      * @param name

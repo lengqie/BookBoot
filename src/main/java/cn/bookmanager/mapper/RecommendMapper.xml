@@ -17,7 +17,7 @@
         where id = #{id};
     </select>
     <insert id="addBookFromRecommend">
-        update recommend set status = 1 , modified_time = #{data} where id = #{id};
+        update recommend set status = 1 , update_time = #{data} where id = #{id};
     </insert>
 
 </mapper>

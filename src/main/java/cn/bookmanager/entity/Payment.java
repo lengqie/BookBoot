@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -18,6 +19,6 @@ public class Payment {
     private long id;
     private User user;
     private Record record;
-    private Double amount;
+    private BigDecimal amount;
     private Date createTime;
 }

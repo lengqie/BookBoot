@@ -6,8 +6,11 @@
 <mapper namespace="cn.bookmanager.mapper.BookMapper">
 
     <sql id="bookField">
-        select isbn, name, type, hot, num, status, create_time, modified_time from book
+        select isbn, name, type, hot, num, status, create_time, update_time from book
     </sql>
+
+    <sql id="userColumns"> ${alias}.id,${alias}.username,${alias}.password </sql>
+
 
     <update id="addHot" parameterType="string">
         update book set hot =hot +1 where Isbn =#{Isbn};
@@ -18,7 +21,10 @@
     </select>
 
     <select id="getAllBookOrderByHot" resultType="Book">
-        <include refid="bookField"/> where status =1 order by hot desc limit 0,5;
+       select isbn, name, type, hot, num, status, create_time, update_time
+            from book where status =1
+                order by hot desc LIMIT 0,5;
+        <!-- <include refid="bookField"></include>where status =1 order by hot desc LIMIT 0,5; -->
     </select>
 
     <select id="getBookByName" resultType="Book" parameterType="string">
@@ -39,7 +45,7 @@
     </select>
 
     <insert id="addBook">
-        insert into book(isbn, name, type, create_time, modified_time) VALUES (#{isbn},#{name},#{type},#{date},#{date});
+        insert into book(isbn, name, type, create_time, update_time) VALUES (#{isbn},#{name},#{type},#{date},#{date});
     </insert>
 
     <update id="delBook">
@@ -47,7 +53,7 @@
     </update>
 
     <update id="updateBook" parameterType="Book">
-        update book set isbn =#{isbn},name =#{name}, type = #{type}, num = #{num} ,modified_time =#{modifiedTime} where isbn = #{isbn};
+        update book set isbn =#{isbn},name =#{name}, type = #{type}, num = #{num} ,update_time =#{modifiedTime} where isbn = #{isbn};
     </update>
 
     <update id="borrowBooks">
@@ -60,7 +66,7 @@
     <update id="returnBooks">
         update book set num = num + 1 where Isbn = #{isbn};
         update user set count = count - 1 where id = #{userId};
-        update record set status = 1, modified_time = #{modifiedTime} where record_id = #{recordId};
+        update record set status = 1, update_time = #{modifiedTime} where id = #{recordId};
     </update>
 
 

@@ -1,7 +1,9 @@
 package cn.bookmanager;
 
+import cn.bookmanager.constant.StatusEnum;
 import cn.bookmanager.util.Base64Util;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.HttpStatus;
 
 import java.util.Base64;
 
@@ -31,5 +33,11 @@ public class MyTest {
     public void Base64(){
         System.out.println(Base64Util.encoder("li4"));
         System.out.println(Base64Util.decoder("bGk0RmxhZw"));
+    }
+
+    @Test
+    public void statusEnum(){
+        System.out.println(StatusEnum.OK.equals("00000"));
+        // System.out.println(HttpStatus.OK.value());
     }
 }

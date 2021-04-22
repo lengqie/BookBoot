@@ -38,6 +38,7 @@ public interface BookService {
 
     /**
      * 通过书名查询数据
+     * @param name Book.Name
      * @return Books
      */
     List<Book> getBookByName(String name);
@@ -56,6 +57,11 @@ public interface BookService {
      */
     List<Book> getBooksByType(String type);
 
+    /**
+     * 通过ID获取Boot
+     * @param isbn Isbn
+     * @return Book
+     */
     Book getBookByIsbn(String isbn);
 
     /**

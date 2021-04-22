@@ -5,7 +5,7 @@
 
 <mapper namespace="cn.bookmanager.mapper.AdminMapper">
     <sql id="adminField">
-        select id, name, password, create_time, modified_time from admin
+        select id, name, password, create_time, update_time from admin
     </sql>
 
     <select id="login" resultType="cn.bookmanager.entity.Admin">

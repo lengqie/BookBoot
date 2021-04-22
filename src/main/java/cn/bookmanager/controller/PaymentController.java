@@ -23,7 +23,7 @@ public class PaymentController {
     PaymentService paymentService;
 
     @PutMapping("/pay")
-    public void addPayment(long id, String userId, String recordId, Double amount, HttpServletResponse response){
+    public void addPayment(String userId, String recordId, Double amount, HttpServletResponse response){
         Date date =new Date();
 
         if (paymentService.pay(userId, recordId, amount,date)) {

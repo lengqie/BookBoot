@@ -42,14 +42,14 @@ public interface UserMapper {
 
     /**
      * 逾期费用
-     * @param id User.id
+     * @param id User.Id
      * @param cost User.Cost
      */
     void overdueCost(String id, double cost);
 
     /**
      * 逾期支付
-     * @param id User.id
+     * @param id User.Id
      */
     void overduePay(String id);
 

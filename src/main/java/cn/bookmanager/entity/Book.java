@@ -22,5 +22,5 @@ public class Book {
 
     private int status;
     private Date createTime;
-    private Date modifiedTime;
+    private Date updateTime;
 }

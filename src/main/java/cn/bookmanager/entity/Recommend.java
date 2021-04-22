@@ -24,6 +24,6 @@ public class Recommend {
 
 
     private Date createTime;
-    private Date modifiedTime;
+    private Date updateTime;
 
 }

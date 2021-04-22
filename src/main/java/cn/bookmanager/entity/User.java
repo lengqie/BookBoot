@@ -24,12 +24,12 @@ public class User {
 
 
     private Date createTime;
-    private Date modifiedTime;
+    private Date updateTime;
 
     /**
      * 添加 只有账号密码的 构造 方法
-     * @param name
-     * @param password
+     * @param name User.Name
+     * @param password User.password
      */
     public User(String name, String password) {
         this.name = name;

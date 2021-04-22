@@ -1,5 +1,6 @@
 package cn.bookmanager.controller;
 
+import cn.bookmanager.constant.CookieEnum;
 import cn.bookmanager.entity.*;
 import cn.bookmanager.service.AdminService;
 import cn.bookmanager.service.RecordService;
@@ -30,10 +31,15 @@ public class AdminController {
     @Autowired
     private AdminService adminService;
 
-    @Autowired
-    private RecordService recordService;
 
-
+    /**
+     * anon 管理员登录
+     * @param name     Admin.Name
+     * @param password Admin.Password
+     * @param session  Session
+     * @param request  equest
+     * @param response response
+     */
     @PostMapping("/login")
     public void login(String name, String password, HttpSession session, HttpServletRequest request, HttpServletResponse response){
 
@@ -48,18 +54,15 @@ public class AdminController {
         response.setStatus(HttpStatus.ACCEPTED.value());
     }
 
-    @GetMapping("/info")
-    public Admin info(){
-        SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-
-        System.out.println();
-        return adminService.getAdmin("root");
-    }
-
+    /**
+     * roles[admin] 管理员注销
+     * @param session  session
+     * @param response response
+     */
     @GetMapping("/logout")
     public void logout(HttpSession session, HttpServletResponse response) {
-        session.removeAttribute("session_admin");
-        Cookie cookieUsername = new Cookie("cookie_admin", "");
+        session.removeAttribute(CookieEnum.SESSION_ADMIN.value());
+        Cookie cookieUsername = new Cookie(CookieEnum.COOKIE_USER.value(), "");
         cookieUsername.setMaxAge(0);
         cookieUsername.setPath("/");
         response.addCookie(cookieUsername);
@@ -67,5 +70,16 @@ public class AdminController {
         // 302
         response.setStatus(HttpStatus.FOUND.value());
         // return ReturnMapUtils.getMap("500","username or password error!");
+    }
+
+    /**
+     * roles[admin] 获取管理员信息
+     * @param adminName Admin.Name
+     * @return
+     */
+    @GetMapping("/{adminName}")
+    public Admin info(@PathVariable String adminName){
+        SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+        return adminService.getAdmin(adminName);
     }
 }
