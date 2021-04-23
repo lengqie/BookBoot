@@ -6,7 +6,7 @@
 <mapper namespace="cn.bookmanager.mapper.RecommendMapper">
 
     <sql id="recommendField">
-        select id, name, isbn, type, status, create_time, modified_time from recommend
+        select id, name, isbn, type, status, create_time, update_time from recommend
     </sql>
 
     <select id="getAllRecommend" resultType="cn.bookmanager.entity.Recommend">
@@ -19,5 +19,11 @@
     <insert id="addBookFromRecommend">
         update recommend set status = 1 , update_time = #{data} where id = #{id};
     </insert>
+
+
+    <update id="recommend">
+        insert into recommend(name,isbn,type, status, create_time, update_time) values (#{name},#{isbn},#{type},0,#{date},#{date})
+    </update>
+
 
 </mapper>

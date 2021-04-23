@@ -1,5 +1,7 @@
 package cn.bookmanager.controller;
 
+import cn.bookmanager.constant.CookieEnum;
+import cn.bookmanager.constant.StatusEnum;
 import cn.bookmanager.entity.Record;
 import cn.bookmanager.entity.User;
 import cn.bookmanager.service.AdminService;
@@ -34,9 +36,12 @@ public class UserController {
     @Autowired
     private RecordService recordService;
 
-    @Autowired
-    private AdminService adminService;
 
+    /**
+     * roles[user] 获取用户自己的信息
+     * @param request  request
+     * @param response response
+     */
     @GetMapping("/")
     public User index(HttpServletRequest request,HttpServletResponse response){
 
@@ -44,7 +49,7 @@ public class UserController {
         System.out.println(subject.getPrincipal());
 
         for (Cookie cookie : request.getCookies()) {
-            if ("cookie_user".equals(cookie.getName())) {
+            if (CookieEnum.COOKIE_USER.value().equals(cookie.getName())) {
                 String name = cookie.getValue();
                 name = Base64Util.decoder(name);
                 return userService.getUserByName(name);
@@ -55,6 +60,11 @@ public class UserController {
 
     }
 
+    /**
+     * roles[user] 修改用户
+     * @param user User
+     * @param response response
+     */
     @PutMapping("/user")
     public void updateUser(User user, HttpServletResponse response){
         if (!userService.updateUser(user) ) {
@@ -62,6 +72,14 @@ public class UserController {
         }
     }
 
+    /**
+     * anon 用户登录
+     * @param name  User.Name
+     * @param password  User.Password
+     * @param session   session
+     * @param request   request
+     * @param response  response
+     */
     @PostMapping("/login")
     public void login(String name, String password, HttpSession session, HttpServletRequest request, HttpServletResponse response){
 
@@ -76,13 +94,18 @@ public class UserController {
 
     }
 
+    /**
+     * roles[user] 登出
+     * @param session  session
+     * @param response response
+     */
     @PostMapping("/logout")
     public void logout(HttpSession session, HttpServletResponse response) {
 
         //Shiro
         Subject subject  = SecurityUtils.getSubject();
 
-        System.out.println(((String) subject.getPrincipal()) +  "logout 了！");
+        System.out.println(subject.getPrincipal() +  "logout 了！");
 
         session.removeAttribute("session_user");
         Cookie cookieUsername = new Cookie("cookie_user", "");
@@ -96,36 +119,31 @@ public class UserController {
         // 302
         response.setStatus(HttpStatus.FOUND.value());
     }
-    @PostMapping("/pay")
-    public void pay(String id){
-        System.out.println(id);
-        userService.overduePay(id);
+
+    /**
+     * roles[user] 用户支付
+     * @param userId User.Id
+     */
+    @PostMapping("/pay/{userId}")
+    public void pay(@PathVariable String userId){
+        userService.overduePay(userId);
     }
 
+    /**
+     * anon 注册
+     * @param name      name
+     * @param password  password
+     * @param response  response
+     */
     @PostMapping("/register")
     public void register(String name, String password, HttpServletResponse response){
 
         final String s = userService.registered(name, password);
 
         // '409' : 'Conflict', //指令冲突
-        if ("exist".equals(s)){
+        if (StatusEnum.ALREADY_EXISTS.value().equals(s)){
             response.setStatus(HttpStatus.CONFLICT.value());
         }
     }
 
-    @GetMapping("/record")
-    public List<Record> getUserRecord(HttpSession session){
-        final User user = (User) session.getAttribute("session_user");
-
-        return recordService.getRecordByUserId(user.getId());
-    }
-
-
-    @PostMapping("/recommend")
-    public void recommend(String name, String isbn,String type, HttpServletResponse response){
-        Date date = new Date();
-        if (!userService.recommend(name,isbn,type,date)){
-            response.setStatus(HttpStatus.NOT_ACCEPTABLE.value());
-        }
-    }
 }

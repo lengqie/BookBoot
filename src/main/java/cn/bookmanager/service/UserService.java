@@ -77,14 +77,4 @@ public interface UserService {
     // @Deprecated
     // boolean reserve(String isbn, String userId, Date date);
 
-    /**创建 一条新记录
-     * @param name 
-     * @param isbn
-     * @param type
-     * @param date
-     * @return
-     */
-    boolean recommend(String name, String isbn,String type, Date date);
-
-
 }

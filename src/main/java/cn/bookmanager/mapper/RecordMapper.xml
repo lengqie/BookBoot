@@ -21,7 +21,7 @@
 
 
     <update id="updateRecord">
-        update record set status = #{success} where id = #{recordId};
+        update record set status = #{status} where id = #{recordId};
     </update>
 
     <resultMap id="recordMap" type="Record">

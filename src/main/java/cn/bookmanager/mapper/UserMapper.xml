@@ -43,9 +43,4 @@
         select count(*) from user where name = #{name};
     </select>
 
-    <update id="recommend">
-        insert into recommend(name,isbn,type, status, create_time, update_time) values (#{name},#{isbn},#{type},0,#{date},#{date})
-    </update>
-
-
 </mapper>

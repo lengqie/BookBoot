@@ -34,8 +34,8 @@ public interface RecordMapper {
     /**
      * 修改记录
      * @param recordId Record.Id
-     * @param  success Success
+     * @param  status status
      * @return 操作的数量 一般是将状态码设置为 1
      */
-    int updateRecord(String recordId, int success);
+    int updateRecord(String recordId, int status);
 }

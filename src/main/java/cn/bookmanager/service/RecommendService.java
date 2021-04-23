@@ -2,6 +2,7 @@ package cn.bookmanager.service;
 
 import cn.bookmanager.entity.Recommend;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -22,5 +23,15 @@ public interface RecommendService {
      * @return Recommend
      */
     Recommend getRecommendById(String id);
+
+    /**创建 一条新记录
+     * @param name name
+     * @param isbn isbn
+     * @param type type
+     * @param date date
+     * @return
+     */
+    boolean recommend(String name, String isbn,String type, Date date);
+
 
 }

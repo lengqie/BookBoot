@@ -33,4 +33,14 @@ public interface RecommendMapper {
      * @param date Date
      */
     void addBookFromRecommend(int id, Date date);
+
+
+    /** 推荐购买
+     * @param name Book.Name
+     * @param isbn Isbn
+     * @param type Book.Type
+     * @param date Book.*Time
+     * @return  操作的数量 成功返回1
+     */
+    int recommend(String name, String isbn,String type, Date date);
 }

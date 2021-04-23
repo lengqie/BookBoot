@@ -22,6 +22,13 @@ public class PaymentController {
     @Autowired
     PaymentService paymentService;
 
+    /**
+     * roles[user]支付 记录
+     * @param userId    User.Id
+     * @param recordId  Record.Id
+     * @param amount    Payment.Amount
+     * @param response  response
+     */
     @PutMapping("/pay")
     public void addPayment(String userId, String recordId, Double amount, HttpServletResponse response){
         Date date =new Date();
@@ -32,6 +39,11 @@ public class PaymentController {
         response.setStatus(HttpStatus.BAD_REQUEST.value());
     }
 
+    /**
+     * roles[admin] 获取全部支付记录
+     * @param response response
+     * @return
+     */
     @GetMapping("/pay")
     public List<Payment> getAllPayment(HttpServletResponse response){
         final List<Payment> allPayment = paymentService.getAllPayment();
@@ -42,6 +54,12 @@ public class PaymentController {
         return allPayment;
     }
 
+    /**
+     * roles[admin]
+     * @param id Payment.Id
+     * @param response response
+     * @return
+     */
     @GetMapping("/pay/{id}")
     public Payment getPaymentById(@PathVariable long id, HttpServletResponse response){
         final Payment payment = paymentService.getPaymentById(id);

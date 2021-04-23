@@ -34,7 +34,7 @@ public class RecordServiceImpl implements RecordService {
     }
 
     @Override
-    public Boolean updateRecord(String recordId, int success) {
-        return recordMapper.updateRecord(recordId,success) == 1;
+    public Boolean updateRecord(String recordId, int status) {
+        return recordMapper.updateRecord(recordId,status) == 1;
     }
 }

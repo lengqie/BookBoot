@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -28,5 +29,12 @@ public class RecommendServiceImpl implements RecommendService {
     @Override
     public Recommend getRecommendById(String id) {
         return recommendMapper.getRecommendById(id);
+    }
+
+
+    @Override
+    public boolean recommend(String name, String isbn, String type, Date date) {
+        final int i = recommendMapper.recommend(name, isbn ,type, date);
+        return i == 1;
     }
 }

@@ -30,9 +30,9 @@ public interface RecordService {
     /**
      * 更新记录
      * @param recordId Record.Id
-     * @param success status
+     * @param status status
      * @return 是否成功更新
      */
-    Boolean updateRecord(String recordId, int success);
+    Boolean updateRecord(String recordId, int status);
 
 }

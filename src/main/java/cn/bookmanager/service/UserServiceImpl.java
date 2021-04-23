@@ -84,12 +84,4 @@ public class UserServiceImpl implements UserService {
         return "00000";
     }
 
-
-    @Override
-    public boolean recommend(String name, String isbn, String type, Date date) {
-        final int i = userMapper.recommend(name, isbn ,type, date);
-        return i == 1;
-    }
-
-
 }
