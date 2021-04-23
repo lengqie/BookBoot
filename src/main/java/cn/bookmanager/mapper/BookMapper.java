@@ -80,11 +80,12 @@ public interface BookMapper {
     int addBook(String isbn,String name,String type, Date date);
 
     /**
-     * 添加书籍
+     * 修改书籍的状态
      * @param isbn Isbn
+     * @param status Book
      * @return 操作的数量 成功返回1
      */
-    int delBook(String isbn);
+    int setBookStatus(String isbn,int status);
 
     /**
      * 借书
@@ -94,7 +95,7 @@ public interface BookMapper {
      * @param createTime CreateTime
      * @param days Days
      */
-    void borrowBooks(String recordId, String isbn, String userId, Date createTime, int days);
+    void borrowBook(String recordId, String isbn, String userId, Date createTime, int days);
 
     /**
      * 还书
@@ -103,7 +104,7 @@ public interface BookMapper {
      * @param userId User.Id
      * @param modifiedTime ModifiedTime
      */
-    void returnBooks(String recordId,String isbn,String userId,Date modifiedTime);
+    void returnBook(String recordId,String isbn,String userId,Date modifiedTime);
 
 
 }

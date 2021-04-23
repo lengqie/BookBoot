@@ -68,7 +68,7 @@ public class RecommendController {
      * @param response response
      * @return
      */
-    @GetMapping("/recommend")
+    @GetMapping("/recommend/my")
     public Recommend getMyRecommend(HttpServletResponse response, HttpSession session){
         User user =  (User) session.getAttribute(CookieEnum.COOKIE_USER.value());
 

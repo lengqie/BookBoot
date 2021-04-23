@@ -1,9 +1,8 @@
 package cn.bookmanager.controller;
 
 import cn.bookmanager.constant.CookieEnum;
-import cn.bookmanager.entity.*;
+import cn.bookmanager.entity.Admin;
 import cn.bookmanager.service.AdminService;
-import cn.bookmanager.service.RecordService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -16,7 +15,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.List;
 
 /**
  * @author lengqie

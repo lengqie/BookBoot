@@ -8,9 +8,12 @@ package cn.bookmanager.constant;
 public enum RoleEnum {
 
     /**
-     * 用户、管理员的 cookie session
+     * admin
      */
     ADMIN("admin"),
+    /**
+     * user
+     */
     USER("user")
     ;
 

@@ -1,5 +1,7 @@
 package cn.bookmanager.service;
 
+import cn.bookmanager.constant.ErrorStatusEnum;
+import cn.bookmanager.constant.StatusEnum;
 import cn.bookmanager.entity.Book;
 import cn.bookmanager.entity.Recommend;
 import cn.bookmanager.entity.Record;
@@ -105,7 +107,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Boolean delBook(String isbn) {
-        return bookMapper.delBook(isbn)!=1;
+        return bookMapper.setBookStatus(isbn, StatusEnum.DELETE.getCode() )!=1;
     }
 
     @Override
@@ -127,25 +129,26 @@ public class BookServiceImpl implements BookService {
         //  超出最大额度
         // Alibaba错误码 数量超出限制
         if (u.getMax() == u.getCount()) {
-            return "A0425";
+            // return "A0425";
+            return ErrorStatusEnum.OUT_OF_LIMIT.value();
         }
         // 已欠费
         // Alibaba错误码 账户余额不足 A0601
         if (u.getBalance() <0){
-            return "A0601";
+            return ErrorStatusEnum.INSUFFICIENT_BALANCE.value();
         }
         Book b = bookMapper.getBookByIsbn(isbn);
         // 书库存不足
         // Alibaba错误码 数量超出限制 A0425
         if (b.getNum() == 0){
-            return "A0425";
+            return ErrorStatusEnum.OUT_OF_LIMIT.value();
         }
 
         String recordId = UUID.randomUUID().toString().replace("-","");
 
-        bookMapper.borrowBooks(recordId,isbn,userId,time,days);
+        bookMapper.borrowBook(recordId,isbn,userId,time,days);
         // Alibaba错误码 00000 一切ok
-        return "00000";
+        return ErrorStatusEnum.OK.value();
     }
 
     @Override
@@ -164,12 +167,12 @@ public class BookServiceImpl implements BookService {
             // userMapper.overdueCost(userId,arrears);
             // return -arrears + "￥ in arrears";
             // ali: 余额不足
-            return "A0601";
+            return ErrorStatusEnum.INSUFFICIENT_BALANCE.value();
         }
-        bookMapper.returnBooks(recordId,isbn,userId,date);
+        bookMapper.returnBook(recordId,isbn,userId,date);
 
         // ali:00000 一切OK
-        return "00000";
+        return ErrorStatusEnum.OK.value();
     }
 
 }

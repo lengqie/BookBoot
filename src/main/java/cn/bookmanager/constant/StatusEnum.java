@@ -1,37 +1,47 @@
 package cn.bookmanager.constant;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
- * 错误码（来自于阿里巴巴代码规范）
+ * 状态码
  * @author lengqie
  */
 
 public enum StatusEnum {
-    
-    /*
-    Alibaba错误码 00000 一切ok
+    /**
+     * Ok
      */
-    OK("00000"),
-    /*
+    OK(0,"ok"),
+    /**
+     * 下架状态（书籍）
+     */
+    OFF_THE_SHELF(-1,"off the shelf"),
 
+    /**
+     * 数量不足（书籍）
      */
-    OUT_OF_LIMIT("A0425"),
-    /*
+    DEFICIENCY(1,"deficiency"),
+    /**
+     * 冻结（用户）
+     */
+    FREEZE(-1,"freeze"),
 
+    /**
+     * 删除 delete
      */
-    INSUFFICIENT_BALANCE("A0601"),
-    /*
-     Alibaba错误码 A0111 用户名已存在
-     */
-    ALREADY_EXISTS("A0111"),
+    DELETE(-2,"delete"),
+
     ;
-    private final String value;
+    @Setter
+    @Getter
+    private int code;
+    @Setter
+    @Getter
+    private String desc;
 
-    StatusEnum(String value){
-        this.value = value;
+    StatusEnum(int code, String desc){
+        this.code = code;
+        this.desc = desc;
     }
-
-    public String value(){
-        return this.value;
-    }
-
 }

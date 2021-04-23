@@ -8,11 +8,20 @@ package cn.bookmanager.constant;
 public enum CookieEnum {
 
     /**
-     * 用户、管理员的 cookie session
+     * cookie_admin
      */
     COOKIE_ADMIN("cookie_admin"),
+    /**
+     * cookie_user
+     */
     COOKIE_USER("cookie_user"),
+    /**
+     * session_admin
+     */
     SESSION_ADMIN("session_admin"),
+    /**
+     * session_user
+     */
     SESSION_USER("session_user"),
     ;
 

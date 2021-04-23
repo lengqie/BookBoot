@@ -1,11 +1,8 @@
 package cn.bookmanager.controller;
 
 import cn.bookmanager.constant.CookieEnum;
-import cn.bookmanager.constant.StatusEnum;
-import cn.bookmanager.entity.Record;
+import cn.bookmanager.constant.ErrorStatusEnum;
 import cn.bookmanager.entity.User;
-import cn.bookmanager.service.AdminService;
-import cn.bookmanager.service.RecordService;
 import cn.bookmanager.service.UserService;
 import cn.bookmanager.util.Base64Util;
 import org.apache.shiro.SecurityUtils;
@@ -19,8 +16,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.Date;
-import java.util.List;
 
 /**
  * @author lengqie
@@ -32,9 +27,6 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private RecordService recordService;
 
 
     /**
@@ -141,7 +133,7 @@ public class UserController {
         final String s = userService.registered(name, password);
 
         // '409' : 'Conflict', //指令冲突
-        if (StatusEnum.ALREADY_EXISTS.value().equals(s)){
+        if (ErrorStatusEnum.ALREADY_EXISTS.value().equals(s)){
             response.setStatus(HttpStatus.CONFLICT.value());
         }
     }

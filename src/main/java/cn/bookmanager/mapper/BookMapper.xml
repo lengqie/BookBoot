@@ -48,22 +48,22 @@
         insert into book(isbn, name, type, create_time, update_time) VALUES (#{isbn},#{name},#{type},#{date},#{date});
     </insert>
 
-    <update id="delBook">
-        update book set status = 0 where isbn = #{isbn};
+    <update id="setBookStatus">
+        update book set status = #{status} where isbn = #{isbn};
     </update>
 
     <update id="updateBook" parameterType="Book">
         update book set isbn =#{isbn},name =#{name}, type = #{type}, num = #{num} ,update_time =#{modifiedTime} where isbn = #{isbn};
     </update>
 
-    <update id="borrowBooks">
+    <update id="borrowBook">
         update book set num = num - 1 where Isbn = #{isbn};
         update user set count = count + 1 where id = #{userId};
         update user set total = total + 1 where id = #{userId};
         insert into record values (#{recordId},#{isbn},#{userId},#{createTime},#{days},0,#{createTime});
     </update>
 
-    <update id="returnBooks">
+    <update id="returnBook">
         update book set num = num + 1 where Isbn = #{isbn};
         update user set count = count - 1 where id = #{userId};
         update record set status = 1, update_time = #{modifiedTime} where id = #{recordId};

@@ -1,9 +1,9 @@
 package cn.bookmanager;
 
+import cn.bookmanager.constant.ErrorStatusEnum;
 import cn.bookmanager.constant.StatusEnum;
 import cn.bookmanager.util.Base64Util;
 import org.junit.jupiter.api.Test;
-import org.springframework.http.HttpStatus;
 
 import java.util.Base64;
 
@@ -36,8 +36,13 @@ public class MyTest {
     }
 
     @Test
-    public void statusEnum(){
-        System.out.println(StatusEnum.OK.equals("00000"));
+    public void ErrorStatusEnum(){
+        // System.out.println(ErrorStatusEnum.OK.equals("00000"));
         // System.out.println(HttpStatus.OK.value());
+
+        System.out.println(StatusEnum.OFF_THE_SHELF.getClass().getTypeName());
+        System.out.println(StatusEnum.OK.getCode());
     }
+
+
 }
