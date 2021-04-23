@@ -17,17 +17,24 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("/")
 public class IndexController {
 
-    @Autowired
-    private IndexService indexService;
-
-
     /**
+     * 没有权限
      * 只返回401
      */
     @GetMapping("/401")
     public String notFound(HttpServletResponse response){
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
-        return " 冇得权限 401！";
+        return " 冇权限 401";
+    }
+
+    /**
+     * 登录吧
+     * 只返回302
+     */
+    @GetMapping("/302")
+    public String found(HttpServletResponse response){
+        response.setStatus(HttpStatus.FOUND.value());
+        return " 冇登录 302";
     }
 
 }

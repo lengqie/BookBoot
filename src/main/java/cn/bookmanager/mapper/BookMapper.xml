@@ -9,9 +9,6 @@
         select isbn, name, type, hot, num, status, create_time, update_time from book
     </sql>
 
-    <sql id="userColumns"> ${alias}.id,${alias}.username,${alias}.password </sql>
-
-
     <update id="addHot" parameterType="string">
         update book set hot =hot +1 where Isbn =#{Isbn};
     </update>
@@ -20,7 +17,7 @@
         <include refid="bookField"/> where status =1;
     </select>
 
-    <select id="getAllBookOrderByHot" resultType="Book">
+    <select id="getHotBook" resultType="Book">
        select isbn, name, type, hot, num, status, create_time, update_time
             from book where status =1
                 order by hot desc LIMIT 0,5;

@@ -50,7 +50,7 @@ public class ShiroConfig {
         ShiroFilterFactoryBean  bean = new ShiroFilterFactoryBean();
 
         bean.setSecurityManager(securityManager());
-        bean.setLoginUrl("/");
+        bean.setLoginUrl("/301");
         bean.setUnauthorizedUrl("/401");
 
         // 拦截器
@@ -72,4 +72,7 @@ public class ShiroConfig {
 
         return bean;
     }
+
+
 }
+

@@ -75,8 +75,10 @@ public class AdminController {
      * @param adminName Admin.Name
      * @return
      */
-    @GetMapping("/{adminName}")
-    public Admin info(@PathVariable String adminName){
+    @GetMapping("/")
+    public Admin info(@PathVariable String adminName ,HttpSession session){
+
+
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         return adminService.getAdmin(adminName);
     }

@@ -29,12 +29,12 @@ public interface BookService {
      * 获取全部书籍
      * @return
      */
-    List<Book> getAllBooks();
+    List<Book> getAllBook();
     /**
      * 获取全部书籍 排序后输出
      * @return
      */
-    List<Book> getAllBooksOrderByHot();
+    List<Book> getHotBook();
 
     /**
      * 通过书名查询数据
@@ -55,7 +55,7 @@ public interface BookService {
      * @param type Book.Type
      * @return
      */
-    List<Book> getBooksByType(String type);
+    List<Book> getBookByType(String type);
 
     /**
      * 通过ID获取Boot
@@ -88,6 +88,12 @@ public interface BookService {
      * @return 是否删除成功
      */
     Boolean delBook(String isbn);
+    /**
+     *  下架书籍
+     * @param isbn Isbn
+     * @return 是否删除成功
+     */
+    Boolean downBook(String isbn);
 
     /**
      * 从Recommend 表中 添加一本书
@@ -104,7 +110,7 @@ public interface BookService {
      * @param days Days
      * @return 借书的不同状态
      */
-    String borrowBooks(String isbn, String userId, Date time, int days);
+    String borrowBook(String isbn, String userId, Date time, int days);
 
 
     /**
@@ -115,6 +121,6 @@ public interface BookService {
      * @param date Date
      * @return 还书的不同状态
      */
-    String returnBooks(String recordId,String isbn, String userId,Date date);
+    String returnBook(String recordId,String isbn, String userId,Date date);
 
 }

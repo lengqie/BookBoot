@@ -47,15 +47,15 @@ public class BookServiceImpl implements BookService {
 
 
     @Override
-    public List<Book> getAllBooks() {
+    public List<Book> getAllBook() {
 
         return bookMapper.getAllBook();
     }
 
     @Override
-    public List<Book> getAllBooksOrderByHot() {
+    public List<Book> getHotBook() {
 
-        return bookMapper.getAllBookOrderByHot();
+        return bookMapper.getHotBook();
     }
 
     @Override
@@ -73,7 +73,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<Book> getBooksByType(String type) {
+    public List<Book> getBookByType(String type) {
         return bookMapper.getBookByType(type);
     }
 
@@ -111,6 +111,11 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public Boolean downBook(String isbn) {
+        return bookMapper.setBookStatus(isbn, StatusEnum.OFF_THE_SHELF.getCode() )!=1;
+    }
+
+    @Override
     public Boolean addBookFromRecommend(String id) {
         Recommend recommend = recommendMapper.getRecommendById(id);
         final String name = recommend.getName();
@@ -123,7 +128,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public String borrowBooks(String isbn, String userId, Date time, int days){
+    public String borrowBook(String isbn, String userId, Date time, int days){
 
         User u = userMapper.getUserById(userId);
         //  超出最大额度
@@ -152,7 +157,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public String returnBooks(String recordId,String isbn, String userId,Date date) {
+    public String returnBook(String recordId,String isbn, String userId,Date date) {
         final Record record = recordMapper.getRecordById(recordId);
 
         int days =record.getDays();
@@ -171,8 +176,8 @@ public class BookServiceImpl implements BookService {
         }
         bookMapper.returnBook(recordId,isbn,userId,date);
 
-        // ali:00000 一切OK
         return ErrorStatusEnum.OK.value();
     }
 
 }
+        // ali:00000 一切OK

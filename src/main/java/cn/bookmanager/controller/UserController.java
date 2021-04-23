@@ -97,10 +97,10 @@ public class UserController {
         //Shiro
         Subject subject  = SecurityUtils.getSubject();
 
-        System.out.println(subject.getPrincipal() +  "logout 了！");
+        System.out.println(subject.getPrincipal() +  "logout...");
 
-        session.removeAttribute("session_user");
-        Cookie cookieUsername = new Cookie("cookie_user", "");
+        session.removeAttribute(CookieEnum.SESSION_USER.value());
+        Cookie cookieUsername = new Cookie(CookieEnum.COOKIE_USER.value(), "");
         cookieUsername.setMaxAge(0);
         cookieUsername.setPath("/");
         response.addCookie(cookieUsername);
