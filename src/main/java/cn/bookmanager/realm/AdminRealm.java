@@ -2,6 +2,7 @@ package cn.bookmanager.realm;
 
 import cn.bookmanager.entity.Admin;
 import cn.bookmanager.mapper.AdminMapper;
+import cn.bookmanager.service.AdminService;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -22,6 +23,7 @@ public class AdminRealm extends AuthorizingRealm {
     AdminMapper adminMapper;
 
 
+
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         System.out.println("✨ UserRealm Authorization...");
@@ -34,8 +36,8 @@ public class AdminRealm extends AuthorizingRealm {
 
         final String username = (String) principalCollection.getPrimaryPrincipal();
 
-        //... （假装）数据库...
-        if ( !"admin".equals(username) ){
+        //...数据库 确定用户名...
+        if ( adminMapper.getAdminByName(username)==null){
             return null;
         }
         String role = "admin";
@@ -63,7 +65,6 @@ public class AdminRealm extends AuthorizingRealm {
             throw new AuthenticationException("Wrong_user_name_or_password！！");
         }
         System.out.println("✔ >> AdminRealm：登录成功");
-        SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(token.getPrincipal(),password,this.getName());
-        return info;
+        return new SimpleAuthenticationInfo(token.getPrincipal(),password, this.getName());
     }
 }

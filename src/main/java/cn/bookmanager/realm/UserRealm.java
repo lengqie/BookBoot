@@ -32,8 +32,8 @@ public class UserRealm extends AuthorizingRealm {
         // 获取角色
         final String username = (String) principalCollection.getPrimaryPrincipal();
 
-        //... （假装）数据库...
-        if (!("li4".equals(username) || "zhang3".equals(username))){
+        //...数据库 确定用户名...
+        if ( userMapper.getUserByName(username)==null ){
             return null;
         }
 
