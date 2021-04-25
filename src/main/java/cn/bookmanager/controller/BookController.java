@@ -36,7 +36,7 @@ public class BookController {
      * @param type     Book.Type
      * @param response response
      */
-    @PostMapping("/book/{isbn}/{name}/{type}")
+    @PostMapping("/book/{isbn}/name/{name}/type/{type}")
     public void addBook(@PathVariable String isbn,@PathVariable String name ,@PathVariable String type,@PathVariable HttpServletResponse response){
         Date date = new Date();
         if (!bookService.addBook(isbn,name, type,date)) {
@@ -75,7 +75,7 @@ public class BookController {
      * @param isbn  Book.Isbn
      * @param response response
      */
-    @PutMapping("/book/{isbn}")
+    @PutMapping("/books/{isbn}")
     public void updateBook(Book book,@PathVariable String isbn, HttpServletResponse response){
         if (!bookService.updateBook(book,isbn) ) {
             response.setStatus(HttpStatus.BAD_REQUEST.value());
@@ -86,7 +86,7 @@ public class BookController {
      * roles[admin] 将推荐书籍添加到书籍中
      * @param recommendId Recommend.Id
      */
-    @PostMapping("/book/recommend/{recommendId}")
+    @PostMapping("/books/recommend/{recommendId}")
     public void addBookFromRecommend(@PathVariable String recommendId, HttpServletResponse response){
         if (!bookService.addBookFromRecommend(recommendId)) {
             response.setStatus(HttpStatus.BAD_REQUEST.value());
@@ -97,7 +97,7 @@ public class BookController {
      * anon 增加时间的热度 +1
      * @param isbn  Book.Isbn
      */
-    @PutMapping("/book/hot/{isbn}")
+    @PutMapping("/books/hot/{isbn}")
     public void addHot(@PathVariable String isbn){
 
         bookService.addHot(isbn);
@@ -110,7 +110,7 @@ public class BookController {
      * @param session session
      * @return Map
      */
-    @PostMapping("/book/{isbn}/{days}")
+    @PostMapping("/books/{isbn}/days/{days}")
     public Map<String,String> borrowBook(@PathVariable String isbn, @PathVariable int days, HttpSession session, HttpServletResponse response){
         // 默认当天
         Date date =new Date();
@@ -140,7 +140,7 @@ public class BookController {
      * @param isbn      Book.Isbn
      * @param session   session
      */
-    @PostMapping("/book/{isbn}/{isbn}")
+    @PostMapping("/books/{isbn}/records/{recordId}")
     public void returnBook(@PathVariable String recordId,@PathVariable String isbn, HttpSession session){
         // 默认当天
         Date date =new Date();
@@ -154,7 +154,7 @@ public class BookController {
      * 获取全部的书籍
      * @return book s
      */
-    @GetMapping("/book")
+    @GetMapping("/books")
     public List<Book> getAllBook(HttpServletResponse response){
         final List<Book> allBook = bookService.getAllBook();
         if (allBook != null) {
@@ -167,7 +167,7 @@ public class BookController {
      * 获取全部的书籍的类型
      * @return book s
      */
-    @GetMapping("/book/type")
+    @GetMapping("/books/type")
     public List<String> getAllBookType(HttpServletResponse response){
         final List<String> type = bookService.geAllType();
         if (type != null) {
@@ -180,7 +180,7 @@ public class BookController {
      * 获取全部的书籍的类型
      * @return book s
      */
-    @GetMapping("/book/type/{type}")
+    @GetMapping("/books/types/{type}")
     public List<Book>  getBookByType(HttpServletResponse response, @PathVariable String type){
         final List<Book> allBook = bookService.getBookByType(type);
         if (allBook != null) {
@@ -193,7 +193,7 @@ public class BookController {
      * 获取当前书籍中最火的五本
      * @return book s
      */
-    @GetMapping("/book/hot")
+    @GetMapping("/books/hot")
     public List<Book> getAllBookByHot(HttpServletResponse response){
         final List<Book> allBook = bookService.getHotBook();
         if (allBook != null) {
@@ -206,7 +206,7 @@ public class BookController {
      * anon 查找书籍 没有使用restful
      * @return book s
      */
-    @GetMapping("/book/")
+    @GetMapping("/books/")
     public List<Book> searchBook(String re,HttpServletResponse response){
         final List<Book> allBook = bookService.getBookByName(re);
         if (allBook != null) {
@@ -220,7 +220,7 @@ public class BookController {
      * @param isbn Isbn
      * @return book
      */
-    @GetMapping("/book/{isbn}")
+    @GetMapping("/books/{isbn}")
     public Book getBookByIsbn(@PathVariable String isbn, HttpServletResponse response){
         final Book book = bookService.getBookByIsbn(isbn);
         if (book != null) {

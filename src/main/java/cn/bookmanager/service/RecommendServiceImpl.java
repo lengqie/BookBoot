@@ -31,6 +31,11 @@ public class RecommendServiceImpl implements RecommendService {
         return recommendMapper.getRecommendById(id);
     }
 
+    @Override
+    public Recommend getRecommendByUserId(String userId) {
+        return recommendMapper.getRecommendByUserId(userId);
+    }
+
 
     @Override
     public boolean recommend(String name, String isbn, String type, Date date) {

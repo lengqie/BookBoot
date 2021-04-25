@@ -8,9 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -30,7 +33,7 @@ public class RecommendController {
      * @param type     type
      * @param response response
      */
-    @PostMapping("/recommend")
+    @PostMapping("/recommends")
     public void recommend(String name, String isbn,String type, HttpServletResponse response){
         Date date = new Date();
         if (!recommendService.recommend(name,isbn,type,date)){
@@ -39,11 +42,20 @@ public class RecommendController {
     }
 
     /**
-     * roles[admin] 获取全部推荐记录
+     * roles[admin,user] 获取全部推荐记录
      * @return getAllRecommend
      */
-    @GetMapping("/recommend")
-    public List<Recommend> getAllRecommend(){
+    @GetMapping("/recommends")
+    public List<Recommend> getAllRecommend(HttpServletRequest request){
+
+        for (Cookie cookie : request.getCookies()) {
+            // 如果cookie 是user 并且 能获取到用户名 表示这是个用户
+            if( !cookie.getValue().isEmpty() && CookieEnum.COOKIE_USER.value().equals(cookie.getName()) ){
+                List<Recommend> recommend = new LinkedList<>();
+                recommend.add( recommendService.getRecommendByUserId(cookie.getName()) );
+                return recommend;
+            }
+        }
         return recommendService.getAllRecommend();
     }
 
@@ -53,28 +65,12 @@ public class RecommendController {
      * @param response response
      * @return
      */
-    @GetMapping("/recommend/{id}")
+    @GetMapping("/recommends/{id}")
     public Recommend getRecommendById(@PathVariable String id, HttpServletResponse response){
         final Recommend recommend = recommendService.getRecommendById(id);
         if (recommend == null) {
             response.setStatus(HttpStatus.NOT_FOUND.value());
         }
         return recommend;
-    }
-
-    /**
-     * 有问题
-     * roles[user] 获取记录的详情
-     * @param response response
-     * @return
-     */
-    @GetMapping("/recommend/my")
-    public Recommend getMyRecommend(HttpServletResponse response, HttpSession session){
-        User user =  (User) session.getAttribute(CookieEnum.COOKIE_USER.value());
-
-        /**
-         * 待补充 Service
-         */
-        return null;
     }
 }

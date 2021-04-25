@@ -20,7 +20,7 @@ public class RecordController {
      * roles[admin] 获取全部的记录
      * @return record s
      */
-    @GetMapping("/record")
+    @GetMapping("/records")
     public List<Record> getAllRecord(){
         return recordService.getAllRecord();
     }
@@ -31,7 +31,7 @@ public class RecordController {
      * @param recordId  Record.Id
      * @param response  response
      */
-    @PutMapping("/record/{recordId}")
+    @PutMapping("/records/{recordId}")
     public void upRecord(int status, @PathVariable String recordId, HttpServletResponse response){
         if ( !recordService.updateRecord(recordId,status) ) {
             response.setStatus(HttpStatus.BAD_REQUEST.value());
@@ -46,7 +46,7 @@ public class RecordController {
      * @param response  response
      * @return record Record
      */
-    @GetMapping("/record/{recordId}")
+    @GetMapping("/records/{recordId}")
     public Record getRecordByRecordId(@PathVariable String recordId,HttpServletResponse response){
         final Record record = recordService.getRecordByRecordId(recordId);
 

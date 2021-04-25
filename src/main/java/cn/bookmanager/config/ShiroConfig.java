@@ -7,6 +7,8 @@ import org.apache.shiro.mgt.SessionsSecurityManager;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,7 +20,6 @@ import java.util.*;
  */
 @Configuration
 public class ShiroConfig {
-
 
     /**
      * realm
@@ -50,18 +51,35 @@ public class ShiroConfig {
         ShiroFilterFactoryBean  bean = new ShiroFilterFactoryBean();
 
         bean.setSecurityManager(securityManager());
-        bean.setLoginUrl("/301");
+
+        // 重定向到了 StatusController
+        bean.setLoginUrl("/302");
         bean.setUnauthorizedUrl("/401");
 
         // 拦截器
         Map<String,String> filterChainDefinitionMap = new LinkedHashMap<>();
-        filterChainDefinitionMap.put("/401","anon");
 
-        filterChainDefinitionMap.put("/user/login","anon");
-        filterChainDefinitionMap.put("/user/**","roles[user]");
-        filterChainDefinitionMap.put("/admin/login","anon");
+        filterChainDefinitionMap.put("/401","anon");
+        filterChainDefinitionMap.put("/301","anon");
+
+        // admin
+        // roles
         filterChainDefinitionMap.put("/admin/**","roles[admin]");
 
+        //向数据库中添加书籍
+        filterChainDefinitionMap.put("/book/*/name/*/type/*","roles[admin]");
+        filterChainDefinitionMap.put("/book/*","roles[admin]");
+        filterChainDefinitionMap.put("/book/recommend/*","roles[admin]");
+
+        // anon
+        filterChainDefinitionMap.put("/admin/login","anon");
+
+
+        // user
+        // roles
+        // anon
+
+        //swagger
         filterChainDefinitionMap.put("/swagger-ui/**","anon");
         filterChainDefinitionMap.put("/swagger-resources/**","anon");
         filterChainDefinitionMap.put("/v3/api-docs/**","anon");

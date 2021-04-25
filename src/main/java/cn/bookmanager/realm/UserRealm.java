@@ -1,5 +1,6 @@
 package cn.bookmanager.realm;
 
+import cn.bookmanager.config.ShiroConfig;
 import cn.bookmanager.entity.User;
 import cn.bookmanager.mapper.UserMapper;
 import cn.bookmanager.service.UserService;
@@ -8,6 +9,8 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashSet;
@@ -19,13 +22,16 @@ import java.util.Set;
  */
 public class UserRealm extends AuthorizingRealm {
 
+    protected Logger logger = LoggerFactory.getLogger(UserRealm.class);
+
     @Autowired
     UserMapper userMapper;
 
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        System.out.println("✨ UserRealm Authorization...");
+
+        logger.debug("✨ UserRealm Authorization...");
 
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 
@@ -43,16 +49,15 @@ public class UserRealm extends AuthorizingRealm {
 
         info.setRoles(set);
 
-
-        System.out.println("🤔 >> UserRealm："+info.getRoles());
-
+        logger.debug("🤔 >> UserRealm："+info.getRoles());
 
         return info;
     }
 
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
-        System.out.println("🎶 UserRealm Authentication...");
+
+        logger.debug("🎶 UserRealm Authentication...");
 
         UsernamePasswordToken token = (UsernamePasswordToken)authenticationToken;
 
@@ -64,7 +69,8 @@ public class UserRealm extends AuthorizingRealm {
             throw new AuthenticationException("Wrong_user_name_or_password！！");
         }
 
-        System.out.println("✔ >> UserRealm：登录成功");
+        logger.debug("✔ >> UserRealm：登录成功");
+
         SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(token.getPrincipal(),password,this.getName());
         return info;
     }

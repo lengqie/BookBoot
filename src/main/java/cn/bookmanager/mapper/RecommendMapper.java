@@ -28,6 +28,13 @@ public interface RecommendMapper {
     Recommend getRecommendById(String id);
 
     /**
+     * 获取指定的推荐
+     * @param userId User.Id
+     * @return Recommend s
+     */
+    Recommend getRecommendByUserId(String userId);
+
+    /**
      * 将推荐书籍添加到 书籍库中
      * @param id Recommend.Id
      * @param date Date

@@ -3,11 +3,13 @@ package cn.bookmanager.controller;
 import cn.bookmanager.constant.CookieEnum;
 import cn.bookmanager.entity.Admin;
 import cn.bookmanager.service.AdminService;
+import cn.bookmanager.util.Base64Util;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,15 +43,17 @@ public class AdminController {
     @PostMapping("/login")
     public void login(String name, String password, HttpSession session, HttpServletRequest request, HttpServletResponse response){
 
+        // Service层登录 设置了Cookie
         final Boolean login = adminService.isLogin(new Admin(name, password),session,request,response);
-
-        Subject subject = SecurityUtils.getSubject();
-        subject.login(new UsernamePasswordToken(name, password));
 
         if (!login){
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
         }
-        response.setStatus(HttpStatus.ACCEPTED.value());
+        // Shiro登录 授权和认证... 设置了ShiroSession
+        Subject subject = SecurityUtils.getSubject();
+        subject.login(new UsernamePasswordToken(name, password));
+
+        response.setStatus(200);
     }
 
     /**
@@ -72,14 +76,19 @@ public class AdminController {
 
     /**
      * roles[admin] 获取管理员信息
-     * @param adminName Admin.Name
      * @return
      */
     @GetMapping("/")
-    public Admin info(@PathVariable String adminName ,HttpSession session){
+    public Admin info(HttpServletRequest request, HttpServletResponse response){
 
-
-        SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-        return adminService.getAdmin(adminName);
+        for (Cookie cookie : request.getCookies()) {
+            if ( CookieEnum.COOKIE_ADMIN.value().equals( cookie.getName() ) ) {
+                String name = cookie.getValue();
+                name = Base64Util.decoder(name);
+                return adminService.getAdmin(name);
+            }
+        }
+        response.setStatus(HttpStatus.NOT_FOUND.value());
+        return null;
     }
 }

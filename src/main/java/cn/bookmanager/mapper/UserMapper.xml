@@ -6,8 +6,8 @@
 <mapper namespace="cn.bookmanager.mapper.UserMapper">
 
     <sql id="userField">
-#         select id, name, password, max, count, total, balance, create_time, status, modified_time from user
-        select id, name, max, count, total, balance, create_time, status, modified_time from user
+#         select id, name, password, max, count, total, balance, create_time, status, update_time from user
+        select id, name, max, count, total, balance, create_time, status, update_time from user
     </sql>
 
     <select id="isLogin" resultType="int" parameterType="User">

@@ -6,7 +6,7 @@
 <mapper namespace="cn.bookmanager.mapper.RecommendMapper">
 
     <sql id="recommendField">
-        select id, name, isbn, type, status, create_time, update_time from recommend
+        select id,user_id, name, isbn, type, status, create_time, update_time from recommend
     </sql>
 
     <select id="getAllRecommend" resultType="cn.bookmanager.entity.Recommend">
@@ -15,6 +15,10 @@
     <select id="getRecommendById" resultType="cn.bookmanager.entity.Recommend">
         <include refid="recommendField"/>
         where id = #{id};
+    </select>
+    <select id="getRecommendByUserId" resultType="cn.bookmanager.entity.Recommend">
+        <include refid="recommendField"/>
+        where user_id = #{userId};
     </select>
     <insert id="addBookFromRecommend">
         update recommend set status = 1 , update_time = #{data} where id = #{id};

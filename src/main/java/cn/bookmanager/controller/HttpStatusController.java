@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @RestController()
 @RequestMapping("/")
-public class IndexController {
+public class HttpStatusController {
 
     /**
      * 没有权限

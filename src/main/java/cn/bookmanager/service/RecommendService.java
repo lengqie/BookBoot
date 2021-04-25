@@ -23,6 +23,12 @@ public interface RecommendService {
      * @return Recommend
      */
     Recommend getRecommendById(String id);
+    /**
+     * 通过Id 查询数据
+     * @param userId Recommend.Id
+     * @return Recommend
+     */
+    Recommend getRecommendByUserId(String userId);
 
     /**创建 一条新记录
      * @param name name

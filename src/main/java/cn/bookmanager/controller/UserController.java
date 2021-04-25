@@ -22,7 +22,7 @@ import javax.servlet.http.HttpSession;
  */
 
 @RestController()
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class UserController {
 
     @Autowired
@@ -57,7 +57,7 @@ public class UserController {
      * @param user User
      * @param response response
      */
-    @PutMapping("/user")
+    @PutMapping("/")
     public void updateUser(User user, HttpServletResponse response){
         if (!userService.updateUser(user) ) {
             response.setStatus(HttpStatus.BAD_REQUEST.value());
@@ -116,7 +116,7 @@ public class UserController {
      * roles[user] 用户支付
      * @param userId User.Id
      */
-    @PostMapping("/pay/{userId}")
+    @PostMapping("/{userId}/pay")
     public void pay(@PathVariable String userId){
         userService.overduePay(userId);
     }
