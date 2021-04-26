@@ -4,6 +4,7 @@ import cn.bookmanager.constant.CookieEnum;
 import cn.bookmanager.entity.Admin;
 import cn.bookmanager.service.AdminService;
 import cn.bookmanager.util.Base64Util;
+import cn.bookmanager.util.Md5Util;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.annotation.RequiresRoles;
@@ -41,7 +42,9 @@ public class AdminController {
      * @param response response
      */
     @PostMapping("/login")
-    public void login(String name, String password, HttpSession session, HttpServletRequest request, HttpServletResponse response){
+    public Object login(String name, String password, HttpSession session, HttpServletRequest request, HttpServletResponse response){
+
+        password = Md5Util.getMD5(password);
 
         // Service层登录 设置了Cookie
         final Boolean login = adminService.isLogin(new Admin(name, password),session,request,response);
@@ -54,6 +57,7 @@ public class AdminController {
         subject.login(new UsernamePasswordToken(name, password));
 
         response.setStatus(200);
+        return null;
     }
 
     /**

@@ -5,6 +5,7 @@ import cn.bookmanager.constant.ErrorStatusEnum;
 import cn.bookmanager.entity.User;
 import cn.bookmanager.service.UserService;
 import cn.bookmanager.util.Base64Util;
+import cn.bookmanager.util.Md5Util;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.annotation.Logical;
@@ -81,6 +82,8 @@ public class UserController {
     @PostMapping("/login")
     public void login(String name, String password, HttpSession session, HttpServletRequest request, HttpServletResponse response){
 
+        password = Md5Util.getMD5(password);
+
         final Boolean login = userService.isLogin(new User(name, password),session,request,response);
 
         Subject subject = SecurityUtils.getSubject();
@@ -138,6 +141,8 @@ public class UserController {
     @RequiresGuest
     @PostMapping("/register")
     public void register(String name, String password, HttpServletResponse response){
+
+        password = Md5Util.getMD5(password);
 
         final String s = userService.registered(name, password);
 
