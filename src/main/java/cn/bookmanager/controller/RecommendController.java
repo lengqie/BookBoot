@@ -37,9 +37,11 @@ public class RecommendController {
     @PostMapping("/recommends")
     public void recommend(String name, String isbn,String type, HttpServletResponse response){
         Date date = new Date();
-        if (!recommendService.recommend(name,isbn,type,date)){
-            response.setStatus(HttpStatus.NOT_ACCEPTABLE.value());
+        if (recommendService.recommend(name,isbn,type,date)){
+            response.setStatus(HttpStatus.OK.value());
         }
+        response.setStatus(HttpStatus.NOT_ACCEPTABLE.value());
+
     }
 
     /**
@@ -48,7 +50,7 @@ public class RecommendController {
      */
     @RequiresRoles(value = {"admin","user"},logical = Logical.OR)
     @GetMapping("/recommends")
-    public List<Recommend> getAllRecommend(HttpServletRequest request){
+    public List<Recommend> getAllRecommend(HttpServletRequest request, HttpServletResponse response){
 
         for (Cookie cookie : request.getCookies()) {
             // 如果cookie 是user 并且 能获取到用户名 表示这是个用户
@@ -58,7 +60,12 @@ public class RecommendController {
                 return recommend;
             }
         }
-        return recommendService.getAllRecommend();
+        final List<Recommend> allRecommend = recommendService.getAllRecommend();
+        if (!allRecommend.isEmpty()){
+            return allRecommend;
+        }
+        response.setStatus(HttpStatus.NOT_FOUND.value());
+        return null;
     }
 
     /**
@@ -71,9 +78,10 @@ public class RecommendController {
     @GetMapping("/recommends/{id}")
     public Recommend getRecommendById(@PathVariable String id, HttpServletResponse response){
         final Recommend recommend = recommendService.getRecommendById(id);
-        if (recommend == null) {
-            response.setStatus(HttpStatus.NOT_FOUND.value());
+        if (recommend != null) {
+            return recommend;
         }
-        return recommend;
+        response.setStatus(HttpStatus.NOT_FOUND.value());
+        return null;
     }
 }

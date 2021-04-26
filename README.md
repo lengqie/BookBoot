@@ -22,6 +22,7 @@ SpringBoot, Mybatis, Mysql, Swagger ,Shiro, ...
 Api：[http://127.0.0.1:8081/swagger-ui](http://127.0.0.1:8081/swagger-ui)
 
 ### 进度
+- 2021/4/26 优化了代码规范 添加Shiro注解, 密码md5, 删除了数据冗余
 - 2021/4/23 优化了代码规范 完善了业务方法、逻辑
 - 2021/4/22 优化了代码规范 restful
 - 2021/4/21 优化了代码规范 修改了数据库

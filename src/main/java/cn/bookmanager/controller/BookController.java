@@ -163,7 +163,6 @@ public class BookController {
      * 获取全部的书籍
      * @return book s
      */
-    @RequiresGuest()
     @GetMapping("/books")
     public List<Book> getAllBook(HttpServletResponse response){
         final List<Book> allBook = bookService.getAllBook();
@@ -195,7 +194,7 @@ public class BookController {
     @GetMapping("/books/types/{type}")
     public List<Book>  getBookByType(HttpServletResponse response, @PathVariable String type){
         final List<Book> allBook = bookService.getBookByType(type);
-        if (allBook != null) {
+        if (!allBook.isEmpty()) {
             return allBook;
         }
         response.setStatus(HttpStatus.NOT_FOUND.value());
@@ -209,7 +208,7 @@ public class BookController {
     @GetMapping("/books/hot")
     public List<Book> getAllBookByHot(HttpServletResponse response){
         final List<Book> allBook = bookService.getHotBook(5);
-        if (allBook != null) {
+        if (!allBook.isEmpty()) {
             return allBook;
         }
         response.setStatus(HttpStatus.NOT_FOUND.value());
@@ -222,13 +221,13 @@ public class BookController {
     @GetMapping("/books/hot/{n}")
     public List<Book> getAllBookByHotN(HttpServletResponse response, @PathVariable int n){
 
+        // 不能违法
         if (n >0 ){
             response.setStatus(HttpStatus.BAD_REQUEST.value());
             return null;
         }
-
         final List<Book> allBook = bookService.getHotBook(n);
-        if (allBook != null) {
+        if (!allBook.isEmpty()) {
             return allBook;
         }
         response.setStatus(HttpStatus.NOT_FOUND.value());
@@ -242,7 +241,7 @@ public class BookController {
     @GetMapping("/books/")
     public List<Book> searchBook(String re,HttpServletResponse response){
         final List<Book> allBook = bookService.getBookByName(re);
-        if (allBook != null) {
+        if (!allBook.isEmpty()) {
             return allBook;
         }
         response.setStatus(HttpStatus.NOT_FOUND.value());

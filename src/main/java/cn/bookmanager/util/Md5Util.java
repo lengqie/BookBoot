@@ -19,7 +19,7 @@ public class Md5Util {
      * @param str
      * @return
      */
-    public static String getMD5(String str) {
+    public static String getMd5(String str) {
         String base = str + "/" + salt;
         return DigestUtils.md5DigestAsHex(base.getBytes());
     }

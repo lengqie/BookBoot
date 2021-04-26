@@ -65,6 +65,7 @@ public class ShiroConfig {
         // 拦截器
         Map<String,String> filterChainDefinitionMap = new LinkedHashMap<>();
 
+        // HttpStatus
         filterChainDefinitionMap.put("/401","anon");
         filterChainDefinitionMap.put("/302","anon");
 
@@ -73,8 +74,20 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/swagger-resources/**","anon");
         filterChainDefinitionMap.put("/v3/api-docs/**","anon");
 
+        //
+        filterChainDefinitionMap.put("/admin/login","anon");
 
-        filterChainDefinitionMap.put("/**", "anon");
+        filterChainDefinitionMap.put("/books","anon");
+        filterChainDefinitionMap.put("/books/*","anon");
+        filterChainDefinitionMap.put("/books/type","anon");
+        filterChainDefinitionMap.put("/books/type/*","anon");
+        filterChainDefinitionMap.put("/books/hot","anon");
+        filterChainDefinitionMap.put("/books/hot/*","anon");
+
+        filterChainDefinitionMap.put("/users/register","anon");
+        filterChainDefinitionMap.put("/users/login","anon");
+
+        filterChainDefinitionMap.put("/**", "authc");
         bean.setFilterChainDefinitionMap(filterChainDefinitionMap);
 
         return bean;

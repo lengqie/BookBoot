@@ -1,6 +1,5 @@
 package cn.bookmanager;
 
-import cn.bookmanager.constant.ErrorStatusEnum;
 import cn.bookmanager.constant.StatusEnum;
 import cn.bookmanager.util.Base64Util;
 import cn.bookmanager.util.Md5Util;
@@ -51,7 +50,7 @@ public class MyTest {
 
         // System.out.println(StatusEnum.OFF_THE_SHELF.getClass().getTypeName());
         // System.out.println(StatusEnum.OK.getCode());
-        final String md5 = Md5Util.getMD5("123456");
+        final String md5 = Md5Util.getMd5("123456");
         System.out.println(md5);
     }
 

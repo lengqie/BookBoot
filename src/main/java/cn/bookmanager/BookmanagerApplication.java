@@ -13,10 +13,10 @@ public class BookmanagerApplication {
     public static void main(String[] args){
         SpringApplication.run(BookmanagerApplication.class, args);
 
-        // QuickStart();
+        // quickStart();
 
     }
-    public static void  QuickStart(){
+    public static void  quickStart(){
         Runtime run = Runtime.getRuntime();
         try {
             Process process = run.exec("cmd /k start http://localhost:8081");

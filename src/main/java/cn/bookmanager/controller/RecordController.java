@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
+/**
+ * 记录查询
+ * @author lengqie
+ */
 @RestController
 @RequestMapping
 public class RecordController {
@@ -37,11 +41,10 @@ public class RecordController {
     @RequiresRoles({"admin"})
     @PutMapping("/records/{recordId}")
     public void upRecord(int status, @PathVariable String recordId, HttpServletResponse response){
-        if ( !recordService.updateRecord(recordId,status) ) {
-            response.setStatus(HttpStatus.BAD_REQUEST.value());
-            // return ReturnMapUtils.getMap("200","ok");
+        if (recordService.updateRecord(recordId,status) ) {
+            response.setStatus(HttpStatus.OK.value());
         }
-        // return ReturnMapUtils.getMap("500","update record failed");
+        response.setStatus(HttpStatus.BAD_REQUEST.value());
     }
 
     /**
@@ -55,9 +58,9 @@ public class RecordController {
     public Record getRecordByRecordId(@PathVariable String recordId,HttpServletResponse response){
         final Record record = recordService.getRecordByRecordId(recordId);
 
-        if (record == null) {
+        if (record != null) {
             response.setStatus(HttpStatus.NOT_FOUND.value());
         }
-        return record;
+        return null;
     }
 }

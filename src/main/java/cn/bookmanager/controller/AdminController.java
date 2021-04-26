@@ -42,9 +42,9 @@ public class AdminController {
      * @param response response
      */
     @PostMapping("/login")
-    public Object login(String name, String password, HttpSession session, HttpServletRequest request, HttpServletResponse response){
+    public void login(String name, String password, HttpSession session, HttpServletRequest request, HttpServletResponse response){
 
-        password = Md5Util.getMD5(password);
+        password = Md5Util.getMd5(password);
 
         // Service层登录 设置了Cookie
         final Boolean login = adminService.isLogin(new Admin(name, password),session,request,response);
@@ -57,7 +57,6 @@ public class AdminController {
         subject.login(new UsernamePasswordToken(name, password));
 
         response.setStatus(200);
-        return null;
     }
 
     /**
@@ -81,7 +80,6 @@ public class AdminController {
 
         // 302
         response.setStatus(HttpStatus.FOUND.value());
-        // return ReturnMapUtils.getMap("500","username or password error!");
     }
 
     /**

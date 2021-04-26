@@ -9,7 +9,6 @@ import cn.bookmanager.util.Md5Util;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.annotation.Logical;
-import org.apache.shiro.authz.annotation.RequiresGuest;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.authz.annotation.RequiresUser;
 import org.apache.shiro.subject.Subject;
@@ -82,7 +81,7 @@ public class UserController {
     @PostMapping("/login")
     public void login(String name, String password, HttpSession session, HttpServletRequest request, HttpServletResponse response){
 
-        password = Md5Util.getMD5(password);
+        password = Md5Util.getMd5(password);
 
         final Boolean login = userService.isLogin(new User(name, password),session,request,response);
 
@@ -138,11 +137,10 @@ public class UserController {
      * @param password  password
      * @param response  response
      */
-    @RequiresGuest
     @PostMapping("/register")
     public void register(String name, String password, HttpServletResponse response){
 
-        password = Md5Util.getMD5(password);
+        password = Md5Util.getMd5(password);
 
         final String s = userService.registered(name, password);
 
