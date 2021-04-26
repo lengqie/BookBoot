@@ -6,7 +6,7 @@
 <mapper namespace="cn.bookmanager.mapper.PaymentMapper">
 
     <sql id="paymentField">
-        select id,user_id,record_id,amount,create_time from payment
+        select id,record_id,amount,create_time from payment
     </sql>
 
     <insert id="pay">
