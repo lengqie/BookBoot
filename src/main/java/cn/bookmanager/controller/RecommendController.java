@@ -2,8 +2,9 @@ package cn.bookmanager.controller;
 
 import cn.bookmanager.constant.CookieEnum;
 import cn.bookmanager.entity.Recommend;
-import cn.bookmanager.entity.User;
 import cn.bookmanager.service.RecommendService;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -33,6 +33,7 @@ public class RecommendController {
      * @param type     type
      * @param response response
      */
+    @RequiresRoles({"user"})
     @PostMapping("/recommends")
     public void recommend(String name, String isbn,String type, HttpServletResponse response){
         Date date = new Date();
@@ -45,6 +46,7 @@ public class RecommendController {
      * roles[admin,user] 获取全部推荐记录
      * @return getAllRecommend
      */
+    @RequiresRoles(value = {"admin","user"},logical = Logical.OR)
     @GetMapping("/recommends")
     public List<Recommend> getAllRecommend(HttpServletRequest request){
 
@@ -65,6 +67,7 @@ public class RecommendController {
      * @param response response
      * @return
      */
+    @RequiresRoles({"admin"})
     @GetMapping("/recommends/{id}")
     public Recommend getRecommendById(@PathVariable String id, HttpServletResponse response){
         final Recommend recommend = recommendService.getRecommendById(id);

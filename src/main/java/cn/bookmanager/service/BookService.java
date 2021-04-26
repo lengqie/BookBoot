@@ -34,7 +34,7 @@ public interface BookService {
      * 获取全部书籍 排序后输出
      * @return
      */
-    List<Book> getHotBook();
+    List<Book> getHotBook(int n);
 
     /**
      * 通过书名查询数据

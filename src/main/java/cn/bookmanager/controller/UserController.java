@@ -7,6 +7,10 @@ import cn.bookmanager.service.UserService;
 import cn.bookmanager.util.Base64Util;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresGuest;
+import org.apache.shiro.authz.annotation.RequiresRoles;
+import org.apache.shiro.authz.annotation.RequiresUser;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,6 +38,7 @@ public class UserController {
      * @param request  request
      * @param response response
      */
+    @RequiresRoles({"user"})
     @GetMapping("/")
     public User index(HttpServletRequest request,HttpServletResponse response){
 
@@ -57,6 +62,7 @@ public class UserController {
      * @param user User
      * @param response response
      */
+    @RequiresRoles(value = {"user,admin"},logical = Logical.OR)
     @PutMapping("/")
     public void updateUser(User user, HttpServletResponse response){
         if (!userService.updateUser(user) ) {
@@ -91,6 +97,7 @@ public class UserController {
      * @param session  session
      * @param response response
      */
+    @RequiresUser
     @PostMapping("/logout")
     public void logout(HttpSession session, HttpServletResponse response) {
 
@@ -116,6 +123,7 @@ public class UserController {
      * roles[user] 用户支付
      * @param userId User.Id
      */
+    @RequiresRoles({"user"})
     @PostMapping("/{userId}/pay")
     public void pay(@PathVariable String userId){
         userService.overduePay(userId);
@@ -127,6 +135,7 @@ public class UserController {
      * @param password  password
      * @param response  response
      */
+    @RequiresGuest
     @PostMapping("/register")
     public void register(String name, String password, HttpServletResponse response){
 

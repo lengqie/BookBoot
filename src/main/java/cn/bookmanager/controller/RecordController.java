@@ -2,6 +2,8 @@ package cn.bookmanager.controller;
 
 import cn.bookmanager.entity.Record;
 import cn.bookmanager.service.RecordService;
+import org.apache.shiro.authz.annotation.RequiresRoles;
+import org.apache.shiro.authz.annotation.RequiresUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +22,7 @@ public class RecordController {
      * roles[admin] 获取全部的记录
      * @return record s
      */
+    @RequiresRoles({"admin"})
     @GetMapping("/records")
     public List<Record> getAllRecord(){
         return recordService.getAllRecord();
@@ -31,6 +34,7 @@ public class RecordController {
      * @param recordId  Record.Id
      * @param response  response
      */
+    @RequiresRoles({"admin"})
     @PutMapping("/records/{recordId}")
     public void upRecord(int status, @PathVariable String recordId, HttpServletResponse response){
         if ( !recordService.updateRecord(recordId,status) ) {
@@ -46,6 +50,7 @@ public class RecordController {
      * @param response  response
      * @return record Record
      */
+    @RequiresUser
     @GetMapping("/records/{recordId}")
     public Record getRecordByRecordId(@PathVariable String recordId,HttpServletResponse response){
         final Record record = recordService.getRecordByRecordId(recordId);

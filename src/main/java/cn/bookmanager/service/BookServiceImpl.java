@@ -53,9 +53,9 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<Book> getHotBook() {
+    public List<Book> getHotBook(int n) {
 
-        return bookMapper.getHotBook();
+        return bookMapper.getHotBook(n);
     }
 
     @Override

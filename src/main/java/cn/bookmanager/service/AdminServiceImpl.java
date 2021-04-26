@@ -4,6 +4,7 @@ import cn.bookmanager.constant.CookieEnum;
 import cn.bookmanager.entity.Admin;
 import cn.bookmanager.mapper.*;
 import cn.bookmanager.util.Base64Util;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

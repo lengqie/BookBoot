@@ -11,6 +11,8 @@ spring:
 
   main:
       allow-bean-definition-overriding: true
+  aop:
+    proxy-target-class: true
 
 logging:
   level:
@@ -24,3 +26,8 @@ mybatis:
 server:
   port: 8081
 
+
+
+securityManager:
+  rememberMeManager:
+    cipherKey:

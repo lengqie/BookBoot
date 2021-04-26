@@ -14,7 +14,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Record {
-    private String id;
+    private long id;
     private Book book;
     private User user;
     private Date time;

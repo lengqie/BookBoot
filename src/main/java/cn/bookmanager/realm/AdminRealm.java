@@ -66,9 +66,11 @@ public class AdminRealm extends AuthorizingRealm {
         logger.debug("🎶 AdminRealm Authentication...");
 
         UsernamePasswordToken token = (UsernamePasswordToken)authenticationToken;
-
         final String username = token.getUsername();
         final String password = new String(token.getPassword());
+
+        // rememberMe
+        token.setRememberMe(true);
 
         final int login = adminMapper.isLogin(new Admin(username, password));
         if (login == 0 ) {

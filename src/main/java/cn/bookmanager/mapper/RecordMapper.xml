@@ -6,7 +6,7 @@
 <mapper namespace="cn.bookmanager.mapper.RecordMapper">
 
     <sql id="recordField">
-        select id, isbn, user_id, days, status, create_time, modified_time from record
+        select id, isbn, user_id, days, status, create_time, update_time from record
     </sql>
 
     <select id="getAllRecord" resultMap="recordMap">
@@ -25,7 +25,7 @@
     </update>
 
     <resultMap id="recordMap" type="Record">
-        <id column="record_id" property="id"/>
+        <id column="id" property="id"/>
         <result column="time" property="time"/>
         <result column="days" property="days"/>
         <result column="status" property="status"/>

@@ -1,6 +1,7 @@
 package cn.bookmanager.config;
 
 import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authz.AuthorizationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -22,11 +23,11 @@ public class ExceptionHandlerConfig {
      * @param response
      * @return
      */
-    @ExceptionHandler(value = AuthenticationException.class)
+    @ExceptionHandler(value = {AuthenticationException.class, AuthorizationException.class})
     public String authenticationExceptionHandler(Exception e, HttpServletResponse response){
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
-        System.out.println("👻 出现异常："+e);
-        return e.getMessage();
+        String error = "👻 出现异常：(权限问题！)"+e;
+        return error;
     }
 
     /**
@@ -38,7 +39,7 @@ public class ExceptionHandlerConfig {
     @ExceptionHandler(value = Exception.class)
     public String exceptionHandler(Exception e, HttpServletResponse response){
         response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
-        System.out.println("👻 出现异常："+e);
-        return e.getMessage();
+        String error = "👻 出现异常："+e;
+        return error;
     }
 }

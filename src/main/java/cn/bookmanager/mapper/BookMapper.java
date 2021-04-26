@@ -31,7 +31,7 @@ public interface BookMapper {
      * 查询全部书籍 并排序 Top5
      * @return Book s
      */
-    List<Book> getHotBook();
+    List<Book> getHotBook(int n);
 
     /**
      * 通过书籍查找

@@ -25,7 +25,7 @@
         <result column="amount" property="amount"/>
         <result column="create_time" property="createTime"/>
 
-        <association property="user" column="user_id" select="cn.bookmanager.mapper.UserMapper.getUserById" javaType="User"/>
+        <!--<association property="user" column="user_id" select="cn.bookmanager.mapper.UserMapper.getUserById" javaType="User"/>-->
         <association property="record" column="record_id" select="cn.bookmanager.mapper.RecordMapper.getRecordById" javaType="Record"/>
 
     </resultMap>

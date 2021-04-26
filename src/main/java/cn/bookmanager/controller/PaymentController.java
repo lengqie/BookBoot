@@ -2,6 +2,8 @@ package cn.bookmanager.controller;
 
 import cn.bookmanager.entity.Payment;
 import cn.bookmanager.service.PaymentService;
+import org.apache.shiro.authz.annotation.RequiresGuest;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +31,7 @@ public class PaymentController {
      * @param amount    Payment.Amount
      * @param response  response
      */
+    @RequiresRoles({"user"})
     @PutMapping("/pay")
     public void addPayment(String userId, String recordId, Double amount, HttpServletResponse response){
         Date date =new Date();
@@ -44,6 +47,7 @@ public class PaymentController {
      * @param response response
      * @return
      */
+    @RequiresRoles({"admin"})
     @GetMapping("/pay")
     public List<Payment> getAllPayment(HttpServletResponse response){
         final List<Payment> allPayment = paymentService.getAllPayment();
@@ -60,6 +64,7 @@ public class PaymentController {
      * @param response response
      * @return
      */
+    @RequiresRoles({"admin"})
     @GetMapping("/pay/{id}")
     public Payment getPaymentById(@PathVariable long id, HttpServletResponse response){
         final Payment payment = paymentService.getPaymentById(id);

@@ -66,7 +66,7 @@ public class UserRealm extends AuthorizingRealm {
 
         final int login = userMapper.isLogin(new User(username, password));
         if (login == 0 ) {
-            throw new AuthenticationException("Wrong_user_name_or_password！！");
+            throw new AuthenticationException("wrong_user_name_or_password！！");
         }
 
         logger.debug("✔ >> UserRealm：登录成功");

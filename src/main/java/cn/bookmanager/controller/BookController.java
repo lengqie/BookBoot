@@ -7,6 +7,9 @@ import cn.bookmanager.entity.Book;
 import cn.bookmanager.entity.User;
 import cn.bookmanager.service.BookService;
 import cn.bookmanager.util.ReturnMapUtil;
+import org.apache.shiro.authz.annotation.RequiresGuest;
+import org.apache.shiro.authz.annotation.RequiresRoles;
+import org.apache.shiro.authz.annotation.RequiresUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -36,6 +39,7 @@ public class BookController {
      * @param type     Book.Type
      * @param response response
      */
+    @RequiresRoles({"admin"})
     @PostMapping("/book/{isbn}/name/{name}/type/{type}")
     public void addBook(@PathVariable String isbn,@PathVariable String name ,@PathVariable String type,@PathVariable HttpServletResponse response){
         Date date = new Date();
@@ -48,7 +52,7 @@ public class BookController {
      * roles[admin] 删除书籍 将书籍的状态设置成 -1
      * @param isbn Book.Isbn
      */
-
+    @RequiresRoles({"admin"})
     @DeleteMapping("/book/{isbn}")
     public void delBookByIsbn(@PathVariable String isbn){
         if (bookService.delBook(isbn)) {
@@ -75,6 +79,7 @@ public class BookController {
      * @param isbn  Book.Isbn
      * @param response response
      */
+    @RequiresRoles({"admin"})
     @PutMapping("/books/{isbn}")
     public void updateBook(Book book,@PathVariable String isbn, HttpServletResponse response){
         if (!bookService.updateBook(book,isbn) ) {
@@ -86,6 +91,7 @@ public class BookController {
      * roles[admin] 将推荐书籍添加到书籍中
      * @param recommendId Recommend.Id
      */
+    @RequiresRoles({"admin"})
     @PostMapping("/books/recommend/{recommendId}")
     public void addBookFromRecommend(@PathVariable String recommendId, HttpServletResponse response){
         if (!bookService.addBookFromRecommend(recommendId)) {
@@ -97,6 +103,7 @@ public class BookController {
      * anon 增加时间的热度 +1
      * @param isbn  Book.Isbn
      */
+    @RequiresRoles({"admin"})
     @PutMapping("/books/hot/{isbn}")
     public void addHot(@PathVariable String isbn){
 
@@ -110,6 +117,7 @@ public class BookController {
      * @param session session
      * @return Map
      */
+    @RequiresRoles({"user"})
     @PostMapping("/books/{isbn}/days/{days}")
     public Map<String,String> borrowBook(@PathVariable String isbn, @PathVariable int days, HttpSession session, HttpServletResponse response){
         // 默认当天
@@ -135,11 +143,12 @@ public class BookController {
     }
 
     /**
-     * 还书
+     * roles[user]还书
      * @param recordId  Record.Id
      * @param isbn      Book.Isbn
      * @param session   session
      */
+    @RequiresRoles({"user"})
     @PostMapping("/books/{isbn}/records/{recordId}")
     public void returnBook(@PathVariable String recordId,@PathVariable String isbn, HttpSession session){
         // 默认当天
@@ -154,6 +163,7 @@ public class BookController {
      * 获取全部的书籍
      * @return book s
      */
+    @RequiresGuest()
     @GetMapping("/books")
     public List<Book> getAllBook(HttpServletResponse response){
         final List<Book> allBook = bookService.getAllBook();
@@ -167,6 +177,7 @@ public class BookController {
      * 获取全部的书籍的类型
      * @return book s
      */
+    @RequiresGuest()
     @GetMapping("/books/type")
     public List<String> getAllBookType(HttpServletResponse response){
         final List<String> type = bookService.geAllType();
@@ -180,6 +191,7 @@ public class BookController {
      * 获取全部的书籍的类型
      * @return book s
      */
+    @RequiresGuest()
     @GetMapping("/books/types/{type}")
     public List<Book>  getBookByType(HttpServletResponse response, @PathVariable String type){
         final List<Book> allBook = bookService.getBookByType(type);
@@ -193,9 +205,29 @@ public class BookController {
      * 获取当前书籍中最火的五本
      * @return book s
      */
+
     @GetMapping("/books/hot")
     public List<Book> getAllBookByHot(HttpServletResponse response){
-        final List<Book> allBook = bookService.getHotBook();
+        final List<Book> allBook = bookService.getHotBook(5);
+        if (allBook != null) {
+            return allBook;
+        }
+        response.setStatus(HttpStatus.NOT_FOUND.value());
+        return null;
+    }
+    /**
+     * 获取当前书籍中最火的n本
+     * @return book s
+     */
+    @GetMapping("/books/hot/{n}")
+    public List<Book> getAllBookByHotN(HttpServletResponse response, @PathVariable int n){
+
+        if (n >0 ){
+            response.setStatus(HttpStatus.BAD_REQUEST.value());
+            return null;
+        }
+
+        final List<Book> allBook = bookService.getHotBook(n);
         if (allBook != null) {
             return allBook;
         }
@@ -206,6 +238,7 @@ public class BookController {
      * anon 查找书籍 没有使用restful
      * @return book s
      */
+
     @GetMapping("/books/")
     public List<Book> searchBook(String re,HttpServletResponse response){
         final List<Book> allBook = bookService.getBookByName(re);
@@ -220,6 +253,7 @@ public class BookController {
      * @param isbn Isbn
      * @return book
      */
+
     @GetMapping("/books/{isbn}")
     public Book getBookByIsbn(@PathVariable String isbn, HttpServletResponse response){
         final Book book = bookService.getBookByIsbn(isbn);

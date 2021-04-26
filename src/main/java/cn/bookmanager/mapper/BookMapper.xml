@@ -20,7 +20,7 @@
     <select id="getHotBook" resultType="Book">
        select isbn, name, type, hot, num, status, create_time, update_time
             from book where status =1
-                order by hot desc LIMIT 0,5;
+                order by hot desc LIMIT 0,#{n};
         <!-- <include refid="bookField"></include>where status =1 order by hot desc LIMIT 0,5; -->
     </select>
 

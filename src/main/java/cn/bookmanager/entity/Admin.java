@@ -14,7 +14,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Admin {
-    private int id;
+    private long id;
 
     private String name;
     private String password;

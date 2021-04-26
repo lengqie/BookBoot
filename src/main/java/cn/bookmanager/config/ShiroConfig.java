@@ -5,11 +5,16 @@ import cn.bookmanager.realm.UserRealm;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.mgt.SessionsSecurityManager;
 import org.apache.shiro.realm.Realm;
+import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
+import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.apache.shiro.web.servlet.SimpleCookie;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -41,6 +46,7 @@ public class ShiroConfig {
         List<Realm> realms = new LinkedList<>();
         realms.add(userRealm());
         realms.add(adminRealm());
+        securityManager.setRememberMeManager(rememberMeManager());
 
         securityManager.setRealms(realms);
         return securityManager;
@@ -60,24 +66,7 @@ public class ShiroConfig {
         Map<String,String> filterChainDefinitionMap = new LinkedHashMap<>();
 
         filterChainDefinitionMap.put("/401","anon");
-        filterChainDefinitionMap.put("/301","anon");
-
-        // admin
-        // roles
-        filterChainDefinitionMap.put("/admin/**","roles[admin]");
-
-        //向数据库中添加书籍
-        filterChainDefinitionMap.put("/book/*/name/*/type/*","roles[admin]");
-        filterChainDefinitionMap.put("/book/*","roles[admin]");
-        filterChainDefinitionMap.put("/book/recommend/*","roles[admin]");
-
-        // anon
-        filterChainDefinitionMap.put("/admin/login","anon");
-
-
-        // user
-        // roles
-        // anon
+        filterChainDefinitionMap.put("/302","anon");
 
         //swagger
         filterChainDefinitionMap.put("/swagger-ui/**","anon");
@@ -91,6 +80,54 @@ public class ShiroConfig {
         return bean;
     }
 
+    /**
+     *
+     * 描述：开启Shiro的注解(如@RequiresRoles,@RequiresPermissions),需借助SpringAOP扫描使用Shiro注解的类,并在必要时进行安全逻辑验证
+     * 配置以下两个bean(DefaultAdvisorAutoProxyCreator和AuthorizationAttributeSourceAdvisor)即可实现此功能
+     * Enable Shiro Annotations for Spring-configured beans. Only run after the lifecycleBeanProcessor(保证实现了Shiro内部lifecycle函数的bean执行) has run
+     * 不使用注解的话，可以注释掉这两个配置
+     */
+
+    @Bean
+    @ConditionalOnMissingBean
+    public DefaultAdvisorAutoProxyCreator advisorAutoProxyCreator() {
+        DefaultAdvisorAutoProxyCreator advisorAutoProxyCreator = new DefaultAdvisorAutoProxyCreator();
+        advisorAutoProxyCreator.setProxyTargetClass(true);
+        return advisorAutoProxyCreator;
+    }
+
+    @Bean
+    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager securityManager) {
+        AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor
+                = new AuthorizationAttributeSourceAdvisor();
+        authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
+        return authorizationAttributeSourceAdvisor;
+    }
+
+    /**
+     * cookie对象
+     * @return
+     */
+    public SimpleCookie rememberMeCookie() {
+        // 设置cookie名称，对应login.html页面的<input type="checkbox" name="rememberMe"/>
+        SimpleCookie cookie = new SimpleCookie("rememberMe");
+        // 设置cookie的过期时间，单位为秒，这里为一天
+        cookie.setMaxAge(86400);
+        return cookie;
+    }
+
+    /**
+     * cookie管理对象
+     * @return
+     */
+    public CookieRememberMeManager rememberMeManager() {
+        CookieRememberMeManager cookieRememberMeManager = new CookieRememberMeManager();
+        cookieRememberMeManager.setCookie(rememberMeCookie());
+        // rememberMe cookie加密的密钥
+        // [-36, 11, -43, -122, 97, 75, 82, -51, 10, 76, 13, -54, -90, -69, 29, 106]
+        cookieRememberMeManager.setCipherKey(Base64.getDecoder().decode("3AvVhmFLUs0KTA3Kprsdag=="));
+        return cookieRememberMeManager;
+    }
 
 }
 

@@ -6,10 +6,10 @@ import cn.bookmanager.service.AdminService;
 import cn.bookmanager.util.Base64Util;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.authz.SimpleAuthorizationInfo;
+import org.apache.shiro.authz.annotation.RequiresRoles;
+import org.apache.shiro.authz.annotation.RequiresUser;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +22,7 @@ import javax.servlet.http.HttpSession;
  * @author lengqie
  */
 
-@RestController()
+@RestController
 @RequestMapping("/admin")
 public class AdminController {
 
@@ -61,13 +61,19 @@ public class AdminController {
      * @param session  session
      * @param response response
      */
+    @RequiresUser
     @GetMapping("/logout")
     public void logout(HttpSession session, HttpServletResponse response) {
         session.removeAttribute(CookieEnum.SESSION_ADMIN.value());
-        Cookie cookieUsername = new Cookie(CookieEnum.COOKIE_USER.value(), "");
+        Cookie cookieUsername = new Cookie(CookieEnum.COOKIE_ADMIN.value(), "");
         cookieUsername.setMaxAge(0);
         cookieUsername.setPath("/");
         response.addCookie(cookieUsername);
+
+
+        //Shiro
+        Subject subject  = SecurityUtils.getSubject();
+        subject.logout();
 
         // 302
         response.setStatus(HttpStatus.FOUND.value());
@@ -78,6 +84,7 @@ public class AdminController {
      * roles[admin] 获取管理员信息
      * @return
      */
+    @RequiresRoles({"admin"})
     @GetMapping("/")
     public Admin info(HttpServletRequest request, HttpServletResponse response){
 
@@ -85,7 +92,11 @@ public class AdminController {
             if ( CookieEnum.COOKIE_ADMIN.value().equals( cookie.getName() ) ) {
                 String name = cookie.getValue();
                 name = Base64Util.decoder(name);
-                return adminService.getAdmin(name);
+                final Admin admin = adminService.getAdmin(name);
+                if (admin == null) {
+                    response.setStatus(HttpStatus.NOT_FOUND.value());
+                }
+                return admin;
             }
         }
         response.setStatus(HttpStatus.NOT_FOUND.value());
