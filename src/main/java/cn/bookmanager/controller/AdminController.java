@@ -126,7 +126,7 @@ public class AdminController {
     }
 
     /**
-     * roles[root] 添加管理员
+     * roles[admin,root] 添加管理员
      */
     @RequiresRoles(value = {"admin","root"}, logical = Logical.AND)
     @PostMapping("/")

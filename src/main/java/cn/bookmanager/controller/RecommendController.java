@@ -46,7 +46,7 @@ public class RecommendController {
 
     /**
      * roles[admin,user] 获取全部推荐记录
-     * @return getAllRecommend
+     * @return AllRecommend
      */
     @RequiresRoles(value = {"admin","user"},logical = Logical.OR)
     @GetMapping("/recommends")
@@ -72,7 +72,7 @@ public class RecommendController {
      * roles[admin] 获取记录的详情
      * @param id Recommend.Id
      * @param response response
-     * @return
+     * @return recommend
      */
     @RequiresRoles({"admin"})
     @GetMapping("/recommends/{id}")

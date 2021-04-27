@@ -10,7 +10,11 @@ import lombok.Setter;
 
 public enum StatusEnum {
     /**
-     * Ok
+     * 完成 状态
+     */
+    FINISHED(0,"Finished"),
+    /**
+     * Ok（正常）
      */
     OK(0,"ok"),
     /**
@@ -18,10 +22,6 @@ public enum StatusEnum {
      */
     OFF_THE_SHELF(-1,"off the shelf"),
 
-    /**
-     * 数量不足（书籍）
-     */
-    DEFICIENCY(1,"deficiency"),
     /**
      * 冻结（用户）
      */
@@ -31,6 +31,11 @@ public enum StatusEnum {
      * 删除 delete
      */
     DELETE(-2,"delete"),
+
+    /**
+     * 数量不足（书籍）
+     */
+    DEFICIENCY(-3,"deficiency"),
 
     ;
     @Setter

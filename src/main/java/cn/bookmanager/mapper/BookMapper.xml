@@ -34,7 +34,7 @@
     </select>
 
     <select id="getBookByType" resultType="Book">
-        <include refid="bookField"/> where  status =1 and type = #{type} order by hot desc;
+        <include refid="bookField"/> where  status = 0 and type = #{type} order by hot desc;
     </select>
 
     <select id="getBookByIsbn" parameterType="string" resultType="Book">
@@ -64,9 +64,7 @@
     <update id="returnBook">
         update book set num = num + 1 where Isbn = #{isbn};
         update user set count = count - 1 where id = #{userId};
-        update record set status = 1, update_time = #{updateTime} where id = #{recordId};
+        update record set status = 0, update_time = #{updateTime} where id = #{recordId};
     </update>
-
-
 
 </mapper>

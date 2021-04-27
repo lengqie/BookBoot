@@ -53,17 +53,17 @@ public class BookController {
      */
     @RequiresRoles({"admin"})
     @DeleteMapping("/book/{isbn}")
-    public void delBookByIsbn(@PathVariable String isbn){
-        if (bookService.delBook(isbn)) {
-
+    public void delBookByIsbn(@PathVariable String isbn, HttpServletResponse response){
+        if (! bookService.delBook(isbn)) {
+            response.setStatus(HttpStatus.BAD_REQUEST.value());
         }
     }
 
-    /**
-     * 放弃使用  直接通过
-     * roles[admin] 下架书籍书籍 将书籍的状态设置成 -1
-     * @param isbn Book.Isbn
-     */
+    // /**
+    //  * 放弃使用  直接通过 修改书籍信息
+    //  * roles[admin] 下架书籍书籍 将书籍的状态设置成 -1
+    //  * @param isbn Book.Isbn
+    //  */
     //
     // @PutMapping("/book/{isbn}")
     // public void downBookByIsbn(@PathVariable String isbn){
@@ -124,7 +124,6 @@ public class BookController {
 
         final User user = (User) session.getAttribute(CookieEnum.COOKIE_USER.value());
 
-        // service never used
         final String s = bookService.borrowBook(isbn, user.getId(), date, days);
         if (ErrorStatusEnum.OK.value().equals(s)){
             response.setStatus(HttpStatus.ACCEPTED.value());
