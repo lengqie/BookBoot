@@ -21,7 +21,7 @@ SpringBoot, Mybatis, Mysql, Swagger ,Shiro, ...
 
 Api：[http://127.0.0.1:8081/swagger-ui](http://127.0.0.1:8081/swagger-ui)
 
-SQL：[BootBook.sql](https://github.com/lengqie/BookBoot/blob/master/file/BootBook.sql)
+SQL：[BootBook.sql](https://github.com/lengqie/BookBoot/blob/master/file/BookBoot.sql)
 
 ### 进度
 - 2021/4/27 优化了代码规范 完善了Shiro
