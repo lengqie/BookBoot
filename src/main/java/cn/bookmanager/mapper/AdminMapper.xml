@@ -12,13 +12,36 @@
        <include refid="adminField"/>
         where name=#{name} and password =#{password}
     </select>
+
     <select id="isLogin" resultType="int" parameterType="Admin">
-        select count(1) from admin where name=#{name} and password =#{password}
+        select count(1) from admin where name=#{name} and password =#{password} and status = 0;
     </select>
 
     <select id="getAdminByName" resultType="Admin" parameterType="string">
         <include refid="adminField"/>
         where name =#{name}
     </select>
+
+    <select id="getAllAdmin" resultType="cn.bookmanager.entity.Admin">
+        <include refid="adminField"/>
+    </select>
+
+    <insert id="addAdmin">
+        insert into admin(name, password, status, create_time, update_time) values (#{name},#{password}, 0,#{date},#{date});
+    </insert>
+    
+    <update id="updateAdmin">
+        update admin
+        set  name = #{name}, password = #{password} , status = #{status} , update_time = #{date}
+        where id = #{id};
+    </update>
+
+    <!--Id 1 的数据不可修改  -->
+
+    <update id="updateAdminStatus">
+        update admin
+        set status = #{status}, update_time = #{date}
+        where id = #{id} and id !=1;
+    </update>
 
 </mapper>

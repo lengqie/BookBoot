@@ -25,17 +25,16 @@ public class PaymentController {
 
     /**
      * roles[user]支付 记录
-     * @param userId    User.Id
      * @param recordId  Record.Id
      * @param amount    Payment.Amount
      * @param response  response
      */
     @RequiresRoles({"user"})
     @PutMapping("/pay")
-    public void addPayment(String userId, String recordId, Double amount, HttpServletResponse response){
+    public void addPayment(String recordId, Double amount, HttpServletResponse response){
         Date date =new Date();
 
-        if (paymentService.pay(userId, recordId, amount,date)) {
+        if (paymentService.pay(recordId, amount,date)) {
             response.setStatus(HttpStatus.OK.value());
         }
         response.setStatus(HttpStatus.BAD_REQUEST.value());

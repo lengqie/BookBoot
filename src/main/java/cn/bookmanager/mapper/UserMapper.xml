@@ -36,7 +36,8 @@
     </update>
 
     <insert id="registered" parameterType="User">
-        insert into user values (#{id},#{name},#{password},4,0,0,0,#{date},#{date});
+        insert into user(name, password, max, count, total, balance, status, create_time, update_time)
+        values (#{name},#{password},4,0,0,0,0,#{date},#{date});
     </insert>
 
     <select id="isUniqueName" parameterType="string" resultType="int">

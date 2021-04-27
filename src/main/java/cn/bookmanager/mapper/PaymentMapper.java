@@ -13,13 +13,12 @@ public interface PaymentMapper {
 
     /**
      * 充值
-     * @param userId User.Id
      * @param recordId Record.Id
      * @param amount Amount
      * @param date Date
      * @return 操作的数量 成功则放回1
      */
-    int pay(String userId, String recordId, Double amount, Date date);
+    int pay(String recordId, Double amount, Date date);
 
     /**
      * 获取一个交易记录

@@ -10,7 +10,7 @@
     </sql>
 
     <insert id="pay">
-        insert into payment (user_id,record_id,amount,create_time) values (#{userId},#{recordId},#{amount},#{date});
+        insert into payment (record_id,amount,create_time) values (#{recordId},#{amount},#{date});
     </insert>
     <select id="getPaymentById" resultMap="paymentMap">
         <include refid="paymentField"/> where id = #{id};

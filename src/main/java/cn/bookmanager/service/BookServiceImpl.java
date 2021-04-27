@@ -151,7 +151,7 @@ public class BookServiceImpl implements BookService {
 
         String recordId = UUID.randomUUID().toString().replace("-","");
 
-        bookMapper.borrowBook(recordId,isbn,userId,time,days);
+        bookMapper.borrowBook(isbn,userId,time,days);
         // Alibaba错误码 00000 一切ok
         return ErrorStatusEnum.OK.value();
     }

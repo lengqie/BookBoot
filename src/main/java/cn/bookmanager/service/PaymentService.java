@@ -8,13 +8,12 @@ import java.util.List;
 public interface PaymentService {
     /**
      * 充值
-     * @param userId User.Id
      * @param recordId Record.Id
      * @param amount Amount
      * @param date Date
      * @return 是否成功
      */
-    boolean pay(String userId, String recordId, Double amount, Date date);
+    boolean pay(String recordId, Double amount, Date date);
 
     /**
      * 获取一个交易记录

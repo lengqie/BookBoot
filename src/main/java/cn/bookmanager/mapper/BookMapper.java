@@ -89,22 +89,21 @@ public interface BookMapper {
 
     /**
      * 借书
-     * @param recordId Record.Id
      * @param isbn ISBN
      * @param userId User.Id
      * @param createTime CreateTime
      * @param days Days
      */
-    void borrowBook(String recordId, String isbn, String userId, Date createTime, int days);
+    void borrowBook(String isbn, String userId, Date createTime, int days);
 
     /**
      * 还书
      * @param recordId  RecordId
      * @param isbn  Isbn
      * @param userId User.Id
-     * @param modifiedTime ModifiedTime
+     * @param updateTime UpdateTime
      */
-    void returnBook(String recordId,String isbn,String userId,Date modifiedTime);
+    void returnBook(String recordId,String isbn,String userId,Date updateTime);
 
 
 }

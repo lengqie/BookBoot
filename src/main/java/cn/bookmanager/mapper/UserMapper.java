@@ -55,12 +55,11 @@ public interface UserMapper {
 
     /**
      * 注册用户
-     * @param id User.Id
      * @param name User.name
      * @param password User.Password
      * @param date User.*Time
      */
-    void registered(String id, String name, String password, Date date);
+    void registered(String name, String password, Date date);
 
     /**
      * 注册名称 不可重复！

@@ -1,6 +1,5 @@
 package cn.bookmanager.realm;
 
-import cn.bookmanager.config.ShiroConfig;
 import cn.bookmanager.entity.Admin;
 import cn.bookmanager.mapper.AdminMapper;
 import cn.bookmanager.service.AdminService;
@@ -53,6 +52,12 @@ public class AdminRealm extends AuthorizingRealm {
 
         Set<String> set  =new HashSet<>();
         set.add(role);
+
+
+        // 根用户 直接写死
+        if( adminMapper.getAdminByName(username).getId() ==1){
+            set.add("root");
+        }
 
         info.setRoles(set);
 

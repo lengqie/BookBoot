@@ -7,6 +7,7 @@ import cn.bookmanager.util.Base64Util;
 import cn.bookmanager.util.Md5Util;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.authz.annotation.RequiresUser;
 import org.apache.shiro.subject.Subject;
@@ -18,13 +19,15 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.Date;
+import java.util.List;
 
 /**
  * @author lengqie
  */
 
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/admins")
 public class AdminController {
 
     // 更加推荐 使用构造方法
@@ -84,7 +87,7 @@ public class AdminController {
 
     /**
      * roles[admin] 获取管理员信息
-     * @return
+     * @return Admin
      */
     @RequiresRoles({"admin"})
     @GetMapping("/")
@@ -104,4 +107,66 @@ public class AdminController {
         response.setStatus(HttpStatus.NOT_FOUND.value());
         return null;
     }
+
+    /**
+     * roles[admin, root] 获取全部管理员的信息
+     * @return Admins
+     */
+    @RequiresRoles(value = {"admin","root"}, logical = Logical.AND)
+    @GetMapping("/all")
+    public List<Admin> getAllAdmin(HttpServletResponse response){
+
+        final List<Admin> allAdmin = adminService.getAllAdmin();
+        if ( allAdmin.isEmpty() ) {
+            response.setStatus(HttpStatus.NOT_FOUND.value());
+
+        }
+
+        return allAdmin;
+    }
+
+    /**
+     * roles[root] 添加管理员
+     */
+    @RequiresRoles(value = {"admin","root"}, logical = Logical.AND)
+    @PostMapping("/")
+    public void addAdmin(HttpServletResponse response, String name, String password){
+
+        password = Md5Util.getMd5(password);
+
+        Date date  =new Date();
+        if (! adminService.addAdmin(name,password,date)) {
+            response.setStatus(HttpStatus.BAD_REQUEST.value());
+        }
+    }
+
+
+    /**
+     * roles[admin] 更新管理员的信息
+     */
+    @RequiresRoles(value = {"admin","root"}, logical = Logical.OR)
+    @PutMapping("/{id}")
+    public void updateAdmin(HttpServletRequest request, HttpServletResponse response, @PathVariable int id, String name, String password){
+
+        password = Md5Util.getMd5(password);
+
+        Date date  =new Date();
+        if (! adminService.updateAdmin(id,name,password,date)) {
+            response.setStatus(HttpStatus.BAD_REQUEST.value());
+        }
+    }
+
+    /**
+     * roles[root] 删除管理员
+     */
+    @RequiresRoles(value = {"admin","root"}, logical = Logical.AND)
+    @DeleteMapping("/{id}")
+    public void delAdmin(HttpServletResponse response, @PathVariable int id){
+
+        Date date  =new Date();
+        if (! adminService.delAdmin(id,date)) {
+            response.setStatus(HttpStatus.BAD_REQUEST.value());
+        }
+    }
+
 }

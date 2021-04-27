@@ -19,13 +19,13 @@
 
     <select id="getHotBook" resultType="Book">
        select isbn, name, type, hot, num, status, create_time, update_time
-            from book where status =1
+            from book where status = 0
                 order by hot desc LIMIT 0,#{n};
         <!-- <include refid="bookField"></include>where status =1 order by hot desc LIMIT 0,5; -->
     </select>
 
     <select id="getBookByName" resultType="Book" parameterType="string">
-        <include refid="bookField"/> where status =1 and name like '%${name}%' order by hot desc;
+        <include refid="bookField"/> where status = 0 and name like '%${name}%' order by hot desc;
     </select>
 
     <select id="geAllType" resultType="string" parameterType="Book">
@@ -57,13 +57,14 @@
         update book set num = num - 1 where Isbn = #{isbn};
         update user set count = count + 1 where id = #{userId};
         update user set total = total + 1 where id = #{userId};
-        insert into record values (#{recordId},#{isbn},#{userId},#{createTime},#{days},0,#{createTime});
+        insert into record(isbn, user_id, days, status, create_time, update_time)
+            values(#{isbn},#{userId},#{createTime},#{days},0,#{createTime});
     </update>
 
     <update id="returnBook">
         update book set num = num + 1 where Isbn = #{isbn};
         update user set count = count - 1 where id = #{userId};
-        update record set status = 1, update_time = #{modifiedTime} where id = #{recordId};
+        update record set status = 1, update_time = #{updateTime} where id = #{recordId};
     </update>
 
 

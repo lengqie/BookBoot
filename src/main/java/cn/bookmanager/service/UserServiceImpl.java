@@ -79,7 +79,7 @@ public class UserServiceImpl implements UserService {
         String id = UUID.randomUUID().toString().replace("-","");
 
         Date date = new Date();
-        userMapper.registered(id,name,password,date);
+        userMapper.registered(name,password,date);
         // ali:00000 一切OK
         return "00000";
     }

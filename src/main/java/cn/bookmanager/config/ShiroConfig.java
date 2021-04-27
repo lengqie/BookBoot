@@ -69,13 +69,14 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/401","anon");
         filterChainDefinitionMap.put("/302","anon");
 
+        filterChainDefinitionMap.put("/","anon");
+
         //swagger
         filterChainDefinitionMap.put("/swagger-ui/**","anon");
         filterChainDefinitionMap.put("/swagger-resources/**","anon");
         filterChainDefinitionMap.put("/v3/api-docs/**","anon");
 
-        //
-        filterChainDefinitionMap.put("/admin/login","anon");
+        filterChainDefinitionMap.put("/admins/login","anon");
 
         filterChainDefinitionMap.put("/books","anon");
         filterChainDefinitionMap.put("/books/*","anon");
