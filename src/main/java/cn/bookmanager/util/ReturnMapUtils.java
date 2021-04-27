@@ -8,7 +8,7 @@ import java.util.Map;
  * @author lengqie
  */
 @Deprecated
-public class ReturnMapUtil {
+public class ReturnMapUtils {
 
 
     public static Map getMap(String status,Object data){

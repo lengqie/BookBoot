@@ -6,10 +6,9 @@ import cn.bookmanager.constant.ErrorStatusEnum;
 import cn.bookmanager.entity.Book;
 import cn.bookmanager.entity.User;
 import cn.bookmanager.service.BookService;
-import cn.bookmanager.util.ReturnMapUtil;
+import cn.bookmanager.util.ReturnMapUtils;
 import org.apache.shiro.authz.annotation.RequiresGuest;
 import org.apache.shiro.authz.annotation.RequiresRoles;
-import org.apache.shiro.authz.annotation.RequiresUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -129,15 +128,15 @@ public class BookController {
         final String s = bookService.borrowBook(isbn, user.getId(), date, days);
         if (ErrorStatusEnum.OK.value().equals(s)){
             response.setStatus(HttpStatus.ACCEPTED.value());
-            return ReturnMapUtil.getMap("200");
+            return ReturnMapUtils.getMap("200");
         }
         if (ErrorStatusEnum.OUT_OF_LIMIT.value().equals(s)){
             response.setStatus(HttpStatus.BAD_REQUEST.value());
-            return ReturnMapUtil.getMap(ErrorStatusEnum.OUT_OF_LIMIT.value(),"超出上限");
+            return ReturnMapUtils.getMap(ErrorStatusEnum.OUT_OF_LIMIT.value(),"超出上限");
         }
         if (ErrorStatusEnum.INSUFFICIENT_BALANCE.value().equals(s)){
             response.setStatus(HttpStatus.BAD_REQUEST.value());
-            return ReturnMapUtil.getMap(ErrorStatusEnum.INSUFFICIENT_BALANCE.value(),"余额不足");
+            return ReturnMapUtils.getMap(ErrorStatusEnum.INSUFFICIENT_BALANCE.value(),"余额不足");
         }
         return null;
     }

@@ -3,8 +3,8 @@ package cn.bookmanager.controller;
 import cn.bookmanager.constant.CookieEnum;
 import cn.bookmanager.entity.Admin;
 import cn.bookmanager.service.AdminService;
-import cn.bookmanager.util.Base64Util;
-import cn.bookmanager.util.Md5Util;
+import cn.bookmanager.util.Base64Utils;
+import cn.bookmanager.util.Md5Utils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.annotation.Logical;
@@ -47,7 +47,7 @@ public class AdminController {
     @PostMapping("/login")
     public void login(String name, String password, HttpSession session, HttpServletRequest request, HttpServletResponse response){
 
-        password = Md5Util.getMd5(password);
+        password = Md5Utils.getMd5(password);
 
         // Service层登录 设置了Cookie
         final Boolean login = adminService.isLogin(new Admin(name, password),session,request,response);
@@ -96,7 +96,7 @@ public class AdminController {
         for (Cookie cookie : request.getCookies()) {
             if ( CookieEnum.COOKIE_ADMIN.value().equals( cookie.getName() ) ) {
                 String name = cookie.getValue();
-                name = Base64Util.decoder(name);
+                name = Base64Utils.decoder(name);
                 final Admin admin = adminService.getAdmin(name);
                 if (admin == null) {
                     response.setStatus(HttpStatus.NOT_FOUND.value());
@@ -132,7 +132,7 @@ public class AdminController {
     @PostMapping("/")
     public void addAdmin(HttpServletResponse response, String name, String password){
 
-        password = Md5Util.getMd5(password);
+        password = Md5Utils.getMd5(password);
 
         Date date  =new Date();
         if (! adminService.addAdmin(name,password,date)) {
@@ -148,7 +148,7 @@ public class AdminController {
     @PutMapping("/{id}")
     public void updateAdmin(HttpServletRequest request, HttpServletResponse response, @PathVariable int id, String name, String password){
 
-        password = Md5Util.getMd5(password);
+        password = Md5Utils.getMd5(password);
 
         Date date  =new Date();
         if (! adminService.updateAdmin(id,name,password,date)) {

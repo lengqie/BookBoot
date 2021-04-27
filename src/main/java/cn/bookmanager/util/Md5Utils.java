@@ -7,7 +7,7 @@ import org.springframework.util.DigestUtils;
  * 密码加密工具类
  * @author lengqie
  */
-public class Md5Util {
+public class Md5Utils {
 
     /**
      *  盐

@@ -6,7 +6,7 @@ import java.util.Base64;
 /**
  * @author lengqie
  */
-public class Base64Util {
+public class Base64Utils {
 
 
     final  static String SALT = "Flag";

@@ -55,7 +55,7 @@ public class AdminRealm extends AuthorizingRealm {
 
 
         // 根用户 直接写死
-        if( adminMapper.getAdminByName(username).getId() ==1){
+        if( adminMapper.getAdminByName(username).getId() ==0){
             set.add("root");
         }
 

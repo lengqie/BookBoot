@@ -5,7 +5,7 @@ package cn.bookmanager.util;
  */
 
 @Deprecated
-public enum ConstantsUtil {
+public enum ConstantsUtils {
     /**
      * 已经存在
      */
@@ -18,7 +18,7 @@ public enum ConstantsUtil {
 
     private final String value;
 
-    ConstantsUtil(String value) {
+    ConstantsUtils(String value) {
         this.value = value;
     }
     public String value() {

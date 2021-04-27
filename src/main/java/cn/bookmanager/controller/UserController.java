@@ -4,8 +4,8 @@ import cn.bookmanager.constant.CookieEnum;
 import cn.bookmanager.constant.ErrorStatusEnum;
 import cn.bookmanager.entity.User;
 import cn.bookmanager.service.UserService;
-import cn.bookmanager.util.Base64Util;
-import cn.bookmanager.util.Md5Util;
+import cn.bookmanager.util.Base64Utils;
+import cn.bookmanager.util.Md5Utils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.annotation.Logical;
@@ -48,7 +48,7 @@ public class UserController {
         for (Cookie cookie : request.getCookies()) {
             if (CookieEnum.COOKIE_USER.value().equals(cookie.getName())) {
                 String name = cookie.getValue();
-                name = Base64Util.decoder(name);
+                name = Base64Utils.decoder(name);
                 return userService.getUserByName(name);
             }
         }
@@ -81,7 +81,7 @@ public class UserController {
     @PostMapping("/login")
     public void login(String name, String password, HttpSession session, HttpServletRequest request, HttpServletResponse response){
 
-        password = Md5Util.getMd5(password);
+        password = Md5Utils.getMd5(password);
 
         final Boolean login = userService.isLogin(new User(name, password),session,request,response);
 
@@ -140,7 +140,7 @@ public class UserController {
     @PostMapping("/register")
     public void register(String name, String password, HttpServletResponse response){
 
-        password = Md5Util.getMd5(password);
+        password = Md5Utils.getMd5(password);
 
         final String s = userService.registered(name, password);
 

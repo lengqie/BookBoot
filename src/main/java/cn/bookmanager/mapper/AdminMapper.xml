@@ -41,7 +41,7 @@
     <update id="updateAdminStatus">
         update admin
         set status = #{status}, update_time = #{date}
-        where id = #{id} and id !=1;
+        where id = #{id} and id !=0;
     </update>
 
 </mapper>

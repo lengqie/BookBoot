@@ -4,7 +4,7 @@ import cn.bookmanager.constant.CookieEnum;
 import cn.bookmanager.constant.StatusEnum;
 import cn.bookmanager.entity.Admin;
 import cn.bookmanager.mapper.*;
-import cn.bookmanager.util.Base64Util;
+import cn.bookmanager.util.Base64Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,7 +39,7 @@ public class AdminServiceImpl implements AdminService{
         if (login ==1){
 
             session.setAttribute(CookieEnum.SESSION_ADMIN.value(),admin);
-            Cookie cookieAdmin = new Cookie(CookieEnum.COOKIE_ADMIN.value(), Base64Util.encoder(admin.getName()));
+            Cookie cookieAdmin = new Cookie(CookieEnum.COOKIE_ADMIN.value(), Base64Utils.encoder(admin.getName()));
             cookieAdmin.setMaxAge(60 * 60 * 24 * 7);
             cookieAdmin.setPath("/");
             response.addCookie(cookieAdmin);

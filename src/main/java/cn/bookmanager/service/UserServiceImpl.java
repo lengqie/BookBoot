@@ -3,7 +3,7 @@ package cn.bookmanager.service;
 import cn.bookmanager.constant.CookieEnum;
 import cn.bookmanager.entity.User;
 import cn.bookmanager.mapper.UserMapper;
-import cn.bookmanager.util.Base64Util;
+import cn.bookmanager.util.Base64Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
         // 登录成功 则 写入Cookie！
         if (login ==1){
             session.setAttribute(CookieEnum.SESSION_USER.value(),user);
-            Cookie cookie = new Cookie(CookieEnum.COOKIE_USER.value(), Base64Util.encoder( user.getName() ) );
+            Cookie cookie = new Cookie(CookieEnum.COOKIE_USER.value(), Base64Utils.encoder( user.getName() ) );
             cookie.setMaxAge(60 * 60 * 24 * 7);
             cookie.setPath("/");
             response.addCookie(cookie);
