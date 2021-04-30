@@ -24,6 +24,7 @@ Api：[http://127.0.0.1:8081/swagger-ui](http://127.0.0.1:8081/swagger-ui)
 SQL：[BootBook.sql](https://github.com/lengqie/BookBoot/blob/master/file/BookBoot.sql)
 
 ### 进度
+- 2021/4/29 添加了索引 假数据生成
 - 2021/4/27 优化了代码规范 完善了Shiro
 - 2021/4/26 优化了代码规范 添加Shiro注解, 密码md5, 删除了数据冗余
 - 2021/4/23 优化了代码规范 完善了业务方法、逻辑
