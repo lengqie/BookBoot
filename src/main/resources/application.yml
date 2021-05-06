@@ -28,7 +28,8 @@ server:
   port: 8081
 
 
-
-securityManager:
-  rememberMeManager:
-    cipherKey:
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql

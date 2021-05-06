@@ -7,6 +7,9 @@ import cn.bookmanager.entity.Book;
 import cn.bookmanager.entity.User;
 import cn.bookmanager.service.BookService;
 import cn.bookmanager.util.ReturnMapUtils;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.apache.shiro.authz.annotation.RequiresGuest;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -169,6 +172,19 @@ public class BookController {
         }
         response.setStatus(HttpStatus.NOT_FOUND.value());
         return null;
+    }
+    /**
+     * 获取全部的书籍
+     * @return book s
+     */
+    @GetMapping("/books/page/{page}/size/{size}")
+    public PageInfo<Book> getAllBookPage(@PathVariable int page, @PathVariable int size){
+        PageHelper.startPage(page,size);
+
+        final Page<Book> allBook = bookService.getAllBookByPageInfo();
+        PageInfo<Book> pageInfo = new PageInfo<>(allBook);
+        return pageInfo;
+
     }
     /**
      * 获取全部的书籍的类型

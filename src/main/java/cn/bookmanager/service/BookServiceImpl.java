@@ -10,6 +10,7 @@ import cn.bookmanager.mapper.BookMapper;
 import cn.bookmanager.mapper.RecommendMapper;
 import cn.bookmanager.mapper.RecordMapper;
 import cn.bookmanager.mapper.UserMapper;
+import com.github.pagehelper.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -50,6 +51,11 @@ public class BookServiceImpl implements BookService {
     public List<Book> getAllBook() {
 
         return bookMapper.getAllBook();
+    }
+
+    @Override
+    public Page<Book> getAllBookByPageInfo() {
+        return bookMapper.getAllBookByPageInfo();
     }
 
     @Override

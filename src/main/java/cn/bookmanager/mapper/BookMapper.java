@@ -1,6 +1,7 @@
 package cn.bookmanager.mapper;
 
 import cn.bookmanager.entity.Book;
+import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -28,7 +29,14 @@ public interface BookMapper {
     List<Book> getAllBook();
 
     /**
-     * 查询全部书籍 并排序 Top5
+     * 查询全部书籍（PageInfo）
+     * @return Book s
+     */
+    Page<Book> getAllBookByPageInfo();
+
+    /**
+     * 查询全部书籍 并排序 Top n
+     * @param n 最火的n本📕
      * @return Book s
      */
     List<Book> getHotBook(int n);

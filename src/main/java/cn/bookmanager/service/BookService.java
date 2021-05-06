@@ -1,6 +1,7 @@
 package cn.bookmanager.service;
 
 import cn.bookmanager.entity.Book;
+import com.github.pagehelper.Page;
 
 import java.util.Date;
 import java.util.List;
@@ -30,8 +31,16 @@ public interface BookService {
      * @return
      */
     List<Book> getAllBook();
+
+    /**
+     * 获取全部书籍
+     * @return
+     */
+    Page<Book> getAllBookByPageInfo();
+
     /**
      * 获取全部书籍 排序后输出
+     * @param n N
      * @return
      */
     List<Book> getHotBook(int n);
