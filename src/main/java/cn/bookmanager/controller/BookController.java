@@ -4,6 +4,7 @@ package cn.bookmanager.controller;
 import cn.bookmanager.constant.CookieEnum;
 import cn.bookmanager.constant.ErrorStatusEnum;
 import cn.bookmanager.entity.Book;
+import cn.bookmanager.entity.RequestPage;
 import cn.bookmanager.entity.User;
 import cn.bookmanager.service.BookService;
 import cn.bookmanager.util.ReturnMapUtils;
@@ -179,11 +180,15 @@ public class BookController {
      */
     @GetMapping("/books/page/{page}/size/{size}")
     public PageInfo<Book> getAllBookPage(@PathVariable int page, @PathVariable int size){
-        PageHelper.startPage(page,size);
+
+        RequestPage requestPage = new RequestPage();
+        requestPage.setPage(page);
+        requestPage.setSize(size);
+
+        PageHelper.startPage(requestPage.getPage(), requestPage.getSize());
 
         final Page<Book> allBook = bookService.getAllBookByPageInfo();
-        PageInfo<Book> pageInfo = new PageInfo<>(allBook);
-        return pageInfo;
+        return new PageInfo<>(allBook);
 
     }
     /**

@@ -3,6 +3,7 @@ package cn.bookmanager;
 import cn.bookmanager.constant.StatusEnum;
 import cn.bookmanager.util.Base64Utils;
 import cn.bookmanager.util.Md5Utils;
+import org.apache.coyote.http11.upgrade.UpgradeServletOutputStream;
 import org.junit.jupiter.api.Test;
 
 import java.util.Base64;
@@ -53,6 +54,14 @@ public class MyTest {
         final String md5 = Md5Utils.getMd5("123456");
         System.out.println(md5);
     }
-
+    //
+    // @Test
+    // public void Array(){
+    //     int[][] a  = new int[3][1];
+    //     a[1][0] =1;
+    //     a[1][1] =2;
+    //     System.out.println(a[1].length);
+    // }
+    //
 
 }
