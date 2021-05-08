@@ -20,7 +20,7 @@ import java.util.List;
  */
 @RestController()
 @RequestMapping("/")
-@Tag(name = "PaymentController",description = "书籍的一些操作")
+@Tag(name = "PaymentController",description = "支付一些操作")
 public class PaymentController {
 
     @Autowired
@@ -67,16 +67,17 @@ public class PaymentController {
     }
 
     /**
-     * roles[admin]
+     * roles[admin] 支付（...）
      * @param id Payment.Id
      * @param response response
      * @return Payment
      */
     @Tag(name = "PaymentController")
-    @Operation(summary = "获取全部支付记录",description = "获取全部支付记录")
+    @Operation(summary = "支付（...）",description = "支付（...）")
     @RequiresRoles({"admin"})
     @GetMapping("/pay/{id}")
-    public Payment getPaymentById(@PathVariable long id, HttpServletResponse response){
+    public Payment getPaymentById(
+            @Parameter(description = "支付记录ID") @PathVariable long id, HttpServletResponse response){
         final Payment payment = paymentService.getPaymentById(id);
         if (payment == null) {
             response.setStatus(HttpStatus.NOT_FOUND.value());

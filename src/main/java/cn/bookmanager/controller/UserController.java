@@ -8,6 +8,8 @@ import cn.bookmanager.util.Base64Utils;
 import cn.bookmanager.util.Md5Utils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.shiro.SecurityUtils;
@@ -28,8 +30,8 @@ import javax.servlet.http.HttpSession;
 /**
  * @author lengqie
  */
-// @Api(value="用户controller",tags = "用户表的操作")
-@RestController()
+
+@Tag(name = "UserController")
 @RequestMapping("/users")
 public class UserController {
 
@@ -42,6 +44,8 @@ public class UserController {
      * @param request  request
      * @param response response
      */
+    @Tag(name = "UserController")
+    @Operation(summary = "获取用户自己的信息",description = "获取用户自己的信息")
     @RequiresRoles({"user"})
     @GetMapping("/")
     public User index(HttpServletRequest request,HttpServletResponse response){
@@ -66,9 +70,13 @@ public class UserController {
      * @param user User
      * @param response response
      */
+    @Tag(name = "UserController")
+    @Operation(summary = "修改用户",description = "修改用户")
     @RequiresRoles(value = {"user,admin"},logical = Logical.OR)
     @PutMapping("/")
-    public void updateUser(User user, HttpServletResponse response){
+    public void updateUser(
+            @Parameter(description = "用户") User user, HttpServletResponse response){
+
         if (!userService.updateUser(user) ) {
             response.setStatus(HttpStatus.BAD_REQUEST.value());
         }
@@ -82,8 +90,12 @@ public class UserController {
      * @param request   request
      * @param response  response
      */
+    @Tag(name = "UserController")
+    @Operation(summary = "用户登录",description = "用户登录")
     @PostMapping("/login")
-    public void login(String name, String password, HttpSession session, HttpServletRequest request, HttpServletResponse response){
+    public void login(
+            @Parameter(description = "用户名") String name,
+            @Parameter(description = "用户密码") String password, HttpSession session, HttpServletRequest request, HttpServletResponse response){
 
         password = Md5Utils.getMd5(password);
 
@@ -103,6 +115,8 @@ public class UserController {
      * @param session  session
      * @param response response
      */
+    @Tag(name = "UserController")
+    @Operation(summary = "登出",description = "登出")
     @RequiresUser
     @PostMapping("/logout")
     public void logout(HttpSession session, HttpServletResponse response) {
@@ -129,9 +143,12 @@ public class UserController {
      * roles[user] 用户支付
      * @param userId User.Id
      */
+    @Tag(name = "UserController")
+    @Operation(summary = "用户支付",description = "用户支付")
     @RequiresRoles({"user"})
     @PostMapping("/{userId}/pay")
-    public void pay(@PathVariable String userId){
+    public void pay(
+            @Parameter(description = "用户Id") @PathVariable String userId){
         userService.overduePay(userId);
     }
 
@@ -141,8 +158,12 @@ public class UserController {
      * @param password  password
      * @param response  response
      */
+    @Tag(name = "UserController")
+    @Operation(summary = "注册",description = "注册")
     @PostMapping("/register")
-    public void register(String name, String password, HttpServletResponse response){
+    public void register(
+            @Parameter(description = "用户名") String name,
+            @Parameter(description = "用户密码") String password, HttpServletResponse response){
 
         password = Md5Utils.getMd5(password);
 
@@ -153,5 +174,4 @@ public class UserController {
             response.setStatus(HttpStatus.CONFLICT.value());
         }
     }
-
 }

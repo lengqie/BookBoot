@@ -3,6 +3,9 @@ package cn.bookmanager.controller;
 import cn.bookmanager.constant.CookieEnum;
 import cn.bookmanager.entity.Recommend;
 import cn.bookmanager.service.RecommendService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +22,7 @@ import java.util.List;
 /**
  * @author lengqie
  */
+@Tag(name = "RecommendController",description = "书籍的一些操作")
 @RestController
 @RequestMapping
 public class RecommendController {
@@ -33,9 +37,15 @@ public class RecommendController {
      * @param type     type
      * @param response response
      */
+    @Tag(name = "RecommendController")
+    @Operation(summary = "添加一个推荐",description = "添加一个推荐")
     @RequiresRoles({"user"})
     @PostMapping("/recommends")
-    public void recommend(String name, String isbn,String type, HttpServletResponse response){
+    public void recommend(
+            @Parameter(description = "书名") String name,
+            @Parameter(description = "Isbn") String isbn,
+            @Parameter(description = "书籍类型") String type, HttpServletResponse response){
+
         Date date = new Date();
         if (recommendService.recommend(name,isbn,type,date)){
             response.setStatus(HttpStatus.OK.value());
@@ -48,6 +58,8 @@ public class RecommendController {
      * roles[admin,user] 获取全部推荐记录
      * @return AllRecommend
      */
+    @Tag(name = "RecommendController")
+    @Operation(summary = "获取全部推荐记录",description = "获取全部推荐记录")
     @RequiresRoles(value = {"admin","user"},logical = Logical.OR)
     @GetMapping("/recommends")
     public List<Recommend> getAllRecommend(HttpServletRequest request, HttpServletResponse response){
@@ -74,6 +86,8 @@ public class RecommendController {
      * @param response response
      * @return recommend
      */
+    @Tag(name = "RecommendController")
+    @Operation(summary = "获取记录的详情",description = "获取记录的详情")
     @RequiresRoles({"admin"})
     @GetMapping("/recommends/{id}")
     public Recommend getRecommendById(@PathVariable String id, HttpServletResponse response){
