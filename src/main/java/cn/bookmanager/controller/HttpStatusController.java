@@ -1,6 +1,7 @@
 package cn.bookmanager.controller;
 
 import cn.bookmanager.service.IndexService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +22,7 @@ public class HttpStatusController {
      * 没有权限
      * 只返回401
      */
+    @Operation(summary = "401",description = "401")
     @GetMapping("/401")
     public String notFound(HttpServletResponse response){
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
@@ -31,6 +33,7 @@ public class HttpStatusController {
      * 登录吧
      * 只返回302
      */
+    @Operation(summary = "302",description = "302")
     @GetMapping("/302")
     public String found(HttpServletResponse response){
         response.setStatus(HttpStatus.FOUND.value());

@@ -2,6 +2,9 @@ package cn.bookmanager.controller;
 
 import cn.bookmanager.entity.Payment;
 import cn.bookmanager.service.PaymentService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,9 +18,9 @@ import java.util.List;
  * Payment
  * @author lengqie
  */
-
 @RestController()
 @RequestMapping("/")
+@Tag(name = "PaymentController",description = "书籍的一些操作")
 public class PaymentController {
 
     @Autowired
@@ -29,9 +32,14 @@ public class PaymentController {
      * @param amount    Payment.Amount
      * @param response  response
      */
+    @Tag(name = "PaymentController")
+    @Operation(summary = "支付 记录",description = "添加支付记录")
     @RequiresRoles({"user"})
     @PutMapping("/pay")
-    public void addPayment(String recordId, Double amount, HttpServletResponse response){
+    public void addPayment(
+            @Parameter (description = "记录ID") String recordId,
+            @Parameter (description = "金额") Double amount, HttpServletResponse response){
+
         Date date =new Date();
 
         if (paymentService.pay(recordId, amount,date)) {
@@ -43,8 +51,10 @@ public class PaymentController {
     /**
      * roles[admin] 获取全部支付记录
      * @param response response
-     * @return
+     * @return Payment s
      */
+    @Tag(name = "PaymentController")
+    @Operation(summary = "获取全部支付记录",description = "获取全部支付记录")
     @RequiresRoles({"admin"})
     @GetMapping("/pay")
     public List<Payment> getAllPayment(HttpServletResponse response){
@@ -60,8 +70,10 @@ public class PaymentController {
      * roles[admin]
      * @param id Payment.Id
      * @param response response
-     * @return
+     * @return Payment
      */
+    @Tag(name = "PaymentController")
+    @Operation(summary = "获取全部支付记录",description = "获取全部支付记录")
     @RequiresRoles({"admin"})
     @GetMapping("/pay/{id}")
     public Payment getPaymentById(@PathVariable long id, HttpServletResponse response){
