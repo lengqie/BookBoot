@@ -28,7 +28,7 @@ public class SwaggerConfig {
     @Bean
     public Docket createRestApi() {
         return new Docket(DocumentationType.OAS_30)
-                .apiInfo(apiInfo())
+                // .apiInfo(apiInfo())
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("cn.bookmanager.controller"))
                 .paths(PathSelectors.any())

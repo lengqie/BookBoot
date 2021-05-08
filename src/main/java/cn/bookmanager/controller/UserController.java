@@ -6,6 +6,10 @@ import cn.bookmanager.entity.User;
 import cn.bookmanager.service.UserService;
 import cn.bookmanager.util.Base64Utils;
 import cn.bookmanager.util.Md5Utils;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.annotation.Logical;
@@ -24,7 +28,7 @@ import javax.servlet.http.HttpSession;
 /**
  * @author lengqie
  */
-
+// @Api(value="用户controller",tags = "用户表的操作")
 @RestController()
 @RequestMapping("/users")
 public class UserController {

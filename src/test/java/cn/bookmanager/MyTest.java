@@ -61,6 +61,23 @@ public class MyTest {
         a[1][0] =1;
         a[1][1] =2;
         System.out.println(a[1].length);
+
+    }
+
+    @Test
+    public void Int(){
+        Integer a= 100;
+        Integer b= new Integer(100);
+        System.out.println(a == b);
+
+        // Integer a= new Integer(100);
+        // Integer b= new Integer(100);
+        // System.out.println(a == b);
+        //
+        // Integer a= 100;
+        // Integer b= 100;
+        System.out.println(a.hashCode());
+        System.out.println(a.hashCode());
     }
 
 

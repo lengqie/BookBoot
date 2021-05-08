@@ -5,6 +5,9 @@ import cn.bookmanager.entity.Admin;
 import cn.bookmanager.service.AdminService;
 import cn.bookmanager.util.Base64Utils;
 import cn.bookmanager.util.Md5Utils;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.annotation.Logical;
@@ -28,6 +31,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/admins")
+@Tag(name = "AdminController",description = "管理员的一些操作")
 public class AdminController {
 
     // 更加推荐 使用构造方法
@@ -44,8 +48,12 @@ public class AdminController {
      * @param request  equest
      * @param response response
      */
+    @Tag(name = "AdminController", description = "管理员登录")
+    @Operation(summary = "管理员登录",description = "管理员登录")
     @PostMapping("/login")
-    public void login(String name, String password, HttpSession session, HttpServletRequest request, HttpServletResponse response){
+    public void login(
+            @Parameter(description = "管理员名字") String name,
+            @Parameter(description = "管理员密码") String password, HttpSession session, HttpServletRequest request, HttpServletResponse response){
 
         password = Md5Utils.getMd5(password);
 
@@ -67,6 +75,8 @@ public class AdminController {
      * @param session  session
      * @param response response
      */
+    @Tag(name = "AdminController", description = "管理员注销")
+    @Operation(summary = "管理员注销",description = "管理员注销登录")
     @RequiresUser
     @GetMapping("/logout")
     public void logout(HttpSession session, HttpServletResponse response) {
@@ -89,6 +99,8 @@ public class AdminController {
      * roles[admin] 获取管理员信息
      * @return Admin
      */
+    @Tag(name = "AdminController", description = "获取管理员信息")
+    @Operation(summary = "获取管理员信息",description = "获取管理员信息")
     @RequiresRoles({"admin"})
     @GetMapping("/")
     public Admin info(HttpServletRequest request, HttpServletResponse response){
@@ -112,6 +124,8 @@ public class AdminController {
      * roles[admin, root] 获取全部管理员的信息
      * @return Admins
      */
+    @Tag(name = "AdminController", description = "获取全部管理员的信息")
+    @Operation(summary = "获取全部管理员的信息",description = "获取全部管理员的信息")
     @RequiresRoles(value = {"admin","root"}, logical = Logical.AND)
     @GetMapping("/all")
     public List<Admin> getAllAdmin(HttpServletResponse response){
@@ -128,9 +142,13 @@ public class AdminController {
     /**
      * roles[admin,root] 添加管理员
      */
+    @Tag(name = "AdminController", description = "添加管理员")
+    @Operation(summary = "添加管理员",description = "添加管理员")
     @RequiresRoles(value = {"admin","root"}, logical = Logical.AND)
     @PostMapping("/")
-    public void addAdmin(HttpServletResponse response, String name, String password){
+    public void addAdmin(
+            @Parameter(description = "管理员姓名") String name,
+            @Parameter(description = "管理员密码") String password, HttpServletResponse response){
 
         password = Md5Utils.getMd5(password);
 
@@ -144,9 +162,14 @@ public class AdminController {
     /**
      * roles[admin] 更新管理员的信息
      */
+    @Tag(name = "AdminController", description = "更新管理员的信息")
+    @Operation(summary = "更新管理员的信息",description = "更新管理员的信息")
     @RequiresRoles(value = {"admin","root"}, logical = Logical.OR)
     @PutMapping("/{id}")
-    public void updateAdmin(HttpServletRequest request, HttpServletResponse response, @PathVariable int id, String name, String password){
+    public void updateAdmin(
+            @Parameter(description = "管理员Id") @PathVariable int id,
+            @Parameter(description = "管理员姓名") String name,
+            @Parameter(description = "管理员密码") String password,HttpServletResponse response){
 
         password = Md5Utils.getMd5(password);
 
@@ -159,9 +182,12 @@ public class AdminController {
     /**
      * roles[root] 删除管理员
      */
+    @Tag(name = "AdminController", description = "删除管理员")
+    @Operation(summary = "删除管理员",description = "删除管理员")
     @RequiresRoles(value = {"admin","root"}, logical = Logical.AND)
     @DeleteMapping("/{id}")
-    public void delAdmin(HttpServletResponse response, @PathVariable int id){
+    public void delAdmin(
+            @Parameter(description = "书籍ID") @PathVariable int id,HttpServletResponse response){
 
         Date date  =new Date();
         if (! adminService.delAdmin(id,date)) {
