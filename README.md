@@ -26,6 +26,7 @@ SQL：[BootBook.sql](https://github.com/lengqie/BookBoot/blob/master/file/BookBo
 假数据生成：[createFakeDbInfo.py](https://github.com/lengqie/BookBoot/blob/master/file/createFakeDbInfo.py)
 
 ### 进度
+- 2021/5/8  完善了Swagger3 (3.0 似乎有一些Bug，且缺少文档)
 - 2021/5/6  整合PageInfo
 - 2021/4/29 添加了索引 假数据生成
 - 2021/4/27 优化了代码规范 完善了Shiro

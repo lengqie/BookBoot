@@ -19,27 +19,25 @@ public class ExceptionHandlerConfig {
 
     /**
      * AuthenticationException Shiro认证异常
-     * @param e
-     * @param response
+     * @param e  Exception
+     * @param response response
      * @return
      */
     @ExceptionHandler(value = {AuthenticationException.class, AuthorizationException.class})
     public String authenticationExceptionHandler(Exception e, HttpServletResponse response){
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
-        String error = "👻 出现异常：(权限问题！)"+e;
-        return error;
+        return "👻 出现异常：(权限问题！)"+e;
     }
 
     /**
      * Exception
-     * @param e
-     * @param response
+     * @param e  Exception
+     * @param response response
      * @return
      */
     @ExceptionHandler(value = Exception.class)
     public String exceptionHandler(Exception e, HttpServletResponse response){
         response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
-        String error = "👻 出现异常："+e;
-        return error;
+        return "👻 出现异常："+e;
     }
 }
