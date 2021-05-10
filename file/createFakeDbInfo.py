@@ -21,13 +21,14 @@ def fakeName():
    return random.choice(first) + second + third + random.choice(end)
 # i =10
 for i in range(10,1000):
+	for j in range(10,1000):
+		for k in range(106,126):
+			sql = "insert into book(isbn,name,type,create_time,update_time) values(%s,%s,'Fake','2021-04-29 14:19:43','2021-04-29 14:19:43')"
 
-   sql = "insert into book(isbn,name,type,create_time,update_time) values(%s,%s,'Fake','2021-04-29 14:19:43','2021-04-29 14:19:43')"
+			cursor.execute(sql,("202-{}-{}-{}".format(str(k),str(j),str(i)),fakeName() ))
 
-   cursor.execute(sql,("199-120-122-"+str(i),fakeName() ))
-
-   db.commit()
-   i+=1
+			db.commit()
+			i+=1
 
 # print(fakeName())
 

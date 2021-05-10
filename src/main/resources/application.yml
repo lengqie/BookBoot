@@ -23,6 +23,7 @@ mybatis:
   type-aliases-package: cn.bookmanager.entity
   configuration:
     mapUnderscoreToCamelCase: true
+    cache-enabled: true
 
 server:
   port: 8081

@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="cn.bookmanager.mapper.BookMapper">
-
+<cache />
     <sql id="bookField">
         select isbn, name, type, hot, num, status, create_time, update_time from book
     </sql>
@@ -13,35 +13,35 @@
         update book set hot =hot +1 where Isbn =#{Isbn};
     </update>
 
-    <select id="getAllBook" resultType="Book">
+    <select id="getAllBook" useCache="false" resultType="Book">
         <include refid="bookField"/> where status =1;
     </select>
 
-    <select id="getAllBookByPageInfo" resultType="Book">
+    <select id="getAllBookByPageInfo" useCache="false" resultType="Book">
         <include refid="bookField"/> where status =1
     </select>
 
-    <select id="getHotBook" resultType="Book">
+    <select id="getHotBook" useCache="false" resultType="Book">
        select isbn, name, type, hot, num, status, create_time, update_time
-            from book where status = 0
+            from book where status = 1
                 order by hot desc LIMIT 0,#{n};
         <!-- <include refid="bookField"></include>where status =1 order by hot desc LIMIT 0,5; -->
     </select>
 
-    <select id="getBookByName" resultType="Book" parameterType="string">
-        <include refid="bookField"/> where status = 0 and name like '%${name}%' order by hot desc;
+    <select id="getBookByName" useCache="false" resultType="Book" parameterType="string">
+        select isbn, name from book where status = 1 and name like '%${name}%' order by hot desc;
     </select>
 
-    <select id="geAllType" resultType="string" parameterType="Book">
+    <select id="geAllType" useCache="true" resultType="string" parameterType="Book">
         select type from (
                              select type, sum(hot) as total from book group by type order by total desc) as t;
     </select>
 
-    <select id="getBookByType" resultType="Book">
-        <include refid="bookField"/> where  status = 0 and type = #{type} order by hot desc;
+    <select id="getBookByType" useCache="false" resultType="Book">
+        <include refid="bookField"/> where  status = 1 and type = #{type} order by hot desc;
     </select>
 
-    <select id="getBookByIsbn" parameterType="string" resultType="Book">
+    <select id="getBookByIsbn" useCache="false" parameterType="string" resultType="Book">
         <include refid="bookField"/> book where Isbn =#{isbn};
     </select>
 
