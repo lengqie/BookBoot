@@ -79,7 +79,7 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/admins/login","anon");
 
         filterChainDefinitionMap.put("/books","anon");
-        filterChainDefinitionMap.put("/books/*","anon");
+        filterChainDefinitionMap.put("/books/isbn/*","anon");
         filterChainDefinitionMap.put("/books/page/**","anon");
         filterChainDefinitionMap.put("/books/type","anon");
         filterChainDefinitionMap.put("/books/type/*","anon");

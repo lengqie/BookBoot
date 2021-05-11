@@ -320,16 +320,16 @@ public class BookController {
     }
 
     /**
-     * 获取全部的书籍
+     * 查询书籍
      * @return book s
      */
     @Tag(name = "BookController",description = "分页查找查询书籍")
     @Operation(summary = "查询书籍",description = "分页查找")
     @GetMapping("/books/name/page/{page}/size/{size}")
     public PageInfo<Book> searchBookPage(
-            @Parameter(description = "关键词") String  name,
+            @Parameter(description = "关键词") String name,
             @Parameter(description = "页码") @PathVariable int page,
-            @Parameter(description = "数量") @PathVariable int size, HttpServletResponse response){
+            @Parameter(description = "数量") @PathVariable int size){
 
         RequestPage requestPage = new RequestPage();
         requestPage.setPage(page);
