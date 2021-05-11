@@ -217,7 +217,7 @@ public class BookController {
      * @return book s
      */
     @Tag(name = "BookController",description = "分页查找查询书籍")
-    @Operation(summary = "查询书籍",description = "分页查找")
+    @Operation(summary = "获取全部的书籍",description = "分页查找")
     @GetMapping("/books/page/{page}/size/{size}")
     public PageInfo<Book> getAllBookPage(
             @Parameter(description = "页码") @PathVariable int page,
