@@ -52,6 +52,12 @@ public interface BookService {
      */
     List<Book> getBookByName(String name);
 
+    /**
+     * 通过书名查询数据
+     * @param name Book.Name
+     * @return Books
+     */
+    Page<Book> getBookByNamePageInfo(String name);
 
     /**
      * 获取书籍的全部类型

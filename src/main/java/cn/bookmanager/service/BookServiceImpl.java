@@ -74,6 +74,11 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public Page<Book> getBookByNamePageInfo(String name) {
+        return bookMapper.getBookByNamePageInfo(name);
+    }
+
+    @Override
     public List<String> geAllType() {
         return bookMapper.geAllType();
     }

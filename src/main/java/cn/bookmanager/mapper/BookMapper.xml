@@ -14,22 +14,26 @@
     </update>
 
     <select id="getAllBook" useCache="false" resultType="Book">
-        <include refid="bookField"/> where status =1;
+        <include refid="bookField"/> where status =0;
     </select>
 
     <select id="getAllBookByPageInfo" useCache="false" resultType="Book">
-        <include refid="bookField"/> where status =1
+        <include refid="bookField"/> where status =0
     </select>
 
-    <select id="getHotBook" useCache="false" resultType="Book">
+    <select id="getHotBook" useCache="true" resultType="Book">
        select isbn, name, type, hot, num, status, create_time, update_time
-            from book where status = 1
+            from book where status = 0
                 order by hot desc LIMIT 0,#{n};
         <!-- <include refid="bookField"></include>where status =1 order by hot desc LIMIT 0,5; -->
     </select>
 
     <select id="getBookByName" useCache="false" resultType="Book" parameterType="string">
-        select isbn, name from book where status = 1 and name like '%${name}%' order by hot desc;
+        <include refid="bookField"/>where MATCH (`name`) AGAINST (#{name})
+    </select>
+
+    <select id="getBookByNamePageInfo" resultType="cn.bookmanager.entity.Book">
+        <include refid="bookField"/>where MATCH (`name`) AGAINST (#{name})
     </select>
 
     <select id="geAllType" useCache="true" resultType="string" parameterType="Book">
@@ -38,7 +42,7 @@
     </select>
 
     <select id="getBookByType" useCache="false" resultType="Book">
-        <include refid="bookField"/> where  status = 1 and type = #{type} order by hot desc;
+        <include refid="bookField"/> where  status =0 and type = #{type} order by hot desc;
     </select>
 
     <select id="getBookByIsbn" useCache="false" parameterType="string" resultType="Book">

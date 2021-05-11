@@ -49,6 +49,13 @@ public interface BookMapper {
     List<Book> getBookByName(String name);
 
     /**
+     * 通过书籍查找
+     * @param name Book Name
+     * @return Book s
+     */
+    Page<Book> getBookByNamePageInfo(String name);
+
+    /**
      * 获取书籍的全部类型 根据热度 排序
      * @return 最火的五本书籍
      */

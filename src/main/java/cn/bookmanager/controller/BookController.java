@@ -14,7 +14,6 @@ import com.github.pagehelper.PageInfo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.apache.shiro.authz.annotation.RequiresGuest;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -290,8 +289,8 @@ public class BookController {
     public List<Book> getAllBookByHotN(
             @Parameter(description = "数量") @PathVariable int n,HttpServletResponse response){
 
-        // 不能违法
-        if (n >0 ){
+        // 合法性检测
+        if (n <=0 ){
             response.setStatus(HttpStatus.BAD_REQUEST.value());
             return null;
         }
@@ -305,20 +304,44 @@ public class BookController {
     /**
      * anon 查找书籍 没有使用restful
      * @return book s
-     */
+    //  */
     @Tag(name = "BookController",description = "查找书籍")
     @Operation(summary = "查找书籍",description = "查找书籍")
-    @GetMapping("/books/")
+    @GetMapping("/books/name")
     public List<Book> searchBook(
-            @Parameter(description = "书籍名称") String re,HttpServletResponse response){
+            @Parameter(description = "关键词") String name, HttpServletResponse response){
 
-        final List<Book> allBook = bookService.getBookByName(re);
+        final List<Book> allBook = bookService.getBookByName(name);
         if (!allBook.isEmpty()) {
             return allBook;
         }
         response.setStatus(HttpStatus.NOT_FOUND.value());
         return null;
     }
+
+    /**
+     * 获取全部的书籍
+     * @return book s
+     */
+    @Tag(name = "BookController",description = "分页查找查询书籍")
+    @Operation(summary = "查询书籍",description = "分页查找")
+    @GetMapping("/books/name/page/{page}/size/{size}")
+    public PageInfo<Book> searchBookPage(
+            @Parameter(description = "关键词") String  name,
+            @Parameter(description = "页码") @PathVariable int page,
+            @Parameter(description = "数量") @PathVariable int size, HttpServletResponse response){
+
+        RequestPage requestPage = new RequestPage();
+        requestPage.setPage(page);
+        requestPage.setSize(size);
+
+        PageHelper.startPage(requestPage.getPage(), requestPage.getSize());
+
+        final Page<Book> allBook = bookService.getBookByNamePageInfo(name);
+        return new PageInfo<>(allBook);
+
+    }
+
     /**
      * 使用 PathVariable 放在最后 防止先被匹配
      * @param isbn Isbn
@@ -327,7 +350,7 @@ public class BookController {
 
     @Tag(name = "BookController")
     @Operation(summary = "获取书籍的详细信息",description = "获取书籍的详细信息")
-    @GetMapping("/books/{isbn}")
+    @GetMapping("/books/isbn/{isbn}")
     public Book getBookByIsbn(
             @Parameter(description = "Isbn") @PathVariable String isbn, HttpServletResponse response){
         final Book book = bookService.getBookByIsbn(isbn);

@@ -45,5 +45,13 @@ class BookmanagerApplicationTests {
         System.out.println((date.getTime() - d.getTime())/(1000*60*60*24));
     }
 
+    // @Autowired
+    // BookService bookService;
+    @Test
+    void Page(){
+        // booksService.borrowBooks("110-120-112-11", "2020", new Date(),30);
+        System.out.println(bookService.getBookByName("红鞋"));
+    }
+
 
 }
