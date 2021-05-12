@@ -2,6 +2,7 @@ package cn.bookmanager.config;
 
 import cn.bookmanager.realm.AdminRealm;
 import cn.bookmanager.realm.UserRealm;
+import javax.servlet.Filter;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.mgt.SessionsSecurityManager;
 import org.apache.shiro.realm.Realm;
@@ -10,8 +11,7 @@ import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -53,7 +53,9 @@ public class ShiroConfig {
     }
 
     @Bean
-    public ShiroFilterFactoryBean shiroFilter(@Qualifier("securityManager") SecurityManager securityManager) {
+    public ShiroFilterFactoryBean shiroFilter(@Qualifier("securityManager") SecurityManager securityManager,
+                                              ShiroCNInvalidRequestFilter invalidRequestFilter
+                                              ) {
         ShiroFilterFactoryBean  bean = new ShiroFilterFactoryBean();
 
         bean.setSecurityManager(securityManager());
@@ -89,9 +91,19 @@ public class ShiroConfig {
 
         filterChainDefinitionMap.put("/users/register","anon");
         filterChainDefinitionMap.put("/users/login","anon");
+        filterChainDefinitionMap.put("/my/*","anon");
 
         filterChainDefinitionMap.put("/**", "authc");
         bean.setFilterChainDefinitionMap(filterChainDefinitionMap);
+
+        Map<String, Filter> filters =new LinkedHashMap<>();
+        filters.put("invalid", invalidRequestFilter);
+
+        bean.setFilters(filters);
+
+        List<String> globalFilters = new LinkedList<>();
+        globalFilters.add("invalid");
+        bean.setGlobalFilters(globalFilters);
 
         return bean;
     }
