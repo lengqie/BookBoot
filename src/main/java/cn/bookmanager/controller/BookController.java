@@ -307,9 +307,9 @@ public class BookController {
     //  */
     @Tag(name = "BookController",description = "查找书籍")
     @Operation(summary = "查找书籍",description = "查找书籍")
-    @GetMapping("/books/name")
+    @GetMapping("/books/name/{name}")
     public List<Book> searchBook(
-            @Parameter(description = "关键词") String name, HttpServletResponse response){
+            @Parameter(description = "关键词") @PathVariable String name, HttpServletResponse response){
 
         final List<Book> allBook = bookService.getBookByName(name);
         if (!allBook.isEmpty()) {
@@ -325,9 +325,9 @@ public class BookController {
      */
     @Tag(name = "BookController",description = "分页查找查询书籍")
     @Operation(summary = "查询书籍",description = "分页查找")
-    @GetMapping("/books/name/page/{page}/size/{size}")
+    @GetMapping("/books/name/{name}/page/{page}/size/{size}")
     public PageInfo<Book> searchBookPage(
-            @Parameter(description = "关键词") String name,
+            @Parameter(description = "关键词") @PathVariable String name,
             @Parameter(description = "页码") @PathVariable int page,
             @Parameter(description = "数量") @PathVariable int size){
 

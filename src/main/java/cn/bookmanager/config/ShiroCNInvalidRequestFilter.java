@@ -82,8 +82,13 @@ public class ShiroCNInvalidRequestFilter extends AccessControlFilter {
 
         for(int i = 0; i < length; ++i) {
             char c = uri.charAt(i);
-            if ((c < ' ' || c > '~') && !isChinese(c)) {
-                return false;
+
+            // Do not use complicated statements in conditional statements
+            // if( (c < '' || c > '~' ) && !isChinese(c) )
+            if (c < ' ' || c > '~') {
+                if (!isChinese(c)){
+                    return false;
+                }
             }
         }
 
@@ -94,23 +99,12 @@ public class ShiroCNInvalidRequestFilter extends AccessControlFilter {
         return this.blockSemicolon;
     }
 
-    public void setBlockSemicolon(boolean blockSemicolon) {
-        this.blockSemicolon = blockSemicolon;
-    }
-
     public boolean isBlockBackslash() {
         return this.blockBackslash;
-    }
-
-    public void setBlockBackslash(boolean blockBackslash) {
-        this.blockBackslash = blockBackslash;
     }
 
     public boolean isBlockNonAscii() {
         return this.blockNonAscii;
     }
 
-    public void setBlockNonAscii(boolean blockNonAscii) {
-        this.blockNonAscii = blockNonAscii;
-    }
 }
