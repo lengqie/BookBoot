@@ -26,6 +26,7 @@ SQL：[BootBook.sql](https://github.com/lengqie/BookBoot/blob/master/file/BookBo
 假数据生成：[createFakeDbInfo.py](https://github.com/lengqie/BookBoot/blob/master/file/createFakeDbInfo.py)
 
 ### 进度
+- 2021/5/13 Shiro Restful 中文支持
 - 2021/5/11 添加了 数据库Book.name 全文检索
 - 2021/5/10 添加了Mybatis 索引，开启Mysql 缓存
 - 2021/5/8  完善了Swagger3 (3.0 似乎有一些Bug，且缺少文档)

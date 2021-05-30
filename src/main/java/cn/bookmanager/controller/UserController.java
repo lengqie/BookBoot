@@ -33,6 +33,7 @@ import javax.servlet.http.HttpSession;
 
 @Tag(name = "UserController")
 @RequestMapping("/users")
+@RestController
 public class UserController {
 
     @Autowired
