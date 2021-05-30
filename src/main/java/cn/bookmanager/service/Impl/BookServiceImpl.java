@@ -1,4 +1,4 @@
-package cn.bookmanager.service;
+package cn.bookmanager.service.Impl;
 
 import cn.bookmanager.constant.ErrorStatusEnum;
 import cn.bookmanager.constant.StatusEnum;
@@ -10,6 +10,7 @@ import cn.bookmanager.mapper.BookMapper;
 import cn.bookmanager.mapper.RecommendMapper;
 import cn.bookmanager.mapper.RecordMapper;
 import cn.bookmanager.mapper.UserMapper;
+import cn.bookmanager.service.BookService;
 import com.github.pagehelper.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

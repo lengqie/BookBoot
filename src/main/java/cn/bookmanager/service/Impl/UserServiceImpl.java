@@ -1,8 +1,9 @@
-package cn.bookmanager.service;
+package cn.bookmanager.service.Impl;
 
 import cn.bookmanager.constant.CookieEnum;
 import cn.bookmanager.entity.User;
 import cn.bookmanager.mapper.UserMapper;
+import cn.bookmanager.service.UserService;
 import cn.bookmanager.util.Base64Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

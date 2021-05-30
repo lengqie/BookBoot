@@ -1,9 +1,10 @@
-package cn.bookmanager.service;
+package cn.bookmanager.service.Impl;
 
 import cn.bookmanager.constant.CookieEnum;
 import cn.bookmanager.constant.StatusEnum;
 import cn.bookmanager.entity.Admin;
 import cn.bookmanager.mapper.*;
+import cn.bookmanager.service.AdminService;
 import cn.bookmanager.util.Base64Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,7 @@ import java.util.List;
  */
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class AdminServiceImpl implements AdminService{
+public class AdminServiceImpl implements AdminService {
 
     @Autowired
     private AdminMapper adminMapper;

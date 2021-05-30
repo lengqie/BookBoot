@@ -1,7 +1,8 @@
-package cn.bookmanager.service;
+package cn.bookmanager.service.Impl;
 
 import cn.bookmanager.entity.Payment;
 import cn.bookmanager.mapper.PaymentMapper;
+import cn.bookmanager.service.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

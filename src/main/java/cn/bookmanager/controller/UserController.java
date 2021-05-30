@@ -31,7 +31,8 @@ import javax.servlet.http.HttpSession;
  * @author lengqie
  */
 
-@Tag(name = "UserController")
+@Tag(name = "UserController",description = "用户表的一些操作")
+
 @RequestMapping("/users")
 @RestController
 public class UserController {

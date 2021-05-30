@@ -1,7 +1,8 @@
-package cn.bookmanager.service;
+package cn.bookmanager.service.Impl;
 
 import cn.bookmanager.entity.Record;
 import cn.bookmanager.mapper.RecordMapper;
+import cn.bookmanager.service.RecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
